@@ -1,6 +1,6 @@
-import DashLeftComponent from "@/components/DashLeftComponent";
-import RoomHistory from "@/components/RoomHistory";
-import SelectLanguage from "@/components/SelectLanguage";
+import DashLeftComponent from "@/components/Dashboard/DashLeftComponent";
+import RoomHistory from "@/components/Dashboard/RoomHistory";
+import SelectLanguage from "@/components/Dashboard/SelectLanguage";
 import Particles from "@/components/ui/particles"
 
 const Dashboard = () => {
@@ -14,6 +14,7 @@ const Dashboard = () => {
         color={"#ffffff"}
         refresh
       />
+      
       <div className="flex gap-5">
         <DashLeftComponent />
         <div className="flex flex-col gap-y-6">

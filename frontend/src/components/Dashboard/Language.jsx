@@ -1,4 +1,4 @@
-import { MagicCard } from "./ui/magic-card";
+import { MagicCard } from "../ui/magic-card";
 
 const Language = ({ logo, name }) => {
   return (
