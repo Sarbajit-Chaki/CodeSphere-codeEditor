@@ -3,6 +3,7 @@ import { IoMdMailUnread } from "react-icons/io";
 import { FaLock } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
+import GradientText from '../GradientText';
 
 const SignInForm = ({className}) => {
     const [focusStates, setFocusStates] = useState({
@@ -29,9 +30,9 @@ const SignInForm = ({className}) => {
 
   return (
     <>
-        <div className={` ${className} flex flex-col gap-8 w-[92%] md:w-[60%] lg:w-[80%] xl:w-[75%] 2xl:w-[65%]`}>
+        <div className={` ${className} flex flex-col gap-8 w-[92%] md:w-[60%] lg:w-[80%] xl:w-[75%] 2xl:w-[65%] `}>
             <header>
-                <div className=' text-2xl md:text-4xl lg:text-3xl xl:text-4xl font-bold lg:font-semibold mb-2  '>Sign In to CodeSphere</div>
+                <div className=' text-2xl md:text-4xl lg:text-3xl xl:text-4xl font-bold lg:font-semibold mb-2  '>Sign In to <GradientText>CodeSphere</GradientText> </div>
                 <div>Enter your details below</div>
             </header>
 
@@ -41,7 +42,7 @@ const SignInForm = ({className}) => {
                         type="text" 
                         placeholder='Enter Email Address'
                         autoComplete='off'
-                        className=' border border-[#b1b1b1] rounded-lg p-3 pl-8 w-full focus: outline-[#d6927c] '  
+                        className=' border border-[#b1b1b1] rounded-lg p-3 pl-8 w-full focus: outline-[#d6927c]  bg-[#27272A]'  
                         name='email'
                         onFocus={(e) => setFocusStates({...focusStates, [e.target.name]: true})}
                         onBlur={(e) => setFocusStates({...focusStates, [e.target.name]: false})}
@@ -56,7 +57,7 @@ const SignInForm = ({className}) => {
                         type={`${showPassword ? "text" : "password"}`}
                         placeholder='Enter Password'
                         autoComplete='off'
-                        className=' border border-[#b1b1b1] rounded-lg p-3 4 pl-8 w-full focus: outline-[#d6927c] '  
+                        className=' border border-[#b1b1b1] rounded-lg p-3 4 pl-8 w-full focus: outline-[#d6927c] bg-[#27272A]'  
                         name='password'
                         onFocus={(e) => setFocusStates({...focusStates, [e.target.name]: true})}
                         onBlur={(e) => setFocusStates({...focusStates, [e.target.name]: false})}

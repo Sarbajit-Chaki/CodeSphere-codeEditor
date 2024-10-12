@@ -4,6 +4,7 @@ import { FaLock } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa6";
+import GradientText from '../GradientText';
 
 
 const SignUpForm = ({className}) => {
@@ -48,7 +49,7 @@ const SignUpForm = ({className}) => {
     <>
         <div className={` ${className} flex flex-col gap-8 w-[92%] md:w-[60%] lg:w-[80%] xl:w-[75%] 2xl:w-[65%]`}>
             <header>
-                <div className=' text-2xl md:text-4xl lg:text-3xl xl:text-4xl font-bold lg:font-semibold mb-2  '>Sign Up to CodeSphere</div>
+                <div className=' text-2xl md:text-4xl lg:text-3xl xl:text-4xl font-bold lg:font-semibold mb-2  '>Sign Up to <GradientText>CodeSphere</GradientText></div>
                 <div>Enter your details below</div>
             </header>
 
@@ -59,7 +60,7 @@ const SignUpForm = ({className}) => {
                         type="text" 
                         placeholder='First Name'
                         autoComplete='off'
-                        className=' border border-[#b1b1b1] rounded-lg p-3 pl-8 w-full focus: outline-[#d6927c] '  
+                        className=' border border-[#b1b1b1] rounded-lg p-3 pl-8 w-full focus: outline-[#d6927c]  bg-[#27272A]'  
                         name='firstName'
                         onFocus={(e) => setFocusStates({...focusStates, [e.target.name]: true})}
                         onBlur={(e) => setFocusStates({...focusStates, [e.target.name]: false})}
@@ -74,7 +75,7 @@ const SignUpForm = ({className}) => {
                         type="text" 
                         placeholder='Last Name'
                         autoComplete='off'
-                        className=' border border-[#b1b1b1] rounded-lg p-3 pl-8 w-full focus: outline-[#d6927c] '  
+                        className=' border border-[#b1b1b1] rounded-lg p-3 pl-8 w-full focus: outline-[#d6927c]  bg-[#27272A]'  
                         name='lastName'
                         onFocus={(e) => setFocusStates({...focusStates, [e.target.name]: true})}
                         onBlur={(e) => setFocusStates({...focusStates, [e.target.name]: false})}
@@ -89,7 +90,7 @@ const SignUpForm = ({className}) => {
                         type="email" 
                         placeholder='Email Address'
                         autoComplete='off'
-                        className=' border border-[#b1b1b1] rounded-lg p-3 pl-8 w-full focus: outline-[#d6927c] '  
+                        className=' border border-[#b1b1b1] rounded-lg p-3 pl-8 w-full focus: outline-[#d6927c]  bg-[#27272A]'  
                         name='email'
                         onFocus={(e) => setFocusStates({...focusStates, [e.target.name]: true})}
                         onBlur={(e) => setFocusStates({...focusStates, [e.target.name]: false})}
@@ -99,12 +100,12 @@ const SignUpForm = ({className}) => {
                     <IoMdMailUnread className={` absolute left-2 text-[#8f8f8f] ${focusStates.email ? "text-[#fb4c19]" : "text-[#b1b1b1]"}`} />
                 </div>
 
-                <div className='relative flex items-center '>
+                {/* <div className='relative flex items-center '>
                     <input 
                         type="text" 
                         placeholder='Phone no.'
                         autoComplete='off'
-                        className='  border border-[#b1b1b1] rounded-lg p-3 pl-8 w-full focus: outline-[#d6927c] '  
+                        className='  border border-[#b1b1b1] rounded-lg p-3 pl-8 w-full focus: outline-[#d6927c]  bg-[#27272A]'  
                         name='phNo'
                         onFocus={(e) => setFocusStates({...focusStates, [e.target.name]: true})}
                         onBlur={(e) => setFocusStates({...focusStates, [e.target.name]: false})}
@@ -112,14 +113,14 @@ const SignUpForm = ({className}) => {
                         onChange={handleChange}
                     />
                     <FaPhone className={` absolute left-2 text-[#8f8f8f] ${focusStates.phNo ? "text-[#fb4c19]" : "text-[#b1b1b1]"}`} />
-                </div>
+                </div> */}
 
                 <div className=' relative flex items-center'>
                     <input 
                         type={`${showPassword1 ? "text" : "password"}`}
                         placeholder='Password'
                         autoComplete='off'
-                        className=' border border-[#b1b1b1] rounded-lg p-3 4 pl-8 w-full focus: outline-[#d6927c] '  
+                        className=' border border-[#b1b1b1] rounded-lg p-3 4 pl-8 w-full focus: outline-[#d6927c]  bg-[#27272A]'  
                         name='password1'
                         onFocus={(e) => setFocusStates({...focusStates, [e.target.name]: true})}
                         onBlur={(e) => setFocusStates({...focusStates, [e.target.name]: false})}
@@ -134,9 +135,9 @@ const SignUpForm = ({className}) => {
                 <div className=' relative flex items-center'>
                     <input 
                         type={`${showPassword2 ? "text" : "password"}`}
-                        placeholder='Enter Password'
+                        placeholder='Confirm Password'
                         autoComplete='off'
-                        className=' border border-[#b1b1b1] rounded-lg p-3 4 pl-8 w-full focus: outline-[#d6927c] '  
+                        className=' border border-[#b1b1b1] rounded-lg p-3 4 pl-8 w-full focus: outline-[#d6927c]  bg-[#27272A]'  
                         name='password2'
                         onFocus={(e) => setFocusStates({...focusStates, [e.target.name]: true})}
                         onBlur={(e) => setFocusStates({...focusStates, [e.target.name]: false})}

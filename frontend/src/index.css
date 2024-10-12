@@ -21,6 +21,29 @@
   }
 }
 
+@keyframes meteor {
+  0% {
+      transform: translateX(0) translateY(0) rotate(230deg);
+  }
+  100% {
+      transform: translateX(500px) translateY(500px) rotate(230deg);
+  }
+}
+
+.animate-meteor {
+  animation: meteor 10s linear infinite;
+  animation-duration: 10s;
+  animation-timing-function: linear;
+  animation-delay: 0s;
+  animation-iteration-count: infinite;
+  animation-direction: normal;
+  animation-fill-mode: none;
+  animation-play-state: running;
+  animation-name: meteor;
+  animation-timeline: auto;
+}
+
+
 .animate-border-hover {
   background: linear-gradient(270deg, #ff6b6b, #f8e16b, #ff6b6b); /* Customize the gradient colors */
   background-size: 200% 100%;

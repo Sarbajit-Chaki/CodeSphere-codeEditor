@@ -19,7 +19,7 @@ const BorderCircle = () => {
   return (
     <>
         <div
-            className={` md:size-[620px] lg:size-[920px] xl:size-[870px] 2xl:size-[870px] bg-white border border-[#b1b1b1] rounded-full absolute -top-72 left-[-360px] transition-transform duration-[1700ms] ease-linear transform ${isMounted ? 'translate-x-0 translate-y-0 transition-all duration-[700ms] animate-bounce2 ' : '-translate-x-[50%] -translate-y-[50%] '}`}
+            className={` md:size-[620px] lg:size-[920px] xl:size-[870px] 2xl:size-[870px] bg-gray-500 border border-[#b1b1b1] rounded-full absolute -top-72 left-[-360px] transition-transform  ease-linear transform ${isMounted ? 'translate-x-0 translate-y-0 transition-all duration-[700ms] animate-bounce2 ' : '-translate-x-[50%] -translate-y-[50%] '}`}
         >
         </div>
     </>
