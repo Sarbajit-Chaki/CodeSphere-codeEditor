@@ -1,5 +1,5 @@
 import { HistoryIcon } from "lucide-react";
-import HistoryCard from "./HistoryCard";
+import HistoryCard from "./HistoryCard.jsx";
 
 
 const RoomHistory = () => {

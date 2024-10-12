@@ -1,6 +1,6 @@
 import { languages } from "@/data/languages";
 import Language from "./Language";
-import { MagicCard } from "./ui/magic-card";
+import { MagicCard } from "../ui/magic-card";
 import { House, Plus } from "lucide-react";
 
 const SelectLanguage = () => {

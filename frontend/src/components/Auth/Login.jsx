@@ -1,8 +1,8 @@
 import React from 'react'
-import Left from '../components/Auth/Left'
-import Right from '../components/Auth/Right'
+import Left from './Left'
+import Right from './Right'
 
-const Signup = () => {
+const Login = () => {
   return (
     <>
       <div className="main w-full h-screen flex flex-col lg:flex-row overflow-hidden">
@@ -18,4 +18,4 @@ const Signup = () => {
   )
 }
 
-export default Signup
+export default Login

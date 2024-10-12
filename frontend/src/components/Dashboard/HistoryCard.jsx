@@ -1,5 +1,5 @@
 import { Dot } from "lucide-react";
-import { MagicCard } from "./ui/magic-card";
+import { MagicCard } from "../ui/magic-card";
 import { languages } from "@/data/languages";
 import { DotsVerticalIcon } from "@radix-ui/react-icons";
 import {
