@@ -1,9 +1,8 @@
-import React from 'react'
 import Left from '../components/Auth/Left'
 import Right from '../components/Auth/Right'
 import Meteors from '@/components/ui/meteors'
 
-const Signup = () => {
+const Auth = () => {
   return (
     <>
       <div className="relative main w-full h-screen flex flex-col lg:flex-row overflow-hidden">
@@ -20,4 +19,4 @@ const Signup = () => {
   )
 }
 
-export default Signup
+export default Auth
