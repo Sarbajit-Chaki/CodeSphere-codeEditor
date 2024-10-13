@@ -4,6 +4,7 @@ import { FaLock } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import GradientText from '../GradientText';
+import GoogleAuthButton from './GoogleAuthButton';
 
 const SignInForm = ({className}) => {
     const [focusStates, setFocusStates] = useState({
@@ -71,6 +72,12 @@ const SignInForm = ({className}) => {
 
                 <button type='submit' className={` bg-[#fb4c19] rounded-3xl px-8 py-3 text-white `}>LOG IN</button>
             </form>
+            <div className='flex w-full -my-4 items-center'>
+                <div className='w-full h-[1px] bg-white'></div>
+                <span className='px-2'>OR</span>
+                <div className='w-full h-[1px] bg-white'></div>
+            </div>
+            <GoogleAuthButton signIn={true} />
         </div>
     </>
   )

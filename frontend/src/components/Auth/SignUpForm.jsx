@@ -5,6 +5,7 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaPhone } from "react-icons/fa6";
 import GradientText from '../GradientText';
+import GoogleAuthButton from './GoogleAuthButton';
 
 
 const SignUpForm = ({className}) => {
@@ -151,6 +152,12 @@ const SignUpForm = ({className}) => {
 
                 <button type='submit' className={` bg-[#fb4c19] rounded-3xl px-8 py-3 text-white `}>Sign Up</button>
             </form>
+            <div className='flex w-full -my-4 items-center'>
+                <div className='w-full h-[1px] bg-white'></div>
+                <span className='px-2'>OR</span>
+                <div className='w-full h-[1px] bg-white'></div>
+            </div>
+            <GoogleAuthButton signIn={false} />
         </div>
     </>
   )
