@@ -1,4 +1,5 @@
 import About from "@/components/Home/About"
+import CodeSection from "@/components/Home/CodeSection"
 import Features from "@/components/Home/Features"
 import Footer from "@/components/Home/Footer"
 import HeroSection from "@/components/Home/HeroSection"
@@ -9,6 +10,7 @@ const Home = () => {
     <div className=" w-full h-screen relative">
       <Navbar />
       <HeroSection />
+      <CodeSection />
       <Features />
       <About />
       <Footer />

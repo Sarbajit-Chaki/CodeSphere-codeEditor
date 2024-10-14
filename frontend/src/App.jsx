@@ -8,7 +8,7 @@ import Home from "./pages/Home";
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="bg-black overflow-x-hidden">
+      <div className="bg-black overflow-x-hidden scroll-smooth">
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/dashboard" element={<Dashboard />} />

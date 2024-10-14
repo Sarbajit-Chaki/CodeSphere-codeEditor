@@ -13,6 +13,9 @@ export default {
     			sm: 'calc(var(--radius) - 4px)'
     		},
     		colors: {
+    			yellow: {
+    				rich: '#FFD60A'
+    			},
     			background: 'hsl(var(--background))',
     			foreground: 'hsl(var(--foreground))',
     			card: {
@@ -126,6 +129,11 @@ export default {
     				to: {
     					'background-position': '0% 0%'
     				}
+    			},
+    			'border-beam': {
+    				'100%': {
+    					'offset-distance': '100%'
+    				}
     			}
     		},
     		animation: {
@@ -136,7 +144,8 @@ export default {
     			curveMove2: 'curveMove2 1.5s ease-in-out forwards',
     			fadeIn: 'fadeIn 2s ease-in-out forwards',
     			popup: 'popup 2s ease-in-out',
-    			shine: 'shine var(--duration) infinite linear'
+    			shine: 'shine var(--duration) infinite linear',
+    			'border-beam': 'border-beam calc(var(--duration)*1s) infinite linear'
     		}
     	}
     },

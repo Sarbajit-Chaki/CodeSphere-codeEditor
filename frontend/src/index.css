@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @keyframes circle1Animate {
   50% {
     left: 1%;
@@ -58,10 +62,25 @@
   transition: all 0.5s; /* Smooth transition */
 }
 
+.cursor {
+  display: inline-block;
+  animation: blink 1s step-end infinite;
+  font-family: monospace; /* Same font as the text */
+  margin-left: 2px; /* Space between text and cursor */
+}
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Cursor blinking animation */
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+
+
 @layer base {
   :root {
     /* --background: 0 0% 100%; */
@@ -125,6 +144,13 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .matrix-transform {
+    transform: matrix(1, 0, -0.03, 1, 0, 0);
+  }
+}
+
 
 @layer utilities {
   .animate-circle1 {
