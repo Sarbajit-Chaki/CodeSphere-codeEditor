@@ -11,9 +11,9 @@ const Right = ({signIn}) => {
           <div className=' text-[#b1b1b1] '>
             {signIn ? "Not a Memeber?" : "Already have an account?"}
           </div>
-          <Button text={signIn ? "SIGN IN" : "LOG IN"} className={" hidden lg:block px-8 py-3"} />
+          <Button text={signIn ? "SIGN UP" : "LOG IN"} className={" hidden lg:block px-8 py-3"} />
           <div className='text-[#fb4c19] hover:underline block lg:hidden'>
-            {signIn ? "SIGN IN" : "LOG IN"}
+            {signIn ? "SIGN UP" : "LOG IN"}
           </div>
         </nav>
 

@@ -33,7 +33,7 @@ const SignInForm = ({className}) => {
     <>
         <div className={` ${className} flex flex-col gap-8 w-[92%] md:w-[60%] lg:w-[80%] xl:w-[75%] 2xl:w-[65%] `}>
             <header>
-                <div className=' text-2xl md:text-4xl lg:text-3xl xl:text-4xl font-bold lg:font-semibold mb-2  '>Sign In to <GradientText>CodeSphere</GradientText> </div>
+                <div className=' text-2xl md:text-4xl lg:text-3xl xl:text-4xl font-mono font-bold mb-2  '>Sign In to <GradientText>CodeSphere</GradientText> </div>
                 <div>Enter your details below</div>
             </header>
 
