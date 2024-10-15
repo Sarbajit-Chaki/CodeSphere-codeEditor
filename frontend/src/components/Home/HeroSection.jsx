@@ -25,7 +25,7 @@ const HeroSection = () => {
         <div className=" w-full md:w-3/5 ">
           <div className=" w-full md:w-[90%] flex flex-col items-start gap-6 sm:gap-8 ">
             <h1 className=" text-3xl sm:text-5xl font-semibold font-mono">
-              Enter the <GradientText>CodeSphere</GradientText>
+              Welcome to <GradientText>CodeSphere</GradientText>
             </h1>
             <div className="text-gray-400 text-sm sm:text-base text-justify">
               Welcome to our collaborative code editor platform, where students
