@@ -227,7 +227,7 @@ const Particles = ({
 
   return (
     (<div className={className} ref={canvasContainerRef} aria-hidden="true">
-      <canvas ref={canvasRef} className="size-full" />
+      <canvas ref={canvasRef} className="size-full bg-[#000814]" />
     </div>)
   );
 };
