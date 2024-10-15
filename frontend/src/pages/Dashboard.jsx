@@ -9,7 +9,7 @@ const Dashboard = () => {
     <div className="relative w-screen bg-[#000000] flex min-h-screen flex-col items-center justify-center rounded-lg border bg-background md:shadow-xl">
       <Particles
         className="absolute inset-0"
-        quantity={1000}
+        quantity={300}
         ease={80}
         color={"#ffffff"}
         refresh

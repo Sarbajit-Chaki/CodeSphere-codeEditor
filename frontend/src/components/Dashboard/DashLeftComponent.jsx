@@ -1,8 +1,7 @@
-import React from 'react'
 
 const DashLeftComponent = () => {
   return (
-    <div>DashLeftComponent</div>
+    <div className='text-white z-10 '>DashLeftComponent</div>
   )
 }
 
