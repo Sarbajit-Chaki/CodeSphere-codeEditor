@@ -3,6 +3,7 @@ import { Otp } from '../models/Otp.model';
 import { User } from '../models/User.model';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
+import { oauth2Client } from '../config/googleConfig';
 
 
 const cookieOptions = {
@@ -135,9 +136,18 @@ const emailLogin = async (req, res) => {
     }
 }
 
-const googleSignup = async (req, res) => {}
-
-const googleLogin = async (req, res) => {}
+const googleSignup = async (req, res) => {
+    try {
+        const code = req.query.code;
+        const { tokens } = await oauth2Client.getToken(code);
+        oauth2Client.setCredentials(tokens);
+        const response = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokens.access_token}`);
+        const data = await response.json();
+        console.log(data);
+    } catch (error) {
+        console.log("Error in googleSignup: ", error);
+    }
+}
 
 const logout = async (req, res) => {
     try {
