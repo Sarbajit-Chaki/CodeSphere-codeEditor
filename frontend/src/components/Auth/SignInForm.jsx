@@ -5,8 +5,10 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import GradientText from '../GradientText';
 import GoogleAuthButton from './GoogleAuthButton';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const SignInForm = ({className}) => {
+    console.log(import.meta.env.VITE_Google_Client_id)
     const [focusStates, setFocusStates] = useState({
         email: false,
         password: false
@@ -77,7 +79,10 @@ const SignInForm = ({className}) => {
                 <span className='px-2'>OR</span>
                 <div className='w-full h-[1px] bg-white'></div>
             </div>
-            <GoogleAuthButton signIn={true} />
+
+            <GoogleOAuthProvider clientId={import.meta.env.VITE_Google_Client_id}>
+                <GoogleAuthButton signIn={true} />
+            </GoogleOAuthProvider>
         </div>
     </>
   )
