@@ -6,8 +6,11 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 
 import authRoute from './routes/authRoute.js';
+import { connectDB } from './config/database.js';
 
 dotenv.config();
+connectDB();
+
 const PORT = process.env.PORT || 4000;
 const app = express();
 const server = createServer(app);
