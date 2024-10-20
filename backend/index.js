@@ -5,6 +5,8 @@ import cookieParser from 'cookie-parser';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
+import authRoute from './routes/authRoute.js';
+
 dotenv.config();
 const PORT = process.env.PORT || 4000;
 const app = express();
@@ -23,6 +25,8 @@ app.use(express.json());
 app.get('/', (req,res) => {
     res.send('Server is ready');
 })
+
+app.use('/auth', authRoute);
 
 server.listen(PORT, (req,res) => {
     console.log(`Server is running on port ${PORT}`);

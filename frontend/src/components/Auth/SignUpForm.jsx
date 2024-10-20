@@ -3,14 +3,10 @@ import { IoMdMailUnread } from "react-icons/io";
 import { FaLock } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
-import { FaPhone } from "react-icons/fa6";
 import GradientText from '../GradientText';
 import GoogleAuthButton from './GoogleAuthButton';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-
 
 const SignUpForm = ({ className }) => {
-    console.log(import.meta.env.VITE_Google_Client_id)
     const [focusStates, setFocusStates] = useState({
         firstName: false,
         lastName: false,
@@ -103,21 +99,6 @@ const SignUpForm = ({ className }) => {
                         <IoMdMailUnread className={` absolute left-2 text-[#8f8f8f] ${focusStates.email ? "text-[#fb4c19]" : "text-[#b1b1b1]"}`} />
                     </div>
 
-                    {/* <div className='relative flex items-center '>
-                    <input 
-                        type="text" 
-                        placeholder='Phone no.'
-                        autoComplete='off'
-                        className='  border border-[#b1b1b1] rounded-lg p-3 pl-8 w-full focus: outline-[#d6927c]  bg-[#27272A]'  
-                        name='phNo'
-                        onFocus={(e) => setFocusStates({...focusStates, [e.target.name]: true})}
-                        onBlur={(e) => setFocusStates({...focusStates, [e.target.name]: false})}
-                        value={form.phNo}
-                        onChange={handleChange}
-                    />
-                    <FaPhone className={` absolute left-2 text-[#8f8f8f] ${focusStates.phNo ? "text-[#fb4c19]" : "text-[#b1b1b1]"}`} />
-                </div> */}
-
                     <div className=' relative flex items-center'>
                         <input
                             type={`${showPassword1 ? "text" : "password"}`}
@@ -160,9 +141,7 @@ const SignUpForm = ({ className }) => {
                     <div className='w-full h-[1px] bg-white'></div>
                 </div>
 
-                <GoogleOAuthProvider clientId={import.meta.env.VITE_Google_Client_id}>
-                    <GoogleAuthButton signIn={false} />
-                </GoogleOAuthProvider>
+                <GoogleAuthButton signIn={false} />
             </div>
         </>
     )

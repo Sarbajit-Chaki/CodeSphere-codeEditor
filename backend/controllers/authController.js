@@ -1,9 +1,9 @@
 import otpGenerator from 'otp-generator';
-import { Otp } from '../models/Otp.model';
-import { User } from '../models/User.model';
+import { Otp } from '../models/Otp.model.js';
+import { User } from '../models/User.model.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { oauth2Client } from '../config/googleConfig';
+import { oauth2Client } from '../config/googleConfig.js';
 
 
 const cookieOptions = {
@@ -13,7 +13,7 @@ const cookieOptions = {
     path: '/'
 }
 
-const sendOtp = async (req, res) => {
+export const sendOtp = async (req, res) => {
     try {
         const { email } = req.body;
         const otp = otpGenerator.generate(6, {
@@ -32,7 +32,7 @@ const sendOtp = async (req, res) => {
     }
 }
 
-const emailSignup = async (req, res) => {
+export const emailSignup = async (req, res) => {
     try {
         const { firstName, lastName, email, password, otp } = req.body;
         if(!firstName || !lastName || !email || !password || !otp) {
@@ -90,7 +90,7 @@ const emailSignup = async (req, res) => {
     }
 }
 
-const emailLogin = async (req, res) => {
+export const emailLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
         if(!email || !password) {
@@ -136,20 +136,65 @@ const emailLogin = async (req, res) => {
     }
 }
 
-const googleSignup = async (req, res) => {
+export const googleSignup = async (req, res) => {
     try {
         const code = req.query.code;
         const { tokens } = await oauth2Client.getToken(code);
         oauth2Client.setCredentials(tokens);
+
+        // Fetch user info from google userinfo API
         const response = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokens.access_token}`);
         const data = await response.json();
-        console.log(data);
+
+        const email = data.email;
+
+        const user = await User.findOne({ email });
+        if(user) {
+            const payload = {
+                email: user.email,
+                id: user._id,
+            }
+
+            const token = jwt.sign(payload, process.env.JWT_SECRET);
+
+            user.password = undefined;
+            return res.cookie("token", token, cookieOptions).status(200).json({
+                success: true,
+                message: 'User logged in successfully',
+                user
+            });
+        }
+
+        const newUser = await User.create({
+            email: data.email,
+            firstName: data.given_name,
+            lastName: data.family_name,
+            imageUrl: data.picture
+        });
+
+        const payload = {
+            email: newUser.email,
+            id: newUser._id,
+        }
+
+        const token = jwt.sign(payload, process.env.JWT_SECRET);
+
+        return res.cookie("token", token, cookieOptions).status(201).json({
+            success: true,
+            message: 'User created successfully',
+            user: newUser
+        });
+        
     } catch (error) {
         console.log("Error in googleSignup: ", error);
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error in Google Signup'
+        })
     }
 }
 
-const logout = async (req, res) => {
+export const logout = async (req, res) => {
     try {
         res.clearCookie("token", cookieOptions)
         return res.status(200).json({

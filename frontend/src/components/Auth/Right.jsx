@@ -2,8 +2,12 @@ import React from 'react'
 import Button from './Button'
 import SignInForm from './SignInForm'
 import SignUpForm from './SignUpForm'
+import { GoogleOAuthProvider } from '@react-oauth/google'
 
-const Right = ({signIn}) => {
+const Right = ({ signIn }) => {
+
+  const Google_clientId = import.meta.env.VITE_Google_Client_id;
+
   return (
     <>
       <div className="w-full h-fit lg:h-full flex flex-col-reverse lg:flex-col lg:px-12 lg:py-8">
@@ -18,11 +22,13 @@ const Right = ({signIn}) => {
         </nav>
 
         <div className=' w-full h-full flex justify-center items-start lg:justify-center xl:justify-start 2xl:justify-start lg:items-center'>
-          {signIn ? 
-            <SignInForm className={"transition-all animate-popup"} />
-            :
-            <SignUpForm className={"transition-all animate-popup"} />
-          }
+          <GoogleOAuthProvider clientId={Google_clientId}>
+            {signIn ?
+              <SignInForm className={"transition-all animate-popup"} />
+              :
+              <SignUpForm className={"transition-all animate-popup"} />
+            }
+          </GoogleOAuthProvider>
         </div>
       </div>
     </>
