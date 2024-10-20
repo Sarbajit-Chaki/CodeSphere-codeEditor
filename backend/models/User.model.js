@@ -14,7 +14,6 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     password: String,
-    googleId: String,
     imageUrl: String,
     rooms: [
         {

@@ -1,14 +1,14 @@
 import { FcGoogle } from "react-icons/fc";
 import ShineBorder from "../ui/shine-border";
 import { useGoogleLogin } from "@react-oauth/google";
-import { oauthLogin } from "@/api/user";
+import { oAuthLogin } from "@/api/user";
 
 const GoogleAuthButton = ({ signIn }) => {
-  const responseGoogle = (response) => {
+  const FetchUserData = async (response) => {
     try {
       if (response.code) {
         const code = response.code
-        const data = oauthLogin(code)
+        const data = await oAuthLogin(code)
         console.log(data)
       }
     } catch (error) {
@@ -17,8 +17,8 @@ const GoogleAuthButton = ({ signIn }) => {
   }
 
   const googleLogin = useGoogleLogin({
-    onSuccess: responseGoogle,
-    onError: responseGoogle,
+    onSuccess: FetchUserData,
+    onError: (error) => console.log("Login Failed:", error),
     flow: "auth-code",
   })
 

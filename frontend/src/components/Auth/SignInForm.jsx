@@ -5,7 +5,6 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import GradientText from '../GradientText';
 import GoogleAuthButton from './GoogleAuthButton';
-import { GoogleOAuthProvider } from '@react-oauth/google';
 
 const SignInForm = ({className}) => {
     console.log(import.meta.env.VITE_Google_Client_id)
@@ -80,9 +79,7 @@ const SignInForm = ({className}) => {
                 <div className='w-full h-[1px] bg-white'></div>
             </div>
 
-            <GoogleOAuthProvider clientId={import.meta.env.VITE_Google_Client_id}>
-                <GoogleAuthButton signIn={true} />
-            </GoogleOAuthProvider>
+            <GoogleAuthButton signIn={true} />
         </div>
     </>
   )
