@@ -1,0 +1,55 @@
+import { CircleUser, Home } from "lucide-react";
+import SidebarContent from "./SidebarContent";
+import SidebarGroup from "./SidebarGroup";
+import SidebarHeader from "./SidebarHeader";
+import logo from "@/assets/Auth/CodeSphere Logo.png";
+import { RiCustomerService2Line } from "react-icons/ri";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import LogoutBtn from "./LogoutBtn";
+import ProfileCard from "./ProfileCard";
+
+
+const sidebarLinks = [
+  { page: "/dashboard", text: "Dashboard", icon: <Home size={30} /> },
+  { page: "/profile", text: "Profile", icon: <CircleUser size={30} /> },
+  {
+    page: "/contact",
+    text: "Contact Us",
+    icon: <RiCustomerService2Line size={30} />,
+  },
+];
+
+const Sidebar = () => {
+  return (
+    <div className="h-screen w-20 bg-[#101622] flex flex-col justify-between py-6">
+      <div className="h-[50%] flex flex-col justify-between items-center">
+        <SidebarHeader className={"mt-2"}>
+          <img src={logo} alt="CodeSphere Logo" width={60} />
+        </SidebarHeader>
+        <SidebarGroup>
+          {sidebarLinks.map((link, index) => {
+            return (
+              <SidebarContent key={index} to={link.page} text={link.text}>
+                {link.icon}
+              </SidebarContent>
+            );
+          })}
+          <div className="flex justify-center cursor-pointer text-gray-600">
+            <LogoutBtn />
+          </div>
+        </SidebarGroup>
+      </div>
+
+      <div className="flex justify-center cursor-pointer">
+        <ProfileCard >
+        <Avatar className="rounded-md">
+          <AvatarImage src="https://avatars.githubusercontent.com/u/116663682?s=400&u=c3d1bddd31d3de63f9bb7373ebfbebf2a8125e76&v=4" />
+          <AvatarFallback>DG</AvatarFallback>
+        </Avatar>
+        </ProfileCard>
+      </div>
+    </div>
+  );
+};
+
+export default Sidebar;
