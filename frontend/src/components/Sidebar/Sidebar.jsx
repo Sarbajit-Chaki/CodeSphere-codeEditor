@@ -10,20 +10,20 @@ import ProfileCard from "./ProfileCard";
 
 
 const sidebarLinks = [
-  { page: "/dashboard", text: "Dashboard", icon: <Home size={30} /> },
-  { page: "/profile", text: "Profile", icon: <CircleUser size={30} /> },
+  { page: "/dashboard", text: "Dashboard", icon: <Home className="size-6 sm:size-8" /> },
+  { page: "/profile", text: "Profile", icon: <CircleUser className="size-6 sm:size-8" /> },
   {
     page: "/contact",
     text: "Contact Us",
-    icon: <RiCustomerService2Line size={30} />,
+    icon: <RiCustomerService2Line className="size-6 sm:size-8" />,
   },
 ];
 
 const Sidebar = () => {
   return (
-    <div className="h-screen w-20 bg-[#101622] flex flex-col justify-between py-6">
-      <div className="h-[50%] flex flex-col justify-between items-center">
-        <SidebarHeader className={"mt-2"}>
+    <div className="h-screen w-14 sm:w-20 bg-[#101622] flex flex-col justify-between py-6">
+      <div className="flex flex-col justify-between items-center">
+        <SidebarHeader className={"sm:mt-2 mb-10"}>
           <img src={logo} alt="CodeSphere Logo" width={60} />
         </SidebarHeader>
         <SidebarGroup>
