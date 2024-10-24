@@ -1,7 +1,7 @@
-const HomeBtn = ({ text }) => {
+const HomeBtn = ({ text, className }) => {
   return (
     <div>
-      <a className="relative inline-flex items-center justify-center p-4 px-6 py-2 overflow-hidden font-medium  transition duration-300 ease-out border-[3px] border-yellow-rich bg-yellow-rich rounded-md shadow-md group">
+      <a className={`relative inline-flex items-center justify-center p-4 px-6 py-2 overflow-hidden font-medium  transition duration-300 ease-out border-[3px] border-yellow-rich bg-yellow-rich rounded-md shadow-md group ${className}`}>
         <span className="absolute inset-0 flex items-center justify-center w-full h-full text-black duration-300 -translate-x-full bg-white group-hover:translate-x-0 ease">
           <svg
             className="w-6 h-6"

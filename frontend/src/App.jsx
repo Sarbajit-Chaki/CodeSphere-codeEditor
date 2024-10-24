@@ -5,6 +5,7 @@ import Auth from "./pages/Auth";
 import { ThemeProvider } from "./components/theme-provider";
 import Home from "./pages/Home";
 import DashboardComponent from "./components/Dashboard/DashboardComponent";
+import Contact from "./pages/Contact";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route element={<Dashboard />}>
             <Route path="/dashboard" element={<DashboardComponent />} />
           </Route>
+          <Route path="/contact" element={<Contact />} />
         </Routes>
       </div>
     </ThemeProvider>
