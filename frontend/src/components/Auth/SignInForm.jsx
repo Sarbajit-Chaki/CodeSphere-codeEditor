@@ -73,7 +73,10 @@ const SignInForm = ({className}) => {
 
                 <button type='submit' className={` bg-[#fb4c19] rounded-3xl px-8 py-3 text-white `}>LOG IN</button>
             </form>
-            <div className='flex w-full -my-4 items-center'>
+            <div>
+                <div className='text-[#fb4c19] cursor-pointer  -my-6 text-end'>Forgot Password ?</div>
+            </div>
+            <div className='flex w-full -my-5 items-center'>
                 <div className='w-full h-[1px] bg-white'></div>
                 <span className='px-2'>OR</span>
                 <div className='w-full h-[1px] bg-white'></div>
