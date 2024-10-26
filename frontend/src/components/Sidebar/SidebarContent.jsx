@@ -12,7 +12,7 @@ const SidebarContent = ({ children, to, text, className }) => {
   };
   return (
     <div
-      className={`flex justify-center cursor-pointer ${currentLocation.pathname === to ? "text-purple-300" : "text-gray-600"} ${className}`}
+      className={`flex justify-center cursor-pointer ${currentLocation.pathname === to ? "text-gray-200" : "text-gray-600"} ${className}`}
       onClick={handleClick}
     >
       <Tooltip text={text}>
