@@ -15,7 +15,7 @@ const DashboardComponent = () => {
       />
 
       <div className="flex flex-col lg:flex-row gap-5">
-        <DashLeftComponent />
+        {/* <DashLeftComponent /> */}
         <div className="flex flex-col gap-y-6 max-w-11/12">
           <SelectLanguage />
           <RoomHistory />

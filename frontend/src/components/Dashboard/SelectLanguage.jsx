@@ -1,9 +1,6 @@
 import { languages } from "@/data/languages";
 import Language from "./Language";
-import { MagicCard } from "../ui/magic-card";
-import { House, Plus } from "lucide-react";
-
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -12,9 +9,10 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 import JoinRoom from "./JoinRoom";
-
 
 const SelectLanguage = () => {
   return (
@@ -29,27 +27,47 @@ const SelectLanguage = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3 mt-4 mb-8">
           {languages.map((language, index) => (
             <Dialog key={index}>
-              <DialogTrigger >
-                <Language key={index} logo={language.logo} name={language.name} />
+              <DialogTrigger>
+                <Language
+                  key={index}
+                  logo={language.logo}
+                  name={language.name}
+                />
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
-                  <DialogTitle className='text-xl'>Create Room</DialogTitle>
-                  <DialogDescription className=' text-lg'>
-                    A room is created for {language.name} Language
+                  <DialogTitle className="text-xl">Create Room</DialogTitle>
+                  <DialogDescription className=" text-lg">
+                    A room will be created for {language.name} Language
                   </DialogDescription>
                 </DialogHeader>
                 <div className=" flex flex-col gap-2">
-                  <input className="w-full p-2 my-2 bg-slate-800 rounded-lg" type="text" placeholder="Room Name" name="room-name" id="room-name" />
-
-                  <div className=" flex items-center gap-2">
-                    <input type="checkbox" name="screen-share" id="screen-share" />
-                    <label htmlFor="screen-share">Anyone can see eachother screen</label>
+                  <div className="flex w-full items-center gap-x-2">
+                    <p className="whitespace-nowrap text-base">Room Name</p>
+                    <input
+                      className="w-full p-2 my-2 bg-[#141414] rounded-lg"
+                      type="text"
+                      placeholder="my-first-room"
+                      name="room-name"
+                      id="room-name"
+                    />
                   </div>
 
                   <div className=" flex items-center gap-2">
-                    <input type="checkbox" name="room-msg" id="room-msg" />
-                    <label htmlFor="room-msg">Enable room messages</label>
+                    <Checkbox id="screen-share" name="screen-share" />
+                    <Label
+                      htmlFor="screen-share"
+                      className="text-base font-normal"
+                    >
+                      Everyone can see eachother's screen
+                    </Label>
+                  </div>
+
+                  <div className=" flex items-center gap-2">
+                    <Checkbox id="room-msg" name="room-msg" />
+                    <Label htmlFor="room-msg" className="text-base font-normal">
+                      Enable room messages
+                    </Label>
                   </div>
                 </div>
                 <DialogFooter>
@@ -61,19 +79,28 @@ const SelectLanguage = () => {
         </div>
 
         {/* Join Room box */}
-        <Dialog >
+        <Dialog>
           <DialogTrigger className="w-full">
             <JoinRoom />
           </DialogTrigger>
           <DialogContent className="sm:max-w-[425px]">
             <DialogHeader>
-              <DialogTitle className='text-xl'>Join Room</DialogTitle>
-              <DialogDescription className=' text-lg'>
+              <DialogTitle className="text-xl">Join Room</DialogTitle>
+              <DialogDescription className=" text-lg">
                 Join an existing room by RoomID
               </DialogDescription>
             </DialogHeader>
             <div className="">
-              <input className="w-full p-2 my-2 bg-slate-800 rounded-lg" type="text" placeholder="Room ID" name="room-id" id="room-id" />
+              <div className="flex w-full items-center gap-x-2">
+                <p className="whitespace-nowrap text-base">Room ID</p>
+                <input
+                  className="w-full p-2 my-2 bg-[#141414] rounded-lg"
+                  type="text"
+                  placeholder="Enter Room ID"
+                  name="room-id"
+                  id="room-id"
+                />
+              </div>
             </div>
             <DialogFooter>
               <Button type="submit">Join</Button>
