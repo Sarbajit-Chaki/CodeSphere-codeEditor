@@ -18,7 +18,7 @@ const LogoutBtn = () => {
     <Tooltip text={"LogOut"}>
       <AlertDialog>
         <AlertDialogTrigger>
-          <LogOut size={30} />
+          <LogOut className="size-6 sm:size-8" />
         </AlertDialogTrigger>
         <AlertDialogContent>
           <AlertDialogHeader>
