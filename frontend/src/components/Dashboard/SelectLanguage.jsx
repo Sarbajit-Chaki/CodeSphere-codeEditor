@@ -3,6 +3,19 @@ import Language from "./Language";
 import { MagicCard } from "../ui/magic-card";
 import { House, Plus } from "lucide-react";
 
+import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import JoinRoom from "./JoinRoom";
+
+
 const SelectLanguage = () => {
   return (
     <div className="relative rounded-md mx-auto w-11/12 sm:w-full flex justify-center items-center">
@@ -15,32 +28,58 @@ const SelectLanguage = () => {
         <p className="text-lg text-center lg:text-start">Select a language</p>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3 mt-4 mb-8">
           {languages.map((language, index) => (
-            <Language key={index} logo={language.logo} name={language.name} />
+            <Dialog key={index}>
+              <DialogTrigger >
+                <Language key={index} logo={language.logo} name={language.name} />
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle className='text-xl'>Create Room</DialogTitle>
+                  <DialogDescription className=' text-lg'>
+                    A room is created for {language.name} Language
+                  </DialogDescription>
+                </DialogHeader>
+                <div className=" flex flex-col gap-2">
+                  <input className="w-full p-2 my-2 bg-slate-800 rounded-lg" type="text" placeholder="Room Name" name="room-name" id="room-name" />
+
+                  <div className=" flex items-center gap-2">
+                    <input type="checkbox" name="screen-share" id="screen-share" />
+                    <label htmlFor="screen-share">Anyone can see eachother screen</label>
+                  </div>
+
+                  <div className=" flex items-center gap-2">
+                    <input type="checkbox" name="room-msg" id="room-msg" />
+                    <label htmlFor="room-msg">Enable room messages</label>
+                  </div>
+                </div>
+                <DialogFooter>
+                  <Button type="submit">Create</Button>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
           ))}
         </div>
-        <div className="p-[1px] relative w-full inline-block">
-          <div className="absolute inset-0 rounded-md animate-border-hover pointer-events-none"></div>
-          <MagicCard
-            className="flex flex-col items-center px-4 py-3 dark:bg-black/20 dark:hover:bg-black/100 border-[1px] border-slate-500 hover:border-none rounded-md cursor-pointer transition-all duration-300"
-            gradientColor={"#363636"}
-          >
-            <div className="flex w-full justify-between">
-              <div className="flex items-center gap-x-2 sm:gap-x-4">
-                <House size={34} color="#3178C6" />
-                <div>
-                  <p className="text-purple-300 text-sm sm:text-base sm:font-semibold">JOIN ROOM</p>
-                  <p className="text-gray-400 text-xs sm:text-sm">
-                    Join an existing room with the RoomID
-                  </p>
-                </div>
-              </div>
 
-              <div className="flex items-center">
-                <Plus size={28} color="#fff" />
-              </div>
+        {/* Join Room box */}
+        <Dialog >
+          <DialogTrigger className="w-full">
+            <JoinRoom />
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle className='text-xl'>Join Room</DialogTitle>
+              <DialogDescription className=' text-lg'>
+                Join an existing room by RoomID
+              </DialogDescription>
+            </DialogHeader>
+            <div className="">
+              <input className="w-full p-2 my-2 bg-slate-800 rounded-lg" type="text" placeholder="Room ID" name="room-id" id="room-id" />
             </div>
-          </MagicCard>
-        </div>
+            <DialogFooter>
+              <Button type="submit">Join</Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );
