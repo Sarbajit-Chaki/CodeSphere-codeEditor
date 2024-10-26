@@ -14,7 +14,7 @@ const JoinRoom = () => {
                 <House size={34} color="#3178C6" />
                 <div>
                   <p className="text-purple-300 text-start text-sm sm:text-base sm:font-semibold">JOIN ROOM</p>
-                  <p className="text-gray-400 text-xs sm:text-sm">
+                  <p className="text-gray-400 text-start text-xs sm:text-sm">
                     Join an existing room with the RoomID
                   </p>
                 </div>

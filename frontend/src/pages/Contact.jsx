@@ -28,8 +28,8 @@ const contactDetails = [
 const Contact = () => {
   return (
     <div>
-      <div className="flex gap-10 justify-center bg-[#000814] py-20 mx-auto">
-        <div className="flex h-fit lg:w-1/4 flex-col gap-6 rounded-xl p-4 lg:p-6 border border-gray-600 bg-[#101622]">
+      <div className="flex flex-col md:flex-row gap-5 lg:gap-10 justify-center bg-[#000814] md:px-10 py-20 mx-auto">
+        <div className="flex mx-auto md:mx-0 h-fit w-5/6 sm:w-2/3 md:w-[40%] lg:w-1/3 flex-col gap-6 rounded-xl p-4 lg:p-6 border border-gray-600 bg-[#101622]">
           {contactDetails.map((ele, i) => {
             let Icon = Icon1[ele.icon] || Icon2[ele.icon] || Icon3[ele.icon];
             return (
@@ -38,18 +38,18 @@ const Contact = () => {
                 key={i}
               >
                 <div className="flex flex-row items-center gap-3">
-                  <Icon size={25} />
-                  <h1 className="text-lg text-gray-300 font-semibold">
+                  <Icon className="size-4 sm:size-6" />
+                  <h1 className="sm:text-lg text-gray-300 font-semibold">
                     {ele?.heading}
                   </h1>
                 </div>
-                <p className="font-medium text-gray-500">{ele?.description}</p>
-                <p className="font-semibold text-gray-500">{ele?.details}</p>
+                <p className="text-xs sm:text-sm font-medium text-gray-500">{ele?.description}</p>
+                <p className="text-xs sm:text-sm font-semibold text-gray-500">{ele?.details}</p>
               </div>
             );
           })}
         </div>
-        <div className="w-1/2">
+        <div className="w-5/6 sm:w-2/3 md:w-[70%] lg:w-3/5 mx-auto lg:mx-0">
           <ContactUsForm />
         </div>
       </div>
