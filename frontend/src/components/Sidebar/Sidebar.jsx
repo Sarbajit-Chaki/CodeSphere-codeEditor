@@ -21,7 +21,7 @@ const sidebarLinks = [
 
 const Sidebar = () => {
   return (
-    <div className="h-screen w-14 sm:w-20 bg-[#101622] flex flex-col justify-between py-6">
+    <div className="h-[100svh] w-14 sm:w-20 bg-[#101622] flex flex-col justify-between py-6 overflow-y-hidden overflow-x-hidden">
       <div className="flex flex-col justify-between items-center">
         <SidebarHeader className={"sm:mt-2 mb-10"}>
           <img src={logo} alt="CodeSphere Logo" width={60} />

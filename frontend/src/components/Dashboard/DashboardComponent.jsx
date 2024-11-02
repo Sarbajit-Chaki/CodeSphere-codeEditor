@@ -5,7 +5,7 @@ import SelectLanguage from "./SelectLanguage";
 
 const DashboardComponent = () => {
   return (
-    <div className="relative flex min-h-screen flex-col items-center justify-center rounded-lg border bg-background md:shadow-xl z-30">
+    <div className="relative flex min-h-[100svh] max-h-fit flex-col items-center justify-center border bg-background md:shadow-xl z-30 overflow-y-scroll overflow-x-hidden">
       <Particles
         className="absolute inset-0"
         quantity={300}
