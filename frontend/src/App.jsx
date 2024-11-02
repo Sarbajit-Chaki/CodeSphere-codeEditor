@@ -6,6 +6,7 @@ import { ThemeProvider } from "./components/theme-provider";
 import Home from "./pages/Home";
 import DashboardComponent from "./components/Dashboard/DashboardComponent";
 import Contact from "./pages/Contact";
+import MyProfile from "./pages/MyProfile";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route element={<Dashboard />}>
             <Route path="/dashboard" element={<DashboardComponent />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/profile" element={<MyProfile />} />
           </Route>
         </Routes>
       </div>
