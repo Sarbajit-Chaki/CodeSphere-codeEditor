@@ -1,3 +1,4 @@
+import GradientText from '@/components/GradientText';
 import React, { useRef, useState } from 'react'
 import { TbCameraPlus } from "react-icons/tb";
 
@@ -22,9 +23,9 @@ const MyProfile = () => {
 
     return (
         <>
-            <div className=' w-full h-screen'>
+            <div className='bg-[#000814] w-full h-screen'>
                 <div className='flex justify-center '>
-                    <div className=' w-[95%] lg:w-[800px] min-h-[450px] flex flex-col md:flex-row bg-[#1f1f1f] rounded-lg mt-8 '>
+                    <div className=' w-[95%] lg:w-[800px] min-h-[450px] flex flex-col md:flex-row bg-[#101622] rounded-lg mt-8 '>
                         <div className=' md:w-1/4 h-full flex justify-center items-center md:border-r-2 border-gray-600'>
                             <div
                                 className={` flex flex-col justify-center items-center gap-2
@@ -44,12 +45,12 @@ const MyProfile = () => {
                         <div className=' md:w-3/4 h-full'>
                             <div className=' m-4 md:m-6 flex flex-col items-center gap-6 md:gap-8'>
                                 <div className=''>
-                                    <h1 className=' text-xl sm:text-2xl font-semibold text-transparent bg-clip-text bg-gradient-to-tr from-sky-400 to-pink-400'>My Profile</h1>
+                                    <GradientText className={"text-xl sm:text-2xl font-semibold"} >My Profile</GradientText>
                                 </div>
                                 <div className=' md:w-4/5 flex flex-col gap-4 sm:text-lg font-semibold'>
                                     <div className=' flex items-center gap-2 sm:gap-6'>
                                         <div className='w-[100px] whitespace-nowrap '>First Name:</div>
-                                        <input className={` bg-transparent w-[70%] border-[1px] rounded-sm px-2 ${isEditable ? "cursor-auto  border-white " : "cursor-not-allowed"} `}
+                                        <input className={` bg-transparent w-[70%] border-[1px] border-transparent rounded-sm px-2 ${isEditable ? "cursor-auto  border-white " : "cursor-not-allowed"} `}
                                             disabled={!isEditable}
                                             type="text"
                                             value={user_details.firstName}
@@ -57,7 +58,7 @@ const MyProfile = () => {
                                     </div>
                                     <div className=' flex items-center gap-2 sm:gap-6 '>
                                         <div className='w-[100px] whitespace-nowrap'>Last Name:</div>
-                                        <input className={`bg-transparent w-[70%] border-[1px] rounded-sm px-2 ${isEditable ? "cursor-auto  border-white " : "cursor-not-allowed"} `}
+                                        <input className={`bg-transparent w-[70%] border-[1px] border-transparent rounded-sm px-2 ${isEditable ? "cursor-auto  border-white " : "cursor-not-allowed"} `}
                                             disabled={!isEditable}
                                             type="text"
                                             value={user_details.lastName}
@@ -65,7 +66,7 @@ const MyProfile = () => {
                                     </div>
                                     <div className=' flex items-center gap-2 sm:gap-6 '>
                                         <div className='w-[100px] whitespace-nowrap'>Email:</div>
-                                        <input className={`bg-transparent w-[70%] border-[1px] rounded-sm px-2 ${isEditable ? "cursor-auto  border-white " : "cursor-not-allowed"} `}
+                                        <input className={`bg-transparent w-[70%] border-[1px] border-transparent rounded-sm px-2 ${isEditable ? "cursor-auto  border-white " : "cursor-not-allowed"} `}
                                             disabled={!isEditable}
                                             type="text"
                                             value={user_details.email}
@@ -76,7 +77,7 @@ const MyProfile = () => {
                                         <textarea name="about" id="about"
                                             cols={30}
                                             rows={4}
-                                            className={`bg-transparent w-[70%] border-[1px] rounded-sm px-2 resize-none ${isEditable ? "cursor-auto  border-white " : "cursor-not-allowed"} `}
+                                            className={`bg-transparent w-[70%] border-[1px] border-transparent rounded-sm px-2 resize-none ${isEditable ? "cursor-auto  border-white " : "cursor-not-allowed"} `}
                                             disabled={!isEditable}
                                             value={user_details.about}
                                         />
