@@ -3,14 +3,34 @@ import React, { useRef, useState } from 'react'
 import { TbCameraPlus } from "react-icons/tb";
 
 const MyProfile = () => {
-    const user_details = {
+    
+    const [user, setUser] = useState({
         firstName: "K",
         lastName: "Jeneliya",
-        email: "kGenelia1234@gmail.com",
-        about: "I am a student of computer application"
-    }
+        email: "kGenelia123@gmail.com",
+        about: "I am a student of computer applications and web development.",
+        imageUrl: "https://cdn3.pixelcut.app/1/3/profile_picture_1728ecf2bd.jpg",
+    })
+
+    const [user_imageFile, setUser_imageFile] = useState(null);
 
     const [isEditable, setIsEditable] = useState(false);
+
+    const imageRef = useRef(null);
+    const handleImageClick = () => {
+        if(isEditable){
+            imageRef.current.click();
+        }
+    }
+
+    const handleFileChange = () => {
+        const file = imageRef.current.files[0];
+        if(file) {
+            console.log(file);
+            const fileUrl = URL.createObjectURL(file);
+            setUser_imageFile(fileUrl);
+        }
+    }
 
     const enableEdit = () => {  // enable input fields and onchange change the redux states
         setIsEditable(true);
@@ -19,7 +39,6 @@ const MyProfile = () => {
     const onSave = () => {  // after clicking save button save the redux states in DB
         setIsEditable(false);
     }
-
 
     return (
         <>
@@ -32,11 +51,12 @@ const MyProfile = () => {
                                 
                             `}
                             >
-                                <div className={` relative border-4 border-transparent bg-gradient-to-tr from-sky-400 to-pink-400 rounded-full
+                                <div onClick={handleImageClick} className={` relative border-4 border-transparent bg-gradient-to-tr from-sky-400 to-pink-400 rounded-full
                                     ${isEditable ? "cursor-pointer" : "cursor-not-allowed"}
                                 `}>
                                     <TbCameraPlus className=' size-8 sm:size-10 absolute right-0 bottom-0 rounded-full p-1 bg-white text-blue-500 ' />
-                                    <img className=' rounded-full size-20 sm:size-32' src="https://cdn3.pixelcut.app/1/3/profile_picture_1728ecf2bd.jpg" alt="user-image" />
+                                    <img className=' rounded-full size-20 sm:size-32' src={user_imageFile || user.imageUrl} alt="user-image" />
+                                    <input onChange={handleFileChange} ref={imageRef} type="file" accept='image/*' name="image" id="image" className=' hidden' />
                                 </div>
                                 <div className=' font-semibold md:text-lg'>K Jeneliya</div>
                             </div>
@@ -53,7 +73,7 @@ const MyProfile = () => {
                                         <input className={` bg-transparent w-[70%] border-[1px] border-transparent rounded-sm px-2 ${isEditable ? "cursor-auto  border-white " : "cursor-not-allowed"} `}
                                             disabled={!isEditable}
                                             type="text"
-                                            value={user_details.firstName}
+                                            value={user.firstName}
                                         />
                                     </div>
                                     <div className=' flex items-center gap-2 sm:gap-6 '>
@@ -61,15 +81,15 @@ const MyProfile = () => {
                                         <input className={`bg-transparent w-[70%] border-[1px] border-transparent rounded-sm px-2 ${isEditable ? "cursor-auto  border-white " : "cursor-not-allowed"} `}
                                             disabled={!isEditable}
                                             type="text"
-                                            value={user_details.lastName}
+                                            value={user.lastName}
                                         />
                                     </div>
                                     <div className=' flex items-center gap-2 sm:gap-6 '>
                                         <div className='w-[100px] whitespace-nowrap'>Email:</div>
-                                        <input className={`bg-transparent w-[70%] border-[1px] border-transparent rounded-sm px-2 ${isEditable ? "cursor-auto  border-white " : "cursor-not-allowed"} `}
-                                            disabled={!isEditable}
+                                        <input className={`bg-transparent w-[70%] border-[1px] border-transparent rounded-sm px-2 cursor-not-allowed `}
+                                            disabled
                                             type="text"
-                                            value={user_details.email}
+                                            value={user.email}
                                         />
                                     </div>
                                     <div className=' flex gap-2 sm:gap-6 '>
@@ -79,7 +99,7 @@ const MyProfile = () => {
                                             rows={4}
                                             className={`bg-transparent w-[70%] border-[1px] border-transparent rounded-sm px-2 resize-none ${isEditable ? "cursor-auto  border-white " : "cursor-not-allowed"} `}
                                             disabled={!isEditable}
-                                            value={user_details.about}
+                                            value={user.about}
                                         />
                                     </div>
                                 </div>
