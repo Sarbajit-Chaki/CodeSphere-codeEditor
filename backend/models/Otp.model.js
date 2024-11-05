@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import mailSender from "../utils/mailSender.js";
+import mailTemplateCode from "../utils/mailTemplate.js";
 
 const otpSchema = new mongoose.Schema({
     email: {
@@ -18,9 +20,8 @@ const otpSchema = new mongoose.Schema({
 
 
 async function sendVerificationEmail(email, otp) {
-    // send email
     try {
-        
+        await mailSender(email, "Verification Email From CodeSphere", mailTemplateCode(otp, email));
     } catch (error) {
         console.log("Error while sending email: ", error);
         throw error;

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import GradientText from '../GradientText'
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 

@@ -145,6 +145,7 @@ export const googleSignup = async (req, res) => {
         // Fetch user info from google userinfo API
         const response = await fetch(`https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${tokens.access_token}`);
         const data = await response.json();
+        console.log(data);
 
         const email = data.email;
 
@@ -169,7 +170,8 @@ export const googleSignup = async (req, res) => {
             email: data.email,
             firstName: data.given_name,
             lastName: data.family_name,
-            imageUrl: data.picture
+            imageUrl: data.picture,
+            googleId: data.id
         });
 
         const payload = {

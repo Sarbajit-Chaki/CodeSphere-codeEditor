@@ -7,6 +7,7 @@ const initialState = {
     email: "",
     about: "",
     imageUrl: "",
+    googleId: ""
   }
 }
 
@@ -26,9 +27,12 @@ export const profileSlice = createSlice({
     setImageUrl: (state, action) => {
       state.user.imageUrl = action.payload
     },
+    setGoogleId: (state, action) => {
+      state.user.googleId = action.payload
+    }
   }
 })
 
-export const { setFirstName, setLastName, setEmail, setAbout, setImageUrl } = profileSlice.actions
+export const { setFirstName, setLastName, setEmail, setAbout, setImageUrl, setGoogleId } = profileSlice.actions
 
 export default profileSlice.reducer
