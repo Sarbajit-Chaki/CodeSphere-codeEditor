@@ -30,11 +30,11 @@ const UpdatePass = () => {
       <div className=' w-full flex flex-col gap-8 items-center'>
         <GradientText className={"text-xl sm:text-2xl font-bold"} >Update Password</GradientText>
 
-        <div className=' w-full flex justify-between items-center'>
+        <div className=' w-full flex flex-col md:flex-row justify-between items-center'>
           <div className=' flex flex-col relative'>
             <p className=' font-semibold'>Old Password</p>
             <input
-              className="border border-gray-600 bg-transparent rounded-md w-[280px] mt-2 p-2 "
+              className="border border-gray-600 bg-transparent rounded-md w-[240px] sm:w-[280px] mt-2 p-2 "
               name="oldPassword"
               type={showPass1 ? "text" : "password"}
               value={oldPass}
@@ -50,7 +50,7 @@ const UpdatePass = () => {
           <div className=' flex flex-col relative'>
             <p className=' font-semibold'>New Password</p>
             <input
-              className="border border-gray-600 bg-transparent rounded-md w-[280px] mt-2 p-2 "
+              className="border border-gray-600 bg-transparent rounded-md w-[240px] sm:w-[280px] mt-2 p-2 "
               name="oldPassword"
               type={showPass2 ? "text" : "password"}
               value={newPass}

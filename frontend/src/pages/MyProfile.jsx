@@ -8,7 +8,7 @@ import { TbCameraPlus } from "react-icons/tb";
 const MyProfile = () => {
     return (
         <>
-            <div className='bg-[#000814] w-full min-h-screen'>
+            <div className='bg-[#000814] w-full min-h-screen py-16'>
                 <UserDetails />
                 <UpdatePass />
                 <DeleteAcount />

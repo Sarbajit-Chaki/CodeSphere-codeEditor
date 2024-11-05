@@ -72,14 +72,14 @@ const UserDetails = () => {
 
     return (
         <div className='flex justify-center '>
-            <div className=' w-[95%] lg:w-[800px] min-h-[450px] flex flex-col md:flex-row bg-[#101622] rounded-lg mt-8 '>
+            <div className=' w-[95%] lg:w-[800px] min-h-[450px] flex flex-col md:flex-row bg-[#101622] rounded-lg '>
                 <div className=' md:w-1/4 h-full flex justify-center items-center md:border-r-2 border-gray-600'>
                     <div
                         className={` flex flex-col justify-center items-center gap-2
                                 
                             `}
                     >
-                        <div onClick={handleImageClick} className={` relative border-4 border-transparent bg-gradient-to-tr from-[#833AB4] via-[#FD1D1D] to-[#FCB045] rounded-full
+                        <div onClick={handleImageClick} className={`mt-6 md:mt-0 relative border-4 border-transparent bg-gradient-to-tr from-[#833AB4] via-[#FD1D1D] to-[#FCB045] rounded-full
                                     ${isEditable ? "cursor-pointer" : "cursor-not-allowed"}
                                 `}>
                             <TbCameraPlus className=' size-8 sm:size-10 absolute right-0 bottom-0 rounded-full p-1 bg-white text-blue-500 ' />
