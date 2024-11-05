@@ -1,6 +1,9 @@
 import logo from "@/assets/Auth/CodeSphere Logo.png";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
   return (
     <div className=" w-full h-16 flex justify-between items-center bg-[#000814] border-b border-b-slate-700 px-4 sm:px-12 lg:px-36 bg-opacity-50 ">
       <div className=" flex items-center">
@@ -18,7 +21,7 @@ const Navbar = () => {
         <div className=" text-gray-400 hover:text-gray-200 cursor-pointer hidden md:block">
           <a href="#about">About</a>
         </div>
-        <button className="relative flex py-2 px-4 sm:px-6 items-center justify-center overflow-hidden bg-white text-black font-semibold font-mono rounded-full transition-all before:absolute before:h-0 before:w-0 before:rounded-full before:bg-yellow-rich before:duration-500 before:ease-out hover:before:h-56 hover:before:w-56">
+        <button className="relative flex py-2 px-4 sm:px-6 items-center justify-center overflow-hidden bg-white text-black font-semibold font-mono rounded-full transition-all before:absolute before:h-0 before:w-0 before:rounded-full before:bg-yellow-rich before:duration-500 before:ease-out hover:before:h-56 hover:before:w-56" onClick={() => navigate("/auth")}>
           <span className="relative z-10">Join Now</span>
         </button>
       </div>

@@ -4,8 +4,10 @@ import HomeBtn from "./HomeBtn";
 import GradientText from "../GradientText";
 import GridPattern from "../ui/animated-grid-pattern";
 import { cn } from "@/lib/utils";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
+  const navigate = useNavigate();
   return (
     <div
       id="home"
@@ -32,7 +34,7 @@ const HeroSection = () => {
               and teachers can come together to create, compile and share their
               code with everyone in a dynamic, interactive environment.
             </div>
-            <div className="cursor-pointer w-fit">
+            <div className="cursor-pointer w-fit" onClick={() => navigate("/auth")}>
               <HomeBtn text={"Get Started"} />
             </div>
           </div>

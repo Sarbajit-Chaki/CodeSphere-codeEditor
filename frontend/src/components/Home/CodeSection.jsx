@@ -1,8 +1,11 @@
 import CodeBlock from "./CodeBlock";
 import { codeblock1, codeblock2 } from "@/data/codeblocks";
 import HomeBtn from "./HomeBtn";
+import { useNavigate } from "react-router-dom";
 
 const CodeSection = () => {
+  const navigate = useNavigate();
+
   return (
     <div className=" w-full min-h-[calc(100vh-125px)] sm:min-h-[calc(100vh-75px)] bg-[#000814] border-b border-b-slate-700 ">
       <div className=" w-full h-full flex flex-col lg:gap-y-20 py-5 sm:py-10 md:py-20 px-4 sm:px-12 lg:px-40">
@@ -23,7 +26,7 @@ const CodeSection = () => {
               for CodeSphere today and discover the power of collaborative
               programming.
             </p>
-            <div className="cursor-pointer w-fit">
+            <div className="cursor-pointer w-fit" onClick={() => navigate("/auth")}>
               <HomeBtn text={"Join Now"} />
             </div>
           </div>
@@ -38,7 +41,7 @@ const CodeSection = () => {
               user friendly platform makes it easy for students and teachers to
               work together in real-time.
             </p>
-            <div className="cursor-pointer w-fit">
+            <div className="cursor-pointer w-fit" onClick={() => navigate("/auth")}>
               <HomeBtn text={"Try for free"} />
             </div>
           </div>
