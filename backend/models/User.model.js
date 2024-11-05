@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema({
     },
     password: String,
     imageUrl: String,
+    googleId: String,
     rooms: [
         {
             type: mongoose.Schema.Types.ObjectId,
