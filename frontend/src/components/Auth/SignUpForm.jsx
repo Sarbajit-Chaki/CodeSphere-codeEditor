@@ -5,6 +5,8 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import GradientText from '../GradientText';
 import GoogleAuthButton from './GoogleAuthButton';
+import { useNavigate } from 'react-router-dom';
+import OtpInputBox from './OtpInputBox';
 
 const SignUpForm = ({ className }) => {
     const [focusStates, setFocusStates] = useState({
@@ -23,12 +25,12 @@ const SignUpForm = ({ className }) => {
         firstName: '',
         lastName: '',
         email: '',
-        code: '',
-        phNo: '',
         password1: '',
         password2: ''
     })
-    const [code, setCode] = useState('+91')
+
+    const [otp, setOtp] = useState("")
+    const [otpDialogOpen, setOtpDialogOpen] = useState(false)
 
     const handleCodeChange = (data) => {
         setCode(data)
@@ -40,8 +42,12 @@ const SignUpForm = ({ className }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        form.code = code
         console.log(form);
+        setOtpDialogOpen(true)
+    }
+
+    const handleOtpSubmit = () => {
+        console.log("OTP: ", otp);
     }
 
     return (
@@ -143,6 +149,13 @@ const SignUpForm = ({ className }) => {
 
                 <GoogleAuthButton signIn={false} />
             </div>
+            <OtpInputBox 
+                otp={otp} 
+                setOtp={setOtp} 
+                otpDialogOpen={otpDialogOpen} 
+                setOtpDialogOpen={setOtpDialogOpen}
+                handleOtpSubmit={handleOtpSubmit}
+            />
         </>
     )
 }
