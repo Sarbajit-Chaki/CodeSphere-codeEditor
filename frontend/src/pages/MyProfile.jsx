@@ -1,4 +1,5 @@
 import GradientText from '@/components/GradientText';
+import DeleteAcount from '@/components/Myprofile/DeleteAcount';
 import UpdatePass from '@/components/Myprofile/UpdatePass';
 import UserDetails from '@/components/Myprofile/UserDetails';
 import React, { useRef, useState } from 'react'
@@ -9,6 +10,8 @@ const MyProfile = () => {
         <>
             <div className='bg-[#000814] w-full min-h-screen'>
                 <UserDetails />
+                <UpdatePass />
+                <DeleteAcount />
             </div>
         </>
     )
