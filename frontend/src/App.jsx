@@ -7,10 +7,25 @@ import Home from "./pages/Home";
 import DashboardComponent from "./components/Dashboard/DashboardComponent";
 import Contact from "./pages/Contact";
 import MyProfile from "./pages/MyProfile";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="dark"
+        transition:Bounce
+      />
       <div className="bg-black overflow-x-hidden scroll-smooth">
         <Routes>
           <Route path="/" element={<Home />} />

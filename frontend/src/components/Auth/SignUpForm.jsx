@@ -7,8 +7,12 @@ import GradientText from '../GradientText';
 import GoogleAuthButton from './GoogleAuthButton';
 import { useNavigate } from 'react-router-dom';
 import OtpInputBox from './OtpInputBox';
+import { Bounce, toast } from 'react-toastify';
+import { sendOtp, signUp } from '@/api/user';
 
 const SignUpForm = ({ className }) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     const [focusStates, setFocusStates] = useState({
         firstName: false,
         lastName: false,
@@ -40,14 +44,116 @@ const SignUpForm = ({ className }) => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(form);
-        setOtpDialogOpen(true)
+        const toastId = toast.loading("Loading...");
+
+        if (!form.firstName || !form.lastName || !form.email || !form.password1 || !form.password2) {
+            toast.error('All fields are required', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce
+            });
+            return;
+        }
+
+        if (!emailRegex.test(form.email)) {
+            toast.error('Enter a valid email', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce
+            });
+            return;
+        }
+
+        if (form.password1.length < 6) {
+            toast.error('Password must be at least 6 characters', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce
+            });
+            return;
+        }
+
+        if (form.password1 !== form.password2) {
+            toast.error('Passwords do not match', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce
+            });
+            return;
+        }
+
+
+        try {
+            const res = await sendOtp(form.email);
+            if (!res) {
+                toast.error('An error occured', {
+                    position: "top-center",
+                    autoClose: 5000,
+                    hideProgressBar: true,
+                    closeOnClick: true,
+                    pauseOnHover: true,
+                    draggable: true,
+                    progress: undefined,
+                    theme: "dark",
+                    transition: Bounce
+                });
+                return;
+            }
+
+            toast.update(toastId, { render: "OTP sent successfully", type: "success", isLoading: false, autoClose: 3000})
+            setOtpDialogOpen(true);
+        } catch (error) {
+            console.log("Error in SignInForm while sending OTP");
+        }
     }
 
-    const handleOtpSubmit = () => {
+    const handleOtpSubmit = async () => {
         console.log("OTP: ", otp);
+
+        const res = await signUp(form, otp);
+        if (!res.success) {
+            toast.error('An error occured', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce
+            });
+            return;
+        }
+
+        console.log("---",res);
+
     }
 
     return (
@@ -92,7 +198,7 @@ const SignUpForm = ({ className }) => {
 
                     <div className=' relative flex items-center'>
                         <input
-                            type="email"
+                            type="text"
                             placeholder='Email Address'
                             autoComplete='off'
                             className=' border border-[#b1b1b1] rounded-lg p-3 pl-8 w-full focus: outline-[#d6927c]  bg-[#27272A]'
@@ -149,10 +255,10 @@ const SignUpForm = ({ className }) => {
 
                 <GoogleAuthButton signIn={false} />
             </div>
-            <OtpInputBox 
-                otp={otp} 
-                setOtp={setOtp} 
-                otpDialogOpen={otpDialogOpen} 
+            <OtpInputBox
+                otp={otp}
+                setOtp={setOtp}
+                otpDialogOpen={otpDialogOpen}
                 setOtpDialogOpen={setOtpDialogOpen}
                 handleOtpSubmit={handleOtpSubmit}
             />
