@@ -16,13 +16,16 @@ const cookieOptions = {
 export const sendOtp = async (req, res) => {
     try {
         const { email } = req.body;
+
         const otp = otpGenerator.generate(6, {
             upperCaseAlphabets: false,
             lowerCaseAlphabets: false,
             specialChars: false
         }).toString();
+
         const otpModel = await Otp.create({ email, otp });
         console.log(otpModel);
+        
         return res.status(200).json({
             success: true,
             message: 'OTP sent successfully' 
