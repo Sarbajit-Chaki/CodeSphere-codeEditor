@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Cookie } from "lucide-react";
 
 const BASE_URL = import.meta.env.VITE_B_URL
 
@@ -40,5 +41,34 @@ export const signUp = async (data, otp) => {
         return false;
     }catch(error){
         console.log("Error in signup after submitting Otp");
+    }
+}
+
+export const login = async (data) => {
+    try{
+        const response = await axios.post(`${BASE_URL}/auth/login`,{
+            email: data.email,
+            password: data.password
+        })
+
+        if(response.data.success === true){
+            return response.data
+        }
+
+        return false;
+    }catch(error){
+        console.log("Error in login");
+    }
+}
+
+export const getUser = async () => {
+    try{
+        const response = await axios.get(`${BASE_URL}/user/getUser`)
+        if(response.data.success === true){
+            return response.data
+        }
+        return false
+    }catch(error){
+        console.log("Error in getUser: ", error);
     }
 }

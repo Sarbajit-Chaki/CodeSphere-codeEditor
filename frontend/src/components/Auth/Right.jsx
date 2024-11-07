@@ -1,10 +1,15 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Button from './Button'
 import SignInForm from './SignInForm'
 import SignUpForm from './SignUpForm'
 import { GoogleOAuthProvider } from '@react-oauth/google'
 
-const Right = ({ signIn }) => {
+const Right = () => {
+  const [signIn, setSignIn] = useState(false);
+
+  const handleAuthChange = () => {
+    setSignIn(!signIn);
+  }
 
   const Google_clientId = import.meta.env.VITE_Google_Client_id;
 
@@ -15,8 +20,13 @@ const Right = ({ signIn }) => {
           <div className=' text-[#b1b1b1] '>
             {signIn ? "Don't have an account ?" : "Already have an account ?"}
           </div>
-          <Button text={signIn ? "SIGN UP" : "LOG IN"} className={" hidden lg:block px-8 py-3"} />
-          <div className='text-[#fb4c19] hover:underline block lg:hidden'>
+          <div onClick={handleAuthChange}>
+            <Button text={signIn ? "SIGN UP" : "LOG IN"} className={" hidden lg:block px-8 py-3"} />
+          </div>
+          <div
+            className='text-[#fb4c19] hover:underline block lg:hidden'
+            onClick={handleAuthChange}
+            >
             {signIn ? "SIGN UP" : "LOG IN"}
           </div>
         </nav>

@@ -5,9 +5,14 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import GradientText from '../GradientText';
 import GoogleAuthButton from './GoogleAuthButton';
+import { login } from '@/api/user';
+import { Bounce, toast } from 'react-toastify';
+import { setUserObj } from '@/features/Profile/profileSlice';
+import { useDispatch } from 'react-redux';
 
 const SignInForm = ({className}) => {
-    console.log(import.meta.env.VITE_Google_Client_id)
+    const dispatch = useDispatch();
+
     const [focusStates, setFocusStates] = useState({
         email: false,
         password: false
@@ -24,11 +29,45 @@ const SignInForm = ({className}) => {
         setForm({...form, [e.target.name]: e.target.value})
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async(e) => {
         e.preventDefault()
-        console.log(form)
-    }
+        const toastId = toast.loading("Loading...");
 
+        const res = await login(form);
+
+        if(!res){
+            toast.error('An error occured', {
+                position: "top-center",
+                autoClose: 5000,
+                hideProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                draggable: true,
+                progress: undefined,
+                theme: "dark",
+                transition: Bounce
+            });
+            return;
+        }
+
+        let userData = {
+            firstName: res?.user?.firstName ?? "",
+            lastName: res?.user?.lastName ?? "",
+            email: res?.user?.email ?? "",
+            about: res?.user?.about ?? "",
+            imageUrl: res?.user?.imageUrl ?? "",
+            googleId: res?.user?.googleId ?? ""
+        }
+
+        dispatch(setUserObj(userData));
+
+        toast.update(toastId, {
+                render: "Logged in successfully",
+                type: "success",
+                isLoading: false,
+                autoClose: 3000
+        });
+    }
 
   return (
     <>

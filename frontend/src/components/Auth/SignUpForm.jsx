@@ -9,8 +9,10 @@ import { useNavigate } from 'react-router-dom';
 import OtpInputBox from './OtpInputBox';
 import { Bounce, toast } from 'react-toastify';
 import { sendOtp, signUp } from '@/api/user';
+import { setUserObj } from '@/features/Profile/profileSlice';
 
 const SignUpForm = ({ className }) => {
+    const dispatch = useNavigate();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const [focusStates, setFocusStates] = useState({
@@ -46,7 +48,7 @@ const SignUpForm = ({ className }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        
+
         if (!form.firstName || !form.lastName || !form.email || !form.password1 || !form.password2) {
             toast.error('All fields are required', {
                 position: "top-center",
@@ -76,7 +78,7 @@ const SignUpForm = ({ className }) => {
             });
             return;
         }
-        
+
         if (form.password1.length < 6) {
             toast.error('Password must be at least 6 characters', {
                 position: "top-center",
@@ -91,7 +93,7 @@ const SignUpForm = ({ className }) => {
             });
             return;
         }
-        
+
         if (form.password1 !== form.password2) {
             toast.error('Passwords do not match', {
                 position: "top-center",
@@ -106,39 +108,40 @@ const SignUpForm = ({ className }) => {
             });
             return;
         }
-        
+
         const toastId = toast.loading("Loading...");
         try {
             const res = await sendOtp(form.email);
             if (!res) {
-                toast.update(toastId, { 
-                    render: "An error occured", 
-                    type: "error", 
-                    isLoading: false, 
+                toast.update(toastId, {
+                    render: "An error occured",
+                    type: "error",
+                    isLoading: false,
                     autoClose: 3000
                 });
                 return;
             }
 
-            toast.update(toastId, { 
-                render: "OTP sent successfully", 
-                type: "success", 
-                isLoading: false, 
+            toast.update(toastId, {
+                render: "OTP sent successfully",
+                type: "success",
+                isLoading: false,
                 autoClose: 3000
             });
             setOtpDialogOpen(true);
         } catch (error) {
             console.log("Error in SignInForm while sending OTP");
-            toast.update(toastId, { 
-                render: "An error occured", 
-                type: "error", 
-                isLoading: false, 
+            toast.update(toastId, {
+                render: "An error occured",
+                type: "error",
+                isLoading: false,
                 autoClose: 3000
             });
         }
     }
 
     const handleOtpSubmit = async () => {
+        const toastId = toast.loading("Loading...");
         console.log("OTP: ", otp);
 
         const res = await signUp(form, otp);
@@ -157,8 +160,25 @@ const SignUpForm = ({ className }) => {
             return;
         }
 
-        console.log("---",res);
+        console.log("---", res);
 
+        let userData = {
+            firstName: res?.user?.firstName ?? "",
+            lastName: res?.user?.lastName ?? "",
+            email: res?.user?.email ?? "",
+            about: res?.user?.about ?? "",
+            imageUrl: res?.user?.imageUrl ?? "",
+            googleId: res?.user?.googleId ?? ""
+        }
+
+        dispatch(setUserObj(userData));
+
+        toast.update(toastId, {
+                render: "Account created successfully",
+                type: "success",
+                isLoading: false,
+                autoClose: 3000
+        });
     }
 
     return (
