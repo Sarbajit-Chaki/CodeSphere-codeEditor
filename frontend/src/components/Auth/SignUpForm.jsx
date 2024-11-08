@@ -5,14 +5,14 @@ import { FaEye } from "react-icons/fa";
 import { FaEyeSlash } from "react-icons/fa";
 import GradientText from '../GradientText';
 import GoogleAuthButton from './GoogleAuthButton';
-import { useNavigate } from 'react-router-dom';
 import OtpInputBox from './OtpInputBox';
 import { Bounce, toast } from 'react-toastify';
 import { sendOtp, signUp } from '@/api/user';
 import { setUserObj } from '@/features/Profile/profileSlice';
+import { useDispatch } from 'react-redux';
 
 const SignUpForm = ({ className }) => {
-    const dispatch = useNavigate();
+    const dispatch = useDispatch();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const [focusStates, setFocusStates] = useState({
@@ -128,6 +128,7 @@ const SignUpForm = ({ className }) => {
                 isLoading: false,
                 autoClose: 3000
             });
+
             setOtpDialogOpen(true);
         } catch (error) {
             console.log("Error in SignInForm while sending OTP");
@@ -145,18 +146,14 @@ const SignUpForm = ({ className }) => {
         console.log("OTP: ", otp);
 
         const res = await signUp(form, otp);
-        if (!res.success) {
-            toast.error('An error occured', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                transition: Bounce
+        if (!res) {
+            toast.update(toastId, {
+                render: "An error occured",
+                type: "error",
+                isLoading: false,
+                autoClose: 3000
             });
+            setOtpDialogOpen(false);
             return;
         }
 
@@ -174,11 +171,13 @@ const SignUpForm = ({ className }) => {
         dispatch(setUserObj(userData));
 
         toast.update(toastId, {
-                render: "Account created successfully",
-                type: "success",
-                isLoading: false,
-                autoClose: 3000
+            render: "Account created successfully",
+            type: "success",
+            isLoading: false,
+            autoClose: 3000
         });
+        
+        setOtpDialogOpen(false);
     }
 
     return (

@@ -36,16 +36,11 @@ const SignInForm = ({className}) => {
         const res = await login(form);
 
         if(!res){
-            toast.error('An error occured', {
-                position: "top-center",
-                autoClose: 5000,
-                hideProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                draggable: true,
-                progress: undefined,
-                theme: "dark",
-                transition: Bounce
+            toast.update(toastId, {
+                render: "An error occured",
+                type: "error",
+                isLoading: false,
+                autoClose: 3000
             });
             return;
         }
