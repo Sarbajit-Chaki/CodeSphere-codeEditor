@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import Dashboard from "./pages/Dashboard";
 import Auth from "./pages/Auth";
@@ -9,8 +9,32 @@ import Contact from "./pages/Contact";
 import MyProfile from "./pages/MyProfile";
 import { ToastContainer } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect, useState } from "react";
+import { getUser } from "./api/user";
+import Cookies from "js-cookie";
 
 function App() {
+  const location = useLocation();
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = Cookies.get("token");
+      if (!token) {
+        console.log("No token found.");
+        return;
+      }
+
+      const res = await getUser();
+      if (!res) {
+        return;
+      }
+      console.log("useEffect response:", res);
+    };
+
+    fetchUser();
+  }, [location]);
+
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <ToastContainer
@@ -28,14 +52,18 @@ function App() {
       />
       <div className="bg-black overflow-x-hidden scroll-smooth">
         <Routes>
-          <Route path="/" element={<Home />} />
+          {
+            isAuthenticated ? (
+              <Route path="/" element={<Dashboard />}>
+                <Route path="/" element={<DashboardComponent />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/profile" element={<MyProfile />} />
+              </Route>
+            ) : (
+              <Route path="/" element={<Home />} />
+            )
+          }
           <Route path="/auth" element={<Auth />} />
-          <Route path="/home" element={<Home />} />
-          <Route element={<Dashboard />}>
-            <Route path="/dashboard" element={<DashboardComponent />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/profile" element={<MyProfile />} />
-          </Route>
         </Routes>
       </div>
     </ThemeProvider>

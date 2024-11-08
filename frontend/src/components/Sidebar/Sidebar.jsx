@@ -10,7 +10,7 @@ import ProfileCard from "./ProfileCard";
 
 
 const sidebarLinks = [
-  { page: "/dashboard", text: "Dashboard", icon: <Home className="size-6 sm:size-8" /> },
+  { page: "/", text: "Dashboard", icon: <Home className="size-6 sm:size-8" /> },
   { page: "/profile", text: "Profile", icon: <CircleUser className="size-6 sm:size-8" /> },
   {
     page: "/contact",

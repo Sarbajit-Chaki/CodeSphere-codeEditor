@@ -24,7 +24,6 @@ export const sendOtp = async (req, res) => {
         }).toString();
 
         const otpModel = await Otp.create({ email, otp });
-        console.log(otpModel);
         
         return res.status(200).json({
             success: true,
