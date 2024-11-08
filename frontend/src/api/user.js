@@ -4,7 +4,7 @@ import { Cookie } from "lucide-react";
 const BASE_URL = import.meta.env.VITE_B_URL
 
 export const oAuthLogin = async (code) => {
-    const response = await axios.get(`${BASE_URL}/auth/google?code=${code}`)
+    const response = await axios.get(`${BASE_URL}/auth/google?code=${code}`, { withCredentials: true })
     const data = response.data
     return data
 }
@@ -30,6 +30,8 @@ export const signUp = async (data, otp) => {
             email: data.email,
             password: data.password1,
             otp: otp
+        },{
+            withCredentials: true,
         })
         
         console.log(response);
@@ -49,6 +51,8 @@ export const login = async (data) => {
         const response = await axios.post(`${BASE_URL}/auth/login`,{
             email: data.email,
             password: data.password
+        }, {
+            withCredentials: true,
         })
 
         if(response.data.success === true){
@@ -63,7 +67,7 @@ export const login = async (data) => {
 
 export const getUser = async () => {
     try{
-        const response = await axios.get(`${BASE_URL}/user/getUser`)
+        const response = await axios.get(`${BASE_URL}/user/getUser`,{ withCredentials: true })
         if(response.data.success === true){
             return response.data
         }

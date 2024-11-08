@@ -8,8 +8,8 @@ import { oauth2Client } from '../config/googleConfig.js';
 
 const cookieOptions = {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'none',
+    secure: false,
+    sameSite: 'None',
     path: '/'
 }
 
