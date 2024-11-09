@@ -12,6 +12,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from "react";
 import { getUser } from "./api/user";
 import Cookies from "js-cookie";
+import NotFoundPage from "./pages/NotFoundPage";
 
 function App() {
   const location = useLocation();
@@ -64,6 +65,7 @@ function App() {
             )
           }
           <Route path="/auth" element={<Auth />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
     </ThemeProvider>
