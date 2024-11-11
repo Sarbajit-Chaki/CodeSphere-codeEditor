@@ -181,6 +181,7 @@ const SignUpForm = ({ className }) => {
         
         setOtpDialogOpen(false);
         navigate("/");
+        window.location.reload();
     }
 
     return (
