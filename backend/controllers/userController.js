@@ -20,14 +20,11 @@ export const getUser = async (req, res) => {
 export const updateProfile = async (req, res) => {
     try{
         const data = req.body.data;
-        console.log(data);
         const userId = req.user.id;
         
         if(data.imageUrl){
             const res = await imageUpload(data.imageUrl);
-            console.log("Cloudinary res: ", res);
-            // Upload photo to cloudinary
-            // data.imageUrl = cloudinary link
+            data.imageUrl = res.secure_url
         }
 
         const user = await User.findByIdAndUpdate(userId, {$set: data}, {new: true});

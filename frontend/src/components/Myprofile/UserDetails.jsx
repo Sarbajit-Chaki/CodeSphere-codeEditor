@@ -8,12 +8,14 @@ import { updateProfile } from '@/api/user';
 
 const UserDetails = () => {
     const { user } = useSelector((state) => state.profile);
+    
     const dispatch = useDispatch();
 
     const [userTemp, setUserTemp] = useState({});
 
     const [user_imageFile, setUser_imageFile] = useState(null);
     const [isEditable, setIsEditable] = useState(false);
+    const [imageFile, setImageFile] = useState(null);
 
     const imageRef = useRef(null);
     const handleImageClick = () => {
@@ -24,11 +26,17 @@ const UserDetails = () => {
 
     const handleFileChange = () => {
         const file = imageRef.current.files[0];
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            setImageFile(reader.result);
+        }
         if (file) {
             console.log(file);
             const fileUrl = URL.createObjectURL(file);
             dispatch(setImageUrl(fileUrl));
             setUser_imageFile(fileUrl);
+            reader.readAsDataURL(file);
         }
     }
 
@@ -63,14 +71,13 @@ const UserDetails = () => {
         }
 
         if(userTemp?.imageUrl !== user?.imageUrl){
-            data.imageUrl = user?.imageUrl;
+            data.imageUrl = imageFile;
         }
 
         if(Object.keys(data).length > 0){
             console.log("---",data);
             const res = await updateProfile(data);
             console.log("onSave: ",res);
-
         }
     }
 
@@ -87,7 +94,7 @@ const UserDetails = () => {
                                     ${isEditable ? "cursor-pointer" : "cursor-not-allowed"}
                                 `}>
                             <TbCameraPlus className=' size-8 sm:size-10 absolute right-0 bottom-0 rounded-full p-1 bg-white text-blue-500 ' />
-                            <img className=' rounded-full size-20 sm:size-32' src={user_imageFile || userDeafult} alt="user-image" />
+                            <img className=' rounded-full size-20 sm:size-32' src={user.imageUrl || user_imageFile || userDeafult} alt="user-image" />
                             <input onChange={handleFileChange} ref={imageRef} type="file" accept='image/*' name="image" id="image" className=' hidden' />
                         </div>
                         <div className=' font-semibold text-center md:text-lg'>{user.firstName + " " + user.lastName}</div>
