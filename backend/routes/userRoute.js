@@ -6,7 +6,7 @@ const router = Router();
 
 router.put("/updateProfile", appAuthMiddleware, updateProfile);
 router.put("/updatePassword", appAuthMiddleware, updatePassword);
-router.put("/deleteUser", appAuthMiddleware, deleteUser);
-router.put("/getUser", appAuthMiddleware, getUser);
+router.delete("/deleteUser", appAuthMiddleware, deleteUser);
+router.get("/getUser", appAuthMiddleware, getUser);
 
 export default router;

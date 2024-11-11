@@ -11,6 +11,6 @@ export const imageUpload = async (fileUrl) => {
         const res = await cloudinary.uploader.upload(fileUrl, option);
         return res;
     }catch(error){
-        console.log("Error in imageUpload");
+        console.log("Error in imageUpload: ", error);
     }
 }

@@ -10,9 +10,11 @@ import { Bounce, toast } from 'react-toastify';
 import { sendOtp, signUp } from '@/api/user';
 import { setUserObj } from '@/features/Profile/profileSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const SignUpForm = ({ className }) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
     const [focusStates, setFocusStates] = useState({
@@ -178,6 +180,7 @@ const SignUpForm = ({ className }) => {
         });
         
         setOtpDialogOpen(false);
+        navigate("/");
     }
 
     return (

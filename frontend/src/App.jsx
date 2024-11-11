@@ -13,10 +13,13 @@ import { useEffect, useState } from "react";
 import { getUser } from "./api/user";
 import Cookies from "js-cookie";
 import NotFoundPage from "./pages/NotFoundPage";
+import { useDispatch } from "react-redux";
+import { setUserObj } from "./features/Profile/profileSlice";
 
 function App() {
   const location = useLocation();
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const dispatch = useDispatch();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -30,7 +33,18 @@ function App() {
       if (!res) {
         return;
       }
-      console.log("useEffect response:", res);
+
+      let data = {
+        firstName: res?.user?.firstName ?? "",
+        lastName: res?.user?.lastName ?? "",
+        email: res?.user?.email ?? "",
+        about: res?.user?.about ?? "",
+        imageUrl: res?.user?.imageUrl ?? "",
+        googleId: res?.user?.googleId ?? ""
+      }
+      
+      dispatch(setUserObj(data));
+      setIsAuthenticated(true);
     };
 
     fetchUser();
