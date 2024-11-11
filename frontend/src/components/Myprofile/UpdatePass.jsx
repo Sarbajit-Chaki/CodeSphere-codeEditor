@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import GradientText from '../GradientText'
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
+import { toast } from 'react-toastify';
+import { updatePassword } from '@/api/user';
 
 const UpdatePass = () => {
     const [oldPass, setOldPass] = useState("");
@@ -9,11 +11,16 @@ const UpdatePass = () => {
     const [showPass1, setShowPass1] = useState(false);
     const [showPass2, setShowPass2] = useState(false);
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if(!oldPass || !newPass){
           return;
         }
+        if(newPass.length < 6){
+          toast.error("Password must be atleast 6 characters long", { autoClose: 3000 });
+          return;
+        }
         if(oldPass === newPass){
+          toast.error("Old password and new password can't be same", { autoClose: 3000 });
           return;
         }
 
@@ -22,7 +29,26 @@ const UpdatePass = () => {
           newPassword: newPass
         }
 
-        console.log(data);
+        const toastId = toast.loading("Updating password...");
+        const res = await updatePassword(data);
+
+        if(!res) {
+          toast.update(toastId, { 
+            render: "Failed to update password", 
+            type: "error", 
+            isLoading: false, 
+            autoClose: 3000 
+          });
+          return;
+        }
+        toast.update(toastId, { 
+          render: "Password updated successfully", 
+          type: "success", 
+          isLoading: false, 
+          autoClose: 3000 
+        });
+        setOldPass("");
+        setNewPass("");
     }
 
   return (
@@ -30,7 +56,7 @@ const UpdatePass = () => {
       <div className=' w-full flex flex-col gap-8 items-center'>
         <GradientText className={"text-xl sm:text-2xl font-bold"} >Update Password</GradientText>
 
-        <div className=' w-full flex flex-col md:flex-row justify-between items-center'>
+        <div className=' w-full flex flex-col gap-y-3 md:flex-row justify-between items-center'>
           <div className=' flex flex-col relative'>
             <p className=' font-semibold'>Old Password</p>
             <input

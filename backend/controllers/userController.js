@@ -1,12 +1,12 @@
 import { User } from "../models/User.model.js";
 import { imageUpload } from "../utils/imageUpload.js";
+import bcrypt from "bcrypt";
 
 export const getUser = async (req, res) => {
     try{
         const userId = req.user.id;
         const user = await User.findById(userId);
         user.password = undefined;
-        console.log(user);
         return res.status(200).json({
             success: true,
             message: "User fetched successfully",
@@ -76,6 +76,7 @@ export const deleteUser = async (req, res) => {
         const user = await User.findByIdAndDelete(userId);
         console.log(user);
 
+        res.clearCookie("token", { path: '/' });
         return res.status(200).json({
             success: true,
             message: "User deleted successfully",
