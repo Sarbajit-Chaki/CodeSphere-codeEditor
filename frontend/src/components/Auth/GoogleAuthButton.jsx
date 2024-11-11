@@ -2,14 +2,19 @@ import { FcGoogle } from "react-icons/fc";
 import ShineBorder from "../ui/shine-border";
 import { useGoogleLogin } from "@react-oauth/google";
 import { oAuthLogin } from "@/api/user";
+import { useNavigate } from "react-router-dom";
 
 const GoogleAuthButton = ({ signIn }) => {
+  const navigate = useNavigate();
+
   const FetchUserData = async (response) => {
     try {
       if (response.code) {
         const code = response.code
         const data = await oAuthLogin(code)
         console.log(data)
+
+        navigate("/");
       }
     } catch (error) {
       console.log("Error in responseGoogle: ", error);

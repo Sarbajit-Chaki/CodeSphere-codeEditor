@@ -9,9 +9,11 @@ import { login } from '@/api/user';
 import { Bounce, toast } from 'react-toastify';
 import { setUserObj } from '@/features/Profile/profileSlice';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const SignInForm = ({className}) => {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [focusStates, setFocusStates] = useState({
         email: false,
@@ -62,6 +64,8 @@ const SignInForm = ({className}) => {
                 isLoading: false,
                 autoClose: 3000
         });
+
+        navigate("/");
     }
 
   return (

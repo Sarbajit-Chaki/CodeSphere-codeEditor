@@ -7,10 +7,7 @@ import { oauth2Client } from '../config/googleConfig.js';
 
 
 const cookieOptions = {
-    httpOnly: true,
-    secure: false,
-    sameSite: 'None',
-    path: '/'
+    httpOnly: false,
 }
 
 export const sendOtp = async (req, res) => {
@@ -141,7 +138,7 @@ export const emailLogin = async (req, res) => {
 export const googleSignup = async (req, res) => {
     try {
         const code = req.query.code;
-        const { tokens } = await oauth2Client.getToken(code);
+        const { tokens } = await oauth2Client.getToken(code); //
         oauth2Client.setCredentials(tokens);
 
         // Fetch user info from google userinfo API
@@ -200,7 +197,7 @@ export const googleSignup = async (req, res) => {
 
 export const logout = async (req, res) => {
     try {
-        res.clearCookie("token", cookieOptions)
+        res.clearCookie("token", { path: "/" });
         return res.status(200).json({
             success: true,
             message: 'User logged out successfully'

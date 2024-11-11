@@ -1,10 +1,11 @@
 import { User } from "../models/User.model.js";
-
+import { imageUpload } from "../utils/imageUpload.js";
 
 export const getUser = async (req, res) => {
     try{
         const userId = req.user.id;
         const user = await User.findById(userId);
+        user.password = undefined;
         console.log(user);
         return res.status(200).json({
             success: true,
@@ -18,10 +19,13 @@ export const getUser = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
     try{
-        const data = req.body.userData;
+        const data = req.body.data;
+        console.log(data);
         const userId = req.user.id;
         
         if(data.imageUrl){
+            const res = await imageUpload(data.imageUrl);
+            console.log("Cloudinary res: ", res);
             // Upload photo to cloudinary
             // data.imageUrl = cloudinary link
         }

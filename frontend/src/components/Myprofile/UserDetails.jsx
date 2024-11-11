@@ -4,6 +4,7 @@ import { TbCameraPlus } from "react-icons/tb";
 import { useDispatch, useSelector } from 'react-redux';
 import  userDeafult  from "../../assets/MyProfile/user-image.jpg";
 import { setAbout, setEmail, setFirstName, setImageUrl, setLastName } from '@/features/Profile/profileSlice';
+import { updateProfile } from '@/api/user';
 
 const UserDetails = () => {
     const { user } = useSelector((state) => state.profile);
@@ -44,7 +45,7 @@ const UserDetails = () => {
         setUserTemp(data);
     }
 
-    const onSave = () => {  // after clicking save button save the redux states in DB
+    const onSave = async () => {  // after clicking save button save the redux states in DB
         setIsEditable(false);
 
         let data ={};
@@ -67,6 +68,9 @@ const UserDetails = () => {
 
         if(Object.keys(data).length > 0){
             console.log("---",data);
+            const res = await updateProfile(data);
+            console.log("onSave: ",res);
+
         }
     }
 

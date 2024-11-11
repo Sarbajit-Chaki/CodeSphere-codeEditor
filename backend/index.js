@@ -8,9 +8,11 @@ import cors from 'cors';
 import authRoute from './routes/authRoute.js';
 import userRoute from './routes/userRoute.js';
 import { connectDB } from './config/database.js';
+import { cloudinaryConfig } from './config/cloudinary.js';
 
 dotenv.config();
 connectDB();
+cloudinaryConfig();
 
 const PORT = process.env.PORT || 4000;
 const app = express();

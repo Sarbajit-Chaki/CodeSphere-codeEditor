@@ -31,7 +31,6 @@ export const profileSlice = createSlice({
       state.user.googleId = action.payload
     },
     setUserObj: (state, action) => {
-      console.log("+++++",action.payload);
       
       state.user = {
         firstName: action.payload.firstName,
