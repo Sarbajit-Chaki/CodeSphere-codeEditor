@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import  userDeafult  from "../../assets/MyProfile/user-image.jpg";
 import { setAbout, setEmail, setFirstName, setImageUrl, setLastName } from '@/features/Profile/profileSlice';
 import { updateProfile } from '@/api/user';
+import { toast } from 'react-toastify';
 
 const UserDetails = () => {
     const { user } = useSelector((state) => state.profile);
@@ -31,8 +32,8 @@ const UserDetails = () => {
         reader.onload = () => {
             setImageFile(reader.result);
         }
+        
         if (file) {
-            console.log(file);
             const fileUrl = URL.createObjectURL(file);
             dispatch(setImageUrl(fileUrl));
             setUser_imageFile(fileUrl);
@@ -75,9 +76,14 @@ const UserDetails = () => {
         }
 
         if(Object.keys(data).length > 0){
-            console.log("---",data);
             const res = await updateProfile(data);
-            console.log("onSave: ",res);
+
+            if(!res){
+                toast.error("Failed to update profile", {autoClose: 3000});
+                return;
+            }
+
+            toast.success("Profile updated successfully", {autoClose: 3000});
         }
     }
 

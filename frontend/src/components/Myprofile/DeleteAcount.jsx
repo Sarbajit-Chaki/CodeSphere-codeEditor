@@ -7,13 +7,15 @@ const DeleteAcount = () => {
   const [deleteConfirm, setDeleteConfirm] = useState("");
 
   const handleDelete = async () => {
+    
     if (deleteConfirm !== "DELETE") {
       return;
-    } else {
-      console.log("Delete Account");
+    }
+    else {
       const toastId = toast.loading("Deleting account...");
       const res = await deleteUser();
-      if(!res) {
+
+      if (!res) {
         toast.update(toastId, {
           render: "Error deleting account",
           type: "error",
@@ -22,6 +24,7 @@ const DeleteAcount = () => {
         });
         return;
       }
+
       window.location.href = "/";
     }
   }

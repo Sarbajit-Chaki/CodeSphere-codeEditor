@@ -15,6 +15,7 @@ import Cookies from "js-cookie";
 import NotFoundPage from "./pages/NotFoundPage";
 import { useDispatch } from "react-redux";
 import { setUserObj } from "./features/Profile/profileSlice";
+import CodeEditor from "./pages/CodeEditor";
 
 function App() {
   const location = useLocation();
@@ -79,6 +80,7 @@ function App() {
             )
           }
           <Route path="/auth" element={<Auth />} />
+          <Route path="/room/:roomId" element={<CodeEditor />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

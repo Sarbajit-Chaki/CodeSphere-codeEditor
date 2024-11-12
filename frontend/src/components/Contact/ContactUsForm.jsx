@@ -1,5 +1,7 @@
 import { useState } from "react";
 import HomeBtn from "../Home/HomeBtn";
+import { toast } from "react-toastify";
+import { contactUs } from "@/api/user";
 
 const ContactUsForm = () => {
   const [formData, setFormData] = useState({
@@ -18,7 +20,19 @@ const ContactUsForm = () => {
   };
 
   const handleSubmit = async () => {
-    console.log(formData);
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.phone || !formData.message) {
+      toast.error("All fields are required", { autoClose: 3000 });
+      return;
+    }
+
+    const res = await contactUs(formData);
+
+    if (!res) {
+      toast.error("An error occured", { autoClose: 3000 });
+      return;
+    }
+
+    toast.success("Message sent successfully", { autoClose: 3000 });
   };
 
   return (
@@ -30,94 +44,92 @@ const ContactUsForm = () => {
         Tell us more about yourself and what you&apos;re got in mind.
       </p>
       <div>
-        <form onSubmit={handleSubmit}>
-          <div className="flex flex-col sm:flex-row gap-x-6 my-2">
-            <div className="w-full">
-              <label>
-                <p className="text-gray-300 text-sm sm:text-base">
-                  First Name<span className="text-red-500">*</span>
-                </p>
-                <input
-                  required
-                  type="text"
-                  name="firstName"
-                  placeholder="Enter first name"
-                  value={formData.firstName}
-                  onChange={handleOnChange}
-                  className="bg-[#101622] text-xs sm:text-base border-gray-700 border-[1px] rounded-md w-full p-2 mb-2"
-                />
-              </label>
-            </div>
-            <div className="w-full">
-              <label>
-                <p className="text-gray-300 text-sm sm:text-base">
-                  Last Name<span className="text-red-500">*</span>
-                </p>
-                <input
-                  required
-                  type="text"
-                  name="lastName"
-                  placeholder="Enter last name"
-                  value={formData.lastName}
-                  onChange={handleOnChange}
-                  className="bg-[#101622] text-xs sm:text-base border-gray-700 border-[1px] rounded-md w-full p-2 mb-2"
-                />
-              </label>
-            </div>
-          </div>
-          <div className="my-2">
+        <div className="flex flex-col sm:flex-row gap-x-6 my-2">
+          <div className="w-full">
             <label>
               <p className="text-gray-300 text-sm sm:text-base">
-                Email <span className="text-red-500">*</span>
+                First Name<span className="text-red-500">*</span>
               </p>
               <input
                 required
-                type="email"
-                name="email"
-                placeholder="Enter email address"
-                value={formData.email}
+                type="text"
+                name="firstName"
+                placeholder="Enter first name"
+                value={formData.firstName}
                 onChange={handleOnChange}
                 className="bg-[#101622] text-xs sm:text-base border-gray-700 border-[1px] rounded-md w-full p-2 mb-2"
               />
             </label>
           </div>
-          <div className="my-2">
+          <div className="w-full">
             <label>
               <p className="text-gray-300 text-sm sm:text-base">
-                Phone Number <span className="text-red-500">*</span>
+                Last Name<span className="text-red-500">*</span>
               </p>
               <input
                 required
-                type="number"
-                name="phone"
-                placeholder="Enter phone number"
-                value={formData.phone}
+                type="text"
+                name="lastName"
+                placeholder="Enter last name"
+                value={formData.lastName}
                 onChange={handleOnChange}
                 className="bg-[#101622] text-xs sm:text-base border-gray-700 border-[1px] rounded-md w-full p-2 mb-2"
               />
             </label>
           </div>
-          <div className="my-2">
-            <label>
-              <p className="text-gray-300 text-sm sm:text-base">
-                Message <span className="text-red-500">*</span>
-              </p>
-              <textarea
-                required
-                name="message"
-                placeholder="Enter your message here"
-                cols={10}
-                rows={7}
-                value={formData.message}
-                onChange={handleOnChange}
-                className="bg-[#101622] text-xs sm:text-base border-gray-700 border-[1px] rounded-md w-full p-2 mb-2"
-              />
-            </label>
-          </div>
-          <button className="w-full" type="submit">
-            <HomeBtn text="Send Message" className={'w-full'} />
-          </button>
-        </form>
+        </div>
+        <div className="my-2">
+          <label>
+            <p className="text-gray-300 text-sm sm:text-base">
+              Email <span className="text-red-500">*</span>
+            </p>
+            <input
+              required
+              type="email"
+              name="email"
+              placeholder="Enter email address"
+              value={formData.email}
+              onChange={handleOnChange}
+              className="bg-[#101622] text-xs sm:text-base border-gray-700 border-[1px] rounded-md w-full p-2 mb-2"
+            />
+          </label>
+        </div>
+        <div className="my-2">
+          <label>
+            <p className="text-gray-300 text-sm sm:text-base">
+              Phone Number <span className="text-red-500">*</span>
+            </p>
+            <input
+              required
+              type="number"
+              name="phone"
+              placeholder="Enter phone number"
+              value={formData.phone}
+              onChange={handleOnChange}
+              className="bg-[#101622] text-xs sm:text-base border-gray-700 border-[1px] rounded-md w-full p-2 mb-2"
+            />
+          </label>
+        </div>
+        <div className="my-2">
+          <label>
+            <p className="text-gray-300 text-sm sm:text-base">
+              Message <span className="text-red-500">*</span>
+            </p>
+            <textarea
+              required
+              name="message"
+              placeholder="Enter your message here"
+              cols={10}
+              rows={7}
+              value={formData.message}
+              onChange={handleOnChange}
+              className="bg-[#101622] text-xs sm:text-base border-gray-700 border-[1px] rounded-md w-full p-2 mb-2"
+            />
+          </label>
+        </div>
+        <button onClick={handleSubmit} className="w-full">
+          <HomeBtn text="Send Message" className={'w-full'} />
+        </button>
       </div>
     </div>
   );

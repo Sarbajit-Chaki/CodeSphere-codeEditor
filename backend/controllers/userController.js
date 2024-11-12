@@ -28,7 +28,6 @@ export const updateProfile = async (req, res) => {
         }
 
         const user = await User.findByIdAndUpdate(userId, {$set: data}, {new: true});
-        console.log(user);
 
         return res.status(200).json({
             success: true,
@@ -71,7 +70,6 @@ export const deleteUser = async (req, res) => {
         const userId = req.user.id;
 
         const user = await User.findByIdAndDelete(userId);
-        console.log(user);
 
         res.clearCookie("token", { path: '/' });
         return res.status(200).json({
