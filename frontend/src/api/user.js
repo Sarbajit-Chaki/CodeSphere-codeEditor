@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Cookie } from "lucide-react";
+import { Cookie, Phone } from "lucide-react";
 
 const BASE_URL = import.meta.env.VITE_B_URL
 
@@ -73,7 +73,7 @@ export const getUser = async () => {
         }
         return false
     }catch(error){
-        console.log("Error in getUser: ", error);
+        console.log("Error in getUser: ");
     }
 }
 
@@ -85,7 +85,7 @@ export const logout = async () => {
         }
         return false
     }catch(error){
-        console.log("Error in logout: ", error);
+        console.log("Error in logout: ");
     }
 }
 
@@ -124,7 +124,7 @@ export const updatePassword = async (data) => {
 
         return false
     }catch(error){
-        console.log("Error in updatePassword: ", error);
+        console.log("Error in updatePassword: ");
     }
 }
 
@@ -137,6 +137,26 @@ export const deleteUser = async () => {
         
         return false
     }catch(error){
-        console.log("Error in deleteUser: ", error);
+        console.log("Error in deleteUser: ");
+    }
+}
+
+export const contactUs = async (data) => {
+    try{
+        const response = await axios.post(`${BASE_URL}/contact/contactForm`,{
+            firstname: data.firstName,
+            lastname: data.lastName,
+            email: data.email,
+            phone: data.phone,
+            message: data.message
+        })
+        
+        if(response.data.success === true){
+            return response.data.data
+        }
+
+        return false
+    }catch(error){
+        console.log("Error in contactUs",error);
     }
 }

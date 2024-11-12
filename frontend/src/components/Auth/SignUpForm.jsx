@@ -145,7 +145,6 @@ const SignUpForm = ({ className }) => {
 
     const handleOtpSubmit = async () => {
         const toastId = toast.loading("Loading...");
-        console.log("OTP: ", otp);
 
         const res = await signUp(form, otp);
         if (!res) {
@@ -159,7 +158,6 @@ const SignUpForm = ({ className }) => {
             return;
         }
 
-        console.log("---", res);
 
         let userData = {
             firstName: res?.user?.firstName ?? "",

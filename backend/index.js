@@ -7,6 +7,8 @@ import cors from 'cors';
 
 import authRoute from './routes/authRoute.js';
 import userRoute from './routes/userRoute.js';
+import contactRoute from './routes/contactRoute.js'
+
 import { connectDB } from './config/database.js';
 import { cloudinaryConfig } from './config/cloudinary.js';
 
@@ -37,6 +39,7 @@ app.get('/', (req,res) => {
 
 app.use('/auth', authRoute);
 app.use('/user', userRoute);
+app.use('/contact', contactRoute);
 
 server.listen(PORT, (req,res) => {
     console.log(`Server is running on port ${PORT}`);
