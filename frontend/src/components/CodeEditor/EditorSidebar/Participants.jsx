@@ -1,7 +1,10 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import React from 'react'
+import {SquareX} from 'lucide-react'
+import { useDispatch } from 'react-redux'
+import { toggleSidebar } from '@/features/EditorSlice/sidebarSlice.js'
 
-const Participants = () => {
+const Participants = ({setIsSidebarOpen}) => {
   const data = [
     { firstName: "Dibakar", lastName: "Ghosh", imageUrl: "" },
     { firstName: "Amit", lastName: "Sharma", imageUrl: "https://avatars.githubusercontent.com/u/116663682?s=400&u=c3d1bddd31d3de63f9bb7373ebfbebf2a8125e76&v=4" },
@@ -10,8 +13,12 @@ const Participants = () => {
     { firstName: "Sneha", lastName: "Patel", imageUrl: "" }
   ]
 
+  const dispatch = useDispatch();
+
   return (
-    <div className=' h-full w-full px-4 '>
+    <div className=' h-full w-full px-4 relative '>
+      <SquareX onClick={() => dispatch(toggleSidebar())} className=' absolute top-2 right-2 cursor-pointer'/>
+
       <div className='flex justify-center font-semibold text-lg pb-1 '>Participants</div>
       <div className=' h-[80%] w-full flex flex-col gap-4 overflow-y-auto  '>
         {
