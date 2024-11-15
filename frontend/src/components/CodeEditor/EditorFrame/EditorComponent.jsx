@@ -1,12 +1,17 @@
 import { Editor } from '@monaco-editor/react'
 import React from 'react'
 import RemoteEditor from './RemoteEditor'
+import { useSelector } from 'react-redux';
 
-const EditorComponent = () => { // kor to style ta vlo kore scrollbar tar transparent ta thik korele hye jabe
+const EditorComponent = () => { 
+    const isRemoteEditorOpen = useSelector((state) => state.remoteEditor.isRemoteEditorOpen);
+    const aboveTablet = window.innerWidth >= 768 ? true : false;
+
     return (
-        <div className=' w-full h-[92%] sm:h-[90%] flex '>
+        <div className=' w-full h-[92%] sm:h-[90%] flex flex-col md:flex-row '>
             <Editor
-                height="90vh"
+                className={` ${isRemoteEditorOpen && "h-[50vh]" } md:h-full `}
+                width={(isRemoteEditorOpen && aboveTablet) ? "50%" : "100%"}
                 defaultLanguage="javascript"
                 defaultValue="// Welcome to CodeSphere - Code, Compile, Run and Debug online from anywhere in world."
                 theme='vs-dark'

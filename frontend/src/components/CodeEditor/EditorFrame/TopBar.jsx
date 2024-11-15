@@ -2,10 +2,12 @@ import { Button } from '@/components/ui/button';
 import React from 'react'
 import { RiMenu2Fill } from "react-icons/ri";
 import { TbCopy } from "react-icons/tb";
-import { useDispatch } from 'react-redux';
-import { toggleSidebar } from '@/features/EditorSlice/sidebarSlice.js';
 import { BsTerminal } from "react-icons/bs";
 import { MdSaveAlt } from "react-icons/md";
+
+import { useDispatch } from 'react-redux';
+import { toggleSidebar } from '@/features/EditorSlice/sidebarSlice.js';
+import { openTerminal } from '@/features/EditorSlice/terminalSlice.js';
 
 const TopBar = () => {
     const dispatch = useDispatch();
@@ -25,7 +27,7 @@ const TopBar = () => {
             </div>
             <div className=' flex items-center gap-2 sm:gap-5'>
                 <Button variant="outline"><MdSaveAlt/><span className=' hidden sm:block'>Save</span></Button>
-                <Button><BsTerminal/><span className=' hidden sm:block'>Terminal</span></Button>
+                <Button onClick={() => dispatch(openTerminal())}><BsTerminal/><span className=' hidden sm:block'>Terminal</span></Button>
             </div>
         </div>
     )
