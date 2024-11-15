@@ -3,6 +3,7 @@ import React from 'react'
 import {SquareX} from 'lucide-react'
 import { useDispatch } from 'react-redux'
 import { toggleSidebar } from '@/features/EditorSlice/sidebarSlice.js'
+import { openRemoteEditor } from '@/features/EditorSlice/remoteEditorSlice'
 
 const Participants = ({setIsSidebarOpen}) => {
   const data = [
@@ -24,7 +25,7 @@ const Participants = ({setIsSidebarOpen}) => {
         {
           data.map((user, index) => {
             return (
-              <div key={index} className=' w-full flex items-center gap-6 cursor-pointer'>
+              <div onClick={() => dispatch(openRemoteEditor())} key={index} className=' w-full flex items-center gap-6 cursor-pointer'>
                 <div className=' border-2 border-transparent bg-gradient-to-tr from-[#833AB4] via-[#FD1D1D] to-[#FCB045] rounded-full'>
                   <Avatar className="rounded-full">
                     <AvatarImage src={user.imageUrl} />
