@@ -18,7 +18,7 @@ const EditorComponent = () => {
                 options={{
                     minimap: { enabled: false },
                     fontSize: 16,
-                    cursorBlinking: 'smooth',
+                    cursorBlinking: 'expand',
                     automaticLayout: true,
                     scrollBeyondLastLine: true,
                     highlightActiveLine: true,

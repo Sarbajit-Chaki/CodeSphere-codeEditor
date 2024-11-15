@@ -20,11 +20,27 @@ const RemoteEditor = () => {
             monaco.editor.defineTheme('custom-theme', {
                 base: 'vs-dark',
                 inherit: true,
-                rules: [],
+                rules: [
+                    { token: '', foreground: 'D4D4D4', background: '10151B' },
+                    { token: 'comment', foreground: '808080' }, 
+                    { token: 'keyword', foreground: '9B59B6' }, 
+                    { token: 'string', foreground: '32CD32' }, 
+                    { token: 'function', foreground: 'F1C40F' },
+                    { token: 'variable', foreground: '9CDCFE' },
+                    { token: 'constant', foreground: '4FC1FF' }, 
+                    { token: 'number', foreground: '56B6C2' }, 
+                    { token: 'delimiter', foreground: 'D4D4D4' },
+                    { token: 'error', foreground: 'F44747' }, 
+                ],
                 colors: {
-                    "scrollbarSlider.background": "#4A5568", // scrollbar thumb color
-                    "scrollbarSlider.hoverBackground": "#718096", // thumb color on hover
-                    "scrollbarSlider.activeBackground": "#A0AEC0" // thumb color when active
+                    "editor.background": "#10151B", 
+                    'editorLineNumber.foreground': '#4B5263',
+                    'editor.selectionBackground': '#264F78', 
+                    'editorIndentGuide.background': '#2E2E3E', 
+                    "scrollbarSlider.background": "#4A5568", 
+                    "scrollbarSlider.hoverBackground": "#718096", 
+                    "scrollbarSlider.activeBackground": "#A0AEC0",
+                    "editor.lineHighlightBackground": "#1B2635",
                 }
             });
 
@@ -53,7 +69,7 @@ const RemoteEditor = () => {
                 options={{
                     minimap: { enabled: false },
                     fontSize: 16,
-                    cursorBlinking: 'smooth',
+                    cursorBlinking: 'expand',
                     automaticLayout: true,
                     scrollBeyondLastLine: true,
                     highlightActiveLine: true,
