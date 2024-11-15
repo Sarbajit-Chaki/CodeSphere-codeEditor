@@ -66,7 +66,7 @@ function App() {
         theme="dark"
         transition:Bounce
       />
-      <div className="bg-black overflow-x-hidden scroll-smooth">
+      <div className="bg-black overflow-hidden scroll-smooth">
         <Routes>
           {
             isAuthenticated ? (

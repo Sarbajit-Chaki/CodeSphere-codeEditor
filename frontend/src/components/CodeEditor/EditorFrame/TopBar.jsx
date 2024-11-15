@@ -4,6 +4,8 @@ import { RiMenu2Fill } from "react-icons/ri";
 import { TbCopy } from "react-icons/tb";
 import { useDispatch } from 'react-redux';
 import { toggleSidebar } from '@/features/EditorSlice/sidebarSlice.js';
+import { BsTerminal } from "react-icons/bs";
+import { MdSaveAlt } from "react-icons/md";
 
 const TopBar = () => {
     const dispatch = useDispatch();
@@ -22,8 +24,8 @@ const TopBar = () => {
                 <span className="material-symbols-outlined bg-red-600 p-2 rounded-full cursor-pointer">call_end</span>
             </div>
             <div className=' flex items-center gap-2 sm:gap-5'>
-                <Button variant="outline">Save</Button>
-                <Button>Run</Button>
+                <Button variant="outline"><MdSaveAlt/><span className=' hidden sm:block'>Save</span></Button>
+                <Button><BsTerminal/><span className=' hidden sm:block'>Terminal</span></Button>
             </div>
         </div>
     )
