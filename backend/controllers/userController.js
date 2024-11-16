@@ -7,6 +7,7 @@ export const getUser = async (req, res) => {
         const userId = req.user.id;
         const user = await User.findById(userId);
         user.password = undefined;
+        
         return res.status(200).json({
             success: true,
             message: "User fetched successfully",
