@@ -9,7 +9,7 @@ const TerminalComponent = () => {
     const isTerminalOpen = useSelector((state) => state.terminal.isTerminalOpen);
 
     const [terminalLineData, setTerminalLineData] = useState([
-        <TerminalOutput>{`*\n**\n***\n****\n*****\n******`}</TerminalOutput>
+        <TerminalOutput key={1}>{`*\n**\n***\n****\n*****\n******`}</TerminalOutput>
     ]);
 
     return (

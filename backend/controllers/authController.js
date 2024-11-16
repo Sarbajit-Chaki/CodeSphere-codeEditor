@@ -81,7 +81,6 @@ export const emailSignup = async (req, res) => {
             user
         });
     } catch (error) {
-        console.log("Error in emailSignup: ", error);
         return res.status(500).json({
             success: false,
             message: 'Internal server error'

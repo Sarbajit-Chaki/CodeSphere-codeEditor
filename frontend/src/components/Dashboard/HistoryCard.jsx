@@ -51,8 +51,7 @@ const HistoryCard = ({ logo, roomName, roomID, createdAt }) => {
               <DotsVerticalIcon color="white" />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>Rename</DropdownMenuItem>
-              <DropdownMenuItem>Delete</DropdownMenuItem>
+              <DropdownMenuItem>Join</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </MagicCard>

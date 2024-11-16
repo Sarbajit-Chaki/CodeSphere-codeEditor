@@ -160,3 +160,42 @@ export const contactUs = async (data) => {
         console.log("Error in contactUs",error);
     }
 }
+
+export const createRoom = async (data) => {
+    try{
+        const response = await axios.post(`${BASE_URL}/room/createRoom`,{
+            roomName: data.roomName,
+            language: data.language,
+            isVisible: data.isVisible,
+            isMsgEnable: data.isMsgEnable
+        }, {
+            withCredentials: true
+        })
+
+        if(response.data.success === true){
+            return response.data
+        }
+
+        return false
+    }catch(error){
+        console.log("Error in createRoom: ", error);
+    }
+}
+
+export const joinRoom = async (roomId) => {
+    try{
+        const response = await axios.post(`${BASE_URL}/room/joinRoom`,{
+            roomId
+        }, {
+            withCredentials: true
+        })
+
+        if(response.data.success === true){
+            return response.data
+        }
+
+        return false
+    }catch(error){
+        console.log("Error in joinRoom: ", error);
+    }
+}
