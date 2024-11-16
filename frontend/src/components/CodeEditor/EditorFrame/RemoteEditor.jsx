@@ -23,7 +23,7 @@ const RemoteEditor = () => {
                 rules: [
                     { token: '', foreground: 'D4D4D4', background: '10151B' },
                     { token: 'comment', foreground: '808080' }, 
-                    { token: 'keyword', foreground: '9B59B6' }, 
+                    { token: 'keyword', foreground: 'FE4EDA' }, 
                     { token: 'string', foreground: '32CD32' }, 
                     { token: 'function', foreground: 'F1C40F' },
                     { token: 'variable', foreground: '9CDCFE' },
