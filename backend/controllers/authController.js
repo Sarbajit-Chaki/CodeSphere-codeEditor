@@ -127,7 +127,6 @@ export const emailLogin = async (req, res) => {
             user
         });
     } catch (error) {
-        console.log("Error in emailLogin: ", error);
         return res.status(500).json({
             success: false,
             message: 'Internal server error'
