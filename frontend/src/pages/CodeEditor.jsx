@@ -7,7 +7,7 @@ import React from 'react'
 const CodeEditor = () => {
     return (
         <>
-            <div className='relative w-full h-screen'>
+            <div className='relative w-full h-screen overflow-y-hidden'>
                 <EditorSidebar />
                 <TopBar />
                 <EditorComponent />
