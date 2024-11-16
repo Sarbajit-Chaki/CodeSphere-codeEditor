@@ -80,7 +80,7 @@ function App() {
             )
           }
           <Route path="/auth" element={<Auth />} />
-          <Route path="/room/:roomId" element={<CodeEditor />} />
+          <Route path="/room" element={<CodeEditor />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>

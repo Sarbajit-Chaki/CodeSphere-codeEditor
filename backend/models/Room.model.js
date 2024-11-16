@@ -14,12 +14,6 @@ const roomSchema = new mongoose.Schema({
         ref: "User",
         required: true,
     },
-    codes: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Code",
-        }
-    ],
     members: [
         {
             type: mongoose.Schema.Types.ObjectId,
@@ -27,6 +21,10 @@ const roomSchema = new mongoose.Schema({
         }
     ],
     isVisible: {
+        type: Boolean,
+        required: true,
+    },
+    isMsgEnable: {
         type: Boolean,
         required: true,
     },

@@ -8,9 +8,12 @@ import cors from 'cors';
 import authRoute from './routes/authRoute.js';
 import userRoute from './routes/userRoute.js';
 import contactRoute from './routes/contactRoute.js'
+import roomRoute from './routes/roomRoute.js';
 
 import { connectDB } from './config/database.js';
 import { cloudinaryConfig } from './config/cloudinary.js';
+
+import './jobs/cleanUpJob.js';      // Import your cron job to run on server start
 
 dotenv.config();
 connectDB();
@@ -40,6 +43,7 @@ app.get('/', (req,res) => {
 app.use('/auth', authRoute);
 app.use('/user', userRoute);
 app.use('/contact', contactRoute);
+app.use('/room', roomRoute);
 
 server.listen(PORT, (req,res) => {
     console.log(`Server is running on port ${PORT}`);

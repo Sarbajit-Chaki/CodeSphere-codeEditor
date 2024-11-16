@@ -13,8 +13,88 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import JoinRoom from "./JoinRoom";
+import { useState } from "react";
+import { createRoom, joinRoom } from "@/api/user";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const SelectLanguage = () => {
+  const [languageName, setLanguageName] = useState("");
+  const [roomName, setRoomName] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
+  const [isMsgEnable, setIsMsgEnable] = useState(false);
+
+  const [roomId, setRoomId] = useState("");
+
+  const navigate = useNavigate();
+
+  const handleCreateRoom = async (e) => {
+    e.preventDefault();
+
+    if (!languageName || !roomName) return;
+
+    let toastId = toast.loading("Creating room...");
+
+    const data = {
+      roomName,
+      language: languageName,
+      isVisible,
+      isMsgEnable
+    }
+
+    const res = await createRoom(data);
+
+    if (!res) {
+      toast.update(toastId, {
+        render: "Failed to create room",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000
+      });
+      return;
+    }
+
+    const roomId = res.room._id;
+
+    toast.update(toastId, {
+      render: "Room created successfully",
+      type: "success",
+      isLoading: false,
+      autoClose: 3000
+    });
+
+    navigate("/room", { state: { roomId } });
+  }
+
+  const handleJoinRoom = async (e) => {
+    e.preventDefault();
+
+    if (!roomId) return;
+
+    let toastId = toast.loading("Joining room...");
+
+    const res = await joinRoom(roomId);
+
+    if (!res) {
+      toast.update(toastId, {
+        render: "Failed to join room",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000
+      });
+      return;
+    }
+
+    toast.update(toastId, {
+      render: "Room joined successfully",
+      type: "success",
+      isLoading: false,
+      autoClose: 3000
+    });
+
+    navigate("/room", { state: { roomId } });
+  }
+
   return (
     <div className="relative rounded-md mx-auto w-11/12 sm:w-full flex justify-center items-center">
       {/* Circles positioned behind the SelectLanguage box */}
@@ -27,7 +107,7 @@ const SelectLanguage = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3 mt-4 mb-8">
           {languages.map((language, index) => (
             <Dialog key={index}>
-              <DialogTrigger>
+              <DialogTrigger onClick={() => setLanguageName(language.name)}>
                 <Language
                   key={index}
                   logo={language.logo}
@@ -50,11 +130,18 @@ const SelectLanguage = () => {
                       placeholder="my-first-room"
                       name="room-name"
                       id="room-name"
+                      value={roomName}
+                      onChange={(e) => setRoomName(e.target.value)}
                     />
                   </div>
 
                   <div className=" flex items-center gap-2">
-                    <Checkbox id="screen-share" name="screen-share" />
+                    <Checkbox
+                      id="screen-share"
+                      name="screen-share"
+                      checked={isVisible}
+                      onCheckedChange={(checked) => setIsVisible(checked)}
+                    />
                     <Label
                       htmlFor="screen-share"
                       className="text-base font-normal"
@@ -64,14 +151,19 @@ const SelectLanguage = () => {
                   </div>
 
                   <div className=" flex items-center gap-2">
-                    <Checkbox id="room-msg" name="room-msg" />
+                    <Checkbox
+                      id="room-msg"
+                      name="room-msg"
+                      checked={isMsgEnable}
+                      onCheckedChange={(checked) => setIsMsgEnable(checked)}
+                    />
                     <Label htmlFor="room-msg" className="text-base font-normal">
                       Enable room messages
                     </Label>
                   </div>
                 </div>
                 <DialogFooter>
-                  <Button type="submit">Create</Button>
+                  <Button onClick={handleCreateRoom} type="submit">Create</Button>
                 </DialogFooter>
               </DialogContent>
             </Dialog>
@@ -99,11 +191,13 @@ const SelectLanguage = () => {
                   placeholder="Enter Room ID"
                   name="room-id"
                   id="room-id"
+                  value={roomId}
+                  onChange={(e) => setRoomId(e.target.value)}
                 />
               </div>
             </div>
             <DialogFooter>
-              <Button type="submit">Join</Button>
+              <Button onClick={handleJoinRoom} type="submit">Join</Button>
             </DialogFooter>
           </DialogContent>
         </Dialog>
