@@ -69,6 +69,7 @@ export const emailSignup = async (req, res) => {
         user.password = undefined;
 
         const payload = {
+            name: user.firstName + " " + user.lastName,
             email: user.email,
             id: user._id,
         }
@@ -114,6 +115,7 @@ export const emailLogin = async (req, res) => {
         }
 
         const payload = {
+            name: user.firstName + " " + user.lastName,
             email: user.email,
             id: user._id,
         }
@@ -149,6 +151,7 @@ export const googleSignup = async (req, res) => {
         const user = await User.findOne({ email });
         if(user) {
             const payload = {
+                name: user.firstName + " " + user.lastName,
                 email: user.email,
                 id: user._id,
             }
@@ -172,6 +175,7 @@ export const googleSignup = async (req, res) => {
         });
 
         const payload = {
+            name: newUser.firstName + " " + newUser.lastName,
             email: newUser.email,
             id: newUser._id,
         }

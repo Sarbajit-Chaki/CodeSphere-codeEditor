@@ -13,7 +13,10 @@ import roomRoute from './routes/roomRoute.js';
 import { connectDB } from './config/database.js';
 import { cloudinaryConfig } from './config/cloudinary.js';
 
+import { socketAuthMiddleware } from './middlewares/auth.middleware.js';
+
 import './jobs/cleanUpJob.js';      // Import your cron job to run on server start
+
 
 dotenv.config();
 connectDB();
@@ -24,10 +27,30 @@ const app = express();
 const server = createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: '*',
+        origin: 'http://localhost:5173',
         credentials: true
     }
 });
+
+export const initSocket = () => {
+    io.use(socketAuthMiddleware);   // socket middleware
+
+    io.on('connection', (socket) => {
+        console.log('user connected', socket?.user);
+
+        socket.on('join-room', (roomId) => {
+            // Join the specified room
+            socket.join(roomId);
+            
+            // Notify all users in the room except the one that just joined
+            socket.to(roomId).emit('userJoined', {
+                userName: socket.user.name,
+            })
+        })
+    })
+}
+
+initSocket();
 
 app.use(cookieParser());
 app.use(cors({
