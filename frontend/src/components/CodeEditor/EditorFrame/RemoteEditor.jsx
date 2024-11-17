@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { openTerminal } from '@/features/EditorSlice/terminalSlice.js'
 import { closeRemoteEditor } from '@/features/EditorSlice/remoteEditorSlice.js'
 
-const RemoteEditor = () => {
+const RemoteEditor = ({language}) => {
     const dispatch = useDispatch();
     const isRemoteEditorOpen = useSelector((state) => state.remoteEditor.isRemoteEditorOpen);
     const monaco = useMonaco();
@@ -63,7 +63,7 @@ const RemoteEditor = () => {
 
             <Editor
                 className={` md:h-[calc(100%-40px)] border-l border-l-slate-600 `}
-                defaultLanguage="javascript"
+                defaultLanguage={language}
                 defaultValue="// Welcome to CodeSphere - Code, Compile, Run and Debug online from anywhere in world."
                 theme='vs-dark'
                 options={{
