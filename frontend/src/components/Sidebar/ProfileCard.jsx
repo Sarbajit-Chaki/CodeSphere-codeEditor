@@ -7,7 +7,9 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 
-export function ProfileCard({ children, userDetails }) {
+export function ProfileCard({ children, email, firstName, lastName, imageUrl, createdAt }) {
+  const joinedDate = (timestamp) => `Joined ${new Date(timestamp).toLocaleString('en-IN', { month: 'long',timeZone: 'Asia/Kolkata' })} ${new Date(timestamp).getFullYear()}`;
+
   return (
     <HoverCard>
       <HoverCardTrigger asChild>
@@ -16,18 +18,19 @@ export function ProfileCard({ children, userDetails }) {
       <HoverCardContent className="w-72">
         <div className="flex justify-between space-x-4">
           <Avatar>
-            <AvatarImage src="https://avatars.githubusercontent.com/u/116663682?s=400&u=c3d1bddd31d3de63f9bb7373ebfbebf2a8125e76&v=4" />
-            <AvatarFallback>DG</AvatarFallback>
+            <AvatarImage src={imageUrl} />
+            <AvatarFallback>{firstName.slice(0, 1)}{lastName.slice(0, 1)}</AvatarFallback>
           </Avatar>
           <div className="space-y-1">
-            <h4 className="text-sm font-bold font-mono">Dibakar Ghosh</h4>
+            <h4 className="text-sm font-bold font-mono">{firstName} {lastName}</h4>
             <p className="text-xs font-extralight font-mono">
-              ghoshdibakar2020@gmail.com
+              {email}
             </p>
             <div className="flex items-center pt-2">
               <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
               <span className="text-xs text-muted-foreground">
-                Joined December 2021
+                {/* Joined December 2021 */}
+                {joinedDate(createdAt)}
               </span>
             </div>
           </div>

@@ -41,7 +41,9 @@ function App() {
         email: res?.user?.email ?? "",
         about: res?.user?.about ?? "",
         imageUrl: res?.user?.imageUrl ?? "",
-        googleId: res?.user?.googleId ?? ""
+        googleId: res?.user?.googleId ?? "",
+        createdAt: res?.user?.createdAt ?? "",
+        rooms: res?.user?.rooms ?? []
       }
       
       dispatch(setUserObj(data));

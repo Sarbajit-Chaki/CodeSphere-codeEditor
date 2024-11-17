@@ -5,7 +5,7 @@ import bcrypt from "bcrypt";
 export const getUser = async (req, res) => {
     try{
         const userId = req.user.id;
-        const user = await User.findById(userId);
+        const user = await User.findById(userId).populate("rooms");
         user.password = undefined;
         
         return res.status(200).json({

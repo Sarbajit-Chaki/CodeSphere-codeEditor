@@ -7,6 +7,7 @@ import { RiCustomerService2Line } from "react-icons/ri";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import LogoutBtn from "./LogoutBtn";
 import ProfileCard from "./ProfileCard";
+import { useSelector } from "react-redux";
 
 
 const sidebarLinks = [
@@ -20,6 +21,8 @@ const sidebarLinks = [
 ];
 
 const Sidebar = () => {
+  const user = useSelector((state) => state.profile.user);
+
   return (
     <div className="h-[100svh] w-14 sm:w-20 bg-[#101622] flex flex-col justify-between py-6 overflow-y-hidden overflow-x-hidden">
       <div className="flex flex-col justify-between items-center">
@@ -41,11 +44,17 @@ const Sidebar = () => {
       </div>
 
       <div className="flex justify-center cursor-pointer">
-        <ProfileCard >
-        <Avatar className="rounded-md">
-          <AvatarImage src="https://avatars.githubusercontent.com/u/116663682?s=400&u=c3d1bddd31d3de63f9bb7373ebfbebf2a8125e76&v=4" />
-          <AvatarFallback>DG</AvatarFallback>
-        </Avatar>
+        <ProfileCard
+          email={user.email}
+          firstName={user.firstName}
+          lastName={user.lastName}
+          imageUrl={user.imageUrl}
+          createdAt={user.createdAt}
+        >
+          <Avatar className="rounded-md">
+            <AvatarImage src={user.imageUrl} />
+            <AvatarFallback className="rounded-md">{user.firstName.slice(0, 1)}{user.lastName.slice(0, 1)}</AvatarFallback>
+          </Avatar>
         </ProfileCard>
       </div>
     </div>
