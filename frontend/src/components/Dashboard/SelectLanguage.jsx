@@ -111,14 +111,14 @@ const SelectLanguage = () => {
                 <Language
                   key={index}
                   logo={language.logo}
-                  name={language.name}
+                  name={language.name.split(" ")[0]}
                 />
               </DialogTrigger>
               <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                   <DialogTitle className="text-xl">Create Room</DialogTitle>
                   <DialogDescription className=" text-lg">
-                    A room will be created for {language.name} Language
+                    A room will be created for {language.name.split(" ")[0]} Language
                   </DialogDescription>
                 </DialogHeader>
                 <div className=" flex flex-col gap-2">

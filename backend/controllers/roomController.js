@@ -96,6 +96,32 @@ export const joinRoom = async (req, res) => {
     }
 }
 
+export const addMember = async (data) => {
+    try{
+        const roomId = data.roomId;
+        const email = data.email;
+
+        const user = await User.findOne({email});
+        await Room.findByIdAndUpdate(roomId, {$push:{members:user._id}});
+
+    }catch(error){
+        console.log("Error in addMember");
+    }
+}
+
+export const removeMember = async (data) => {
+    try{
+        const roomId = data.roomId;
+        const email = data.email;
+
+        const user = await User.findOne({email});
+        await Room.findByIdAndUpdate(roomId, {$pull:{members:user._id}});
+        
+    }catch(error){
+        console.log("Error in addMember");
+    }
+}
+
 export const getMembers = async (req, res) => {
     try {
         const { roomId } = req.body;
@@ -116,7 +142,7 @@ export const getMembers = async (req, res) => {
             })
         }
 
-        const room = await Room.findById(roomId).populate(members);
+        const room = await Room.findById(roomId).populate("members");
         if(!room) {
             return res.status(400).json({
                 success: false,
@@ -132,6 +158,44 @@ export const getMembers = async (req, res) => {
             members,
         })
     } catch (error) {
-        console.log("Error in getError");
+        console.log("Error in getMembers");
+    }
+}
+
+export const getRoomDetails = async (req, res) => {
+    try {
+        const { roomId } = req.body;
+        const userId = req.user.id;
+
+        if(!roomId || !userId) {
+            return res.status(400).json({
+                success: false,
+                message: "All fields are required"
+            });
+        }
+
+        const user = await User.findById(userId);
+        if(!user) {
+            return res.status(400).json({
+                success: false,
+                message: "Unauthorize",
+            })
+        }
+
+        const room = await Room.findById(roomId).populate("members");
+        if(!room) {
+            return res.status(400).json({
+                success: false,
+                message: "Room not found",
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: "Room details fetched successfully",
+            room
+        })
+    } catch (error) {
+        console.log("Error in getRoomDetails");
     }
 }

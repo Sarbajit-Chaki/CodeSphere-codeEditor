@@ -17,6 +17,8 @@ import { socketAuthMiddleware } from './middlewares/auth.middleware.js';
 
 import './jobs/cleanUpJob.js';      // Import your cron job to run on server start
 
+import { addMember, removeMember } from './controllers/roomController.js';
+
 
 dotenv.config();
 connectDB();
@@ -38,14 +40,22 @@ export const initSocket = () => {
     io.on('connection', (socket) => {
         console.log('user connected', socket?.user);
 
-        socket.on('join-room', (roomId) => {
+        socket.on('join-room', async (roomId) => {
             // Join the specified room
             socket.join(roomId);
+            socket.roomId = roomId;
+            await addMember({email: socket.user.email, roomId: roomId});
             
             // Notify all users in the room except the one that just joined
             socket.to(roomId).emit('userJoined', {
                 userName: socket.user.name,
             })
+        })
+
+        socket.on('disconnect', async () => {
+            await removeMember({email: socket.user.email, roomId: socket.roomId});
+            
+            io.to(socket.roomId).emit('userLeft');
         })
     })
 }

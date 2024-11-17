@@ -3,12 +3,14 @@ import profileSlice from '@/features/Profile/profileSlice'
 import sidebarSlice  from '@/features/EditorSlice/sidebarSlice'
 import terminalSlice  from '@/features/EditorSlice/terminalSlice'
 import remoteEditorSlice  from '@/features/EditorSlice/remoteEditorSlice'
+import roomSlice  from '@/features/RoomSlice/RoomSlice'
 
 export const store = configureStore({
   reducer: {
     profile: profileSlice,
     sidebar: sidebarSlice,
     terminal: terminalSlice,
-    remoteEditor: remoteEditorSlice
+    remoteEditor: remoteEditorSlice,
+    room: roomSlice,
   },
 })
