@@ -8,8 +8,49 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { joinRoom } from "@/api/user";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
-const HistoryCard = ({ logo, roomName, roomID, createdAt }) => {
+const HistoryCard = ({ language, roomName, roomID, createdAt }) => {
+  const navigate = useNavigate();
+
+  const timeAgo = (timestamp) => {
+    const diff = Math.floor((new Date() - new Date(timestamp)) / 1000);
+    return diff < 3600
+      ? `Created ${Math.floor(diff / 60)} minute${Math.floor(diff / 60) !== 1 ? 's' : ''} ago`
+      : `Created ${Math.floor(diff / 3600)} hour${Math.floor(diff / 3600) !== 1 ? 's' : ''} ago`;
+  };
+
+  const handleJoin = async (e) => {
+    e.preventDefault();
+
+    if (!roomID) return;
+
+    let toastId = toast.loading("Joining room...");
+
+    const res = await joinRoom(roomID);
+
+    if (!res) {
+      toast.update(toastId, {
+        render: "Failed to join room",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000
+      });
+      return;
+    }
+
+    toast.update(toastId, {
+      render: "Room joined successfully",
+      type: "success",
+      isLoading: false,
+      autoClose: 3000
+    });
+
+    navigate("/room", { state: { roomId: roomID } });
+  }
+  
   return (
     <div className="flex border-[1px] border-slate-500 rounded-md">
       <MagicCard
@@ -19,23 +60,23 @@ const HistoryCard = ({ logo, roomName, roomID, createdAt }) => {
         <div className="flex flex-row gap-x-4 items-center w-full">
           <div className="">
             <img
-              src={languages[0].logo}
+              src={languages.find((lang) => lang.name === language).logo}
               width={30}
               className="aspect-square object-cover"
             />
           </div>
           <div className="hidden sm:block">
-            <p className="text-purple-300 text-lg">my-room-1</p>
+            <p className="text-purple-300 text-lg">{roomName}</p>
             <p className="text-gray-400 flex text-[10px] sm:text-xs items-center">
-              507f1f77bcf86cd799439011
+              {roomID}
               <Dot size={28} className="inline-block" />
-              Created 2 days ago
+              {timeAgo(createdAt)}
             </p>
           </div>
           <div className="w-full block sm:hidden">
-            <p className="text-purple-300">my-room-1</p>
+            <p className="text-purple-300">{roomName}</p>
             <p className="text-[10px] text-gray-400">
-              Created 2 days ago
+              {timeAgo(createdAt)}
             </p>
           </div>
         </div>
@@ -51,7 +92,7 @@ const HistoryCard = ({ logo, roomName, roomID, createdAt }) => {
               <DotsVerticalIcon color="white" />
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem>Join</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleJoin}>Join</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </MagicCard>

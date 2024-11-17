@@ -30,7 +30,9 @@ const appAuthMiddleware = async (req, res, next) => {
 
 const socketAuthMiddleware = async (socket, next) => {
     try {
-        const token = socket.handshake.cookies.token;
+        const cookie = socket?.handshake?.headers?.cookie;
+        const token = cookie?.split("=")[1];
+
         if(!token) {
             return next(new Error('Authentication error: Token not found'));
         }

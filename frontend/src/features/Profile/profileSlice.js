@@ -7,7 +7,9 @@ const initialState = {
     email: "",
     about: "",
     imageUrl: "",
-    googleId: ""
+    googleId: "",
+    createdAt: "",
+    rooms: []
   }
 }
 
@@ -30,6 +32,12 @@ export const profileSlice = createSlice({
     setGoogleId: (state, action) => {
       state.user.googleId = action.payload
     },
+    setCreatedAt: (state, action) => {
+      state.user.createdAt = action.payload
+    },
+    setRooms: (state, action) => {
+      state.user.rooms = action.payload
+    },
     setUserObj: (state, action) => {
       
       state.user = {
@@ -38,12 +46,14 @@ export const profileSlice = createSlice({
         email: action.payload.email,
         about: action.payload.about,
         imageUrl: action.payload.imageUrl,
-        googleId: action.payload.googleId
+        googleId: action.payload.googleId,
+        createdAt: action.payload.createdAt,
+        rooms: action.payload.rooms,
       }
     }
   }
 })
 
-export const { setFirstName, setLastName, setEmail, setAbout, setImageUrl, setGoogleId, setUserObj } = profileSlice.actions
+export const { setFirstName, setLastName, setEmail, setAbout, setImageUrl, setGoogleId, setRooms, setUserObj } = profileSlice.actions
 
 export default profileSlice.reducer
