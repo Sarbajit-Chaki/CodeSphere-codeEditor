@@ -12,19 +12,22 @@ const RoomHistory = () => {
         <HistoryIcon size={18} color="gray" />
       </div>
       <div className="border-[1px] border-white w-[110px] mt-1 mb-6"></div>
+      <div className="flex flex-col gap-y-3 max-h-[160px] overflow-auto">
+
       {
         user.rooms.map((room, i) => {
           return (
             <HistoryCard
-              key={i}
-              language={room.language}
-              roomName={room.name}
-              roomID={room._id}
-              createdAt={room.createdAt}
+            key={i}
+            language={room.language}
+            roomName={room.name}
+            roomID={room._id}
+            createdAt={room.createdAt}
             />
           );
         })
       }
+      </div>
     </div>
   );
 };
