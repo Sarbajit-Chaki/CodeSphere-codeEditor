@@ -34,7 +34,7 @@ const CodeEditor = () => {
             <div className='relative w-full h-screen overflow-y-hidden'>
                 <EditorSidebar />
                 <TopBar />
-                <EditorComponent />
+                <EditorComponent  />
                 <Terminal />
             </div>
         </>
