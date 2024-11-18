@@ -82,6 +82,9 @@ const EditorComponent = () => {
             socket.off("connect_error");
             socket.off("connect_failed");
             socket.off("userJoined");
+            socket.off("receiveMessage");
+            dispatch(setSocketInstance(null));
+            dispatch(setUserCode(""));
 
             socket.disconnect()
         }

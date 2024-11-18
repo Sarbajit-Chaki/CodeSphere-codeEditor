@@ -59,7 +59,7 @@ const Participants = ({setIsSidebarOpen}) => {
         {
           participants.map((user, index) => {
             return (
-              <div onClick={handleOpenRemoteEditor(user)} key={index} className=' w-full flex items-center gap-6 cursor-pointer'>
+              <div onClick={() => {handleOpenRemoteEditor(user)}} key={index} className=' w-full flex items-center gap-6 cursor-pointer'>
                 <div className=' border-2 border-transparent bg-gradient-to-tr from-[#833AB4] via-[#FD1D1D] to-[#FCB045] rounded-full'>
                   <Avatar className="rounded-full">
                     <AvatarImage src={user?.imageUrl} />
