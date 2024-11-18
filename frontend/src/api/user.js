@@ -201,14 +201,14 @@ export const joinRoom = async (roomId) => {
 }
 
 export const getMembers = async (roomId) => {
-    try {  
+    try {
         const response = await axios.post(`${BASE_URL}/room/getMembers`, {
             roomId
         }, {
             withCredentials: true
         })
 
-        if(response.data.success === true){
+        if (response.data.success === true) {
             return response.data
         }
 
@@ -233,5 +233,55 @@ export const getRoomDetails = async (roomId) => {
         return false
     } catch (error) {
         console.log("Error in getRoomDetails: ", error);
+    }
+}
+
+export const getMessages = async (roomId) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/message/getMessages`, {
+            roomId
+        }, {
+            withCredentials: true
+        })
+
+        if (response.data.success === true) {
+            return response.data
+        }
+
+        return false
+    } catch (error) {
+        console.log('Error in getMessages: ', error);
+    }
+}
+
+export const compileCode = async (data) => {
+    try {
+        const { input, code, language } = data;
+
+        const response = await axios.post(`https://emkc.org/api/v2/piston/execute`, {
+            language: language,
+            version: "*",
+            files: [
+                {
+                    "content": code
+                }
+            ],
+            "stdin": input,
+            timeout: 3,
+        })
+
+        if (response.data.run.signal === "SIGKILL") {
+            return "Time Limit Exceeded";
+        }
+        else if (response.data.run.stderr) {
+            return response.data.run.stderr;
+        }
+        else if (response.data.run.code === 0) {
+            return response.data;
+        }
+
+        return false;
+    } catch (error) {
+        console.log("Error in compileCode: ", error);
     }
 }

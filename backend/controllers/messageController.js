@@ -50,50 +50,18 @@ export const getMessages = async (req, res) => {
     }
 }
 
-export const saveMessage = async (req, res) => {
+export const saveMessage = async (data) => {
     try {
-        const { message, roomId } = req.body;
-        const userId = req.user.id;
-
-        if(!userId || !message || !roomId) {
-            return res.status(400).json({
-                success: false,
-                message: "All fields are required"
-            })
-        }
+        const { message, roomId, userId } = data;
 
         const user = await User.findById(userId);
-        if(!user) {
-            return res.status(400).json({
-                success: false,
-                message: "Unauthorize"
-            })
-        }
-
         const room = await Room.findById(roomId);
-        if(!room) {
-            return res.status(400).json({
-                success: false,
-                message: "Room not found"
-            })
-        }
 
         const newMessage = await Message.create({message, sender: user._id});
-
-        if(!newMessage) {
-            return res.status(400).json({
-                success: false,
-                message: "Unable to save message"
-            })
-        }
 
         room.messages.push(newMessage._id);
         await room.save();
 
-        return res.status(200).json({
-            success: false,
-            message: "Message saved successfully"
-        })
     } catch (error) {
         console.log("Error in saveMessage");
     }

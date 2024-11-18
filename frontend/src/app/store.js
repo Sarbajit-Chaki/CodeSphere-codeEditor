@@ -4,6 +4,9 @@ import sidebarSlice  from '@/features/EditorSlice/sidebarSlice'
 import terminalSlice  from '@/features/EditorSlice/terminalSlice'
 import remoteEditorSlice  from '@/features/EditorSlice/remoteEditorSlice'
 import roomSlice  from '@/features/RoomSlice/RoomSlice'
+import socketSlice from '@/features/RoomSlice/SocketSlice'
+import codeSlice from '@/features/CodeSlice/codeSlice'
+
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +15,7 @@ export const store = configureStore({
     terminal: terminalSlice,
     remoteEditor: remoteEditorSlice,
     room: roomSlice,
+    socket: socketSlice,
+    code: codeSlice
   },
 })

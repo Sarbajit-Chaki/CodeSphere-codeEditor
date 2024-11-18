@@ -17,6 +17,7 @@ const Participants = ({setIsSidebarOpen}) => {
   ]
 
   const participantsChange = useSelector((state) => state.room.room.participantsChange);
+  const user = useSelector((state) => state.profile.user);
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -41,6 +42,12 @@ const Participants = ({setIsSidebarOpen}) => {
     getParticipants();
 
   }, [participantsChange])
+
+  const handleOpenRemoteEditor = (remoteUser) => {
+    if(remoteUser.email != user.email){
+      dispatch(openRemoteEditor());
+    }
+  }
   
 
   return (
@@ -52,7 +59,7 @@ const Participants = ({setIsSidebarOpen}) => {
         {
           participants.map((user, index) => {
             return (
-              <div onClick={() => dispatch(openRemoteEditor())} key={index} className=' w-full flex items-center gap-6 cursor-pointer'>
+              <div onClick={handleOpenRemoteEditor(user)} key={index} className=' w-full flex items-center gap-6 cursor-pointer'>
                 <div className=' border-2 border-transparent bg-gradient-to-tr from-[#833AB4] via-[#FD1D1D] to-[#FCB045] rounded-full'>
                   <Avatar className="rounded-full">
                     <AvatarImage src={user?.imageUrl} />

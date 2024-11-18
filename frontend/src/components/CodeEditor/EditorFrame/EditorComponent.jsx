@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
 import { toast } from 'react-toastify';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { toogleparticipantsChange } from '@/features/RoomSlice/RoomSlice';
+import { toogleNewMessage, toogleparticipantsChange } from '@/features/RoomSlice/RoomSlice';
+import { setSocketInstance } from '@/features/RoomSlice/SocketSlice';
+import { setUserCode } from '@/features/CodeSlice/codeSlice';
 
 const EditorComponent = () => {
     const isRemoteEditorOpen = useSelector((state) => state.remoteEditor.isRemoteEditorOpen);
@@ -25,6 +27,10 @@ const EditorComponent = () => {
             setLanguage(derivedLanguage);
         }
     }, [room?.language]);
+
+
+    const [code, setCode] = useState('//Welcome to CodeSphere - Code, Compile, Run and Debug online from anywhere in world.\n');
+    const userCode = useSelector((state) => state.code.userCode);
 
 
 
@@ -47,6 +53,9 @@ const EditorComponent = () => {
             transports: ['websocket']
         });
 
+        dispatch(setSocketInstance(socket));
+
+
         socket.on("connect_error", handleConnectionFail);
         socket.on("connect_failed", handleConnectionFail);
 
@@ -59,6 +68,10 @@ const EditorComponent = () => {
             })
 
             dispatch(toogleparticipantsChange());
+        })
+
+        socket.on("receiveMessage", () => {
+            dispatch(toogleNewMessage());
         })
 
         socket.on("userLeft", () => {
@@ -83,6 +96,8 @@ const EditorComponent = () => {
                     width={(isRemoteEditorOpen && aboveTablet) ? "50%" : "100%"}
                     defaultLanguage={language}
                     defaultValue="// Welcome to CodeSphere - Code, Compile, Run and Debug online from anywhere in world."
+                    value={userCode}
+                    onChange={(value) => dispatch(setUserCode(value))}
                     theme='vs-dark'
                     options={{
                         minimap: { enabled: false },

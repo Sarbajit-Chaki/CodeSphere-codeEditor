@@ -9,6 +9,7 @@ import authRoute from './routes/authRoute.js';
 import userRoute from './routes/userRoute.js';
 import contactRoute from './routes/contactRoute.js'
 import roomRoute from './routes/roomRoute.js';
+import messageRoute from './routes/messageRoute.js';
 
 import { connectDB } from './config/database.js';
 import { cloudinaryConfig } from './config/cloudinary.js';
@@ -18,6 +19,7 @@ import { socketAuthMiddleware } from './middlewares/auth.middleware.js';
 import './jobs/cleanUpJob.js';      // Import your cron job to run on server start
 
 import { addMember, removeMember } from './controllers/roomController.js';
+import { saveMessage } from './controllers/messageController.js';
 
 
 dotenv.config();
@@ -52,6 +54,13 @@ export const initSocket = () => {
             })
         })
 
+        socket.on('sendMessage', async (data) => {
+            const { roomId, message } = data;
+            await saveMessage({message, roomId, userId: socket.user.id});
+
+            socket.to(roomId).emit('receiveMessage');
+        })
+
         socket.on('disconnect', async () => {
             await removeMember({email: socket.user.email, roomId: socket.roomId});
             
@@ -77,6 +86,7 @@ app.use('/auth', authRoute);
 app.use('/user', userRoute);
 app.use('/contact', contactRoute);
 app.use('/room', roomRoute);
+app.use('/message', messageRoute);
 
 server.listen(PORT, (req,res) => {
     console.log(`Server is running on port ${PORT}`);
