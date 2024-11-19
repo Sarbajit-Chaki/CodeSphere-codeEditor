@@ -1,5 +1,5 @@
 import { Editor } from "@monaco-editor/react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import RemoteEditor from "./RemoteEditor";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -16,10 +16,11 @@ const EditorComponent = ({ socket }) => {
   const room = useSelector((state) => state.room.room.roomDetails);
   const userCode = useSelector((state) => state.code.userCode);
   const [language, setLanguage] = useState(null);
-
+  const lastEmittedCode = useRef(""); // Store last emitted code
+  const timeoutRef = useRef(null); // Store timeout reference
 
   useEffect(() => {
-    
+
     if (room?.language) {
       const derivedLanguage = room.language.split(" ")[0].toLowerCase();
       setLanguage(derivedLanguage);
@@ -28,11 +29,26 @@ const EditorComponent = ({ socket }) => {
 
 
   useEffect(() => {
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    // Set a new timeout to emit the code after a delay (3 seconds)
+    timeoutRef.current = setTimeout(() => {
+      if (roomId && socket && userCode !== lastEmittedCode.current) {
+        lastEmittedCode.current = userCode; // Update last emitted code
+        socket.emit("saveCode", { roomId, code: userCode, room: room?.language });
+      }
+    }, 3000); // Delay of 3 seconds (adjust as needed)
 
     return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+
       dispatch(setUserCode(""));
     };
-  }, []);
+  }, [userCode, roomId, socket, room?.language]);
 
   return (
     <div className=" w-full h-[92%] sm:h-[90%] flex flex-col md:flex-row ">
