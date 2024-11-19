@@ -20,6 +20,7 @@ import './jobs/cleanUpJob.js';      // Import your cron job to run on server sta
 
 import { addMember, removeMember } from './controllers/roomController.js';
 import { saveMessage } from './controllers/messageController.js';
+import { codeSave } from './controllers/codeController.js';
 
 
 dotenv.config();
@@ -59,6 +60,13 @@ export const initSocket = () => {
             await saveMessage({message, roomId, userId: socket.user.id});
 
             socket.to(roomId).emit('receiveMessage');
+        })
+
+        socket.on('saveCode', async (data) => {
+            console.log("saveCode:",data);
+            const { code, roomId, language } = data;
+            const userId = socket.user.id;
+            await codeSave({code, roomId, userId, language});
         })
 
         socket.on('disconnect', async () => {

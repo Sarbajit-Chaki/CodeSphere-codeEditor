@@ -2,48 +2,28 @@ import { Room } from "../models/Room.model.js";
 import { User } from "../models/User.model.js";
 import { Code } from "../models/Code.model.js";
 
-export const codeSave = async (req, res) => {
+export const codeSave = async (data) => {
     try {
-
-
-        const { code, language, roomId } = req.body;
-        const userId = req.user.id;
+        const { code, userId, language, roomId } = data;
 
         if (!code || !language || !roomId || !userId) {
-            return res.status(400).json({
-                success: false,
-                message: "All fields are required",
-            });
+            return ;
         }
 
         const user = await User.findById(userId);
         if (!user) {
-            return res.status(400).json({
-                success: false,
-                message: "User not found",
-            });
+            return;
         }
 
         const room = await Room.findById(roomId);
         if (!room) {
-            return res.status(400).json({
-                success: false,
-                message: "Room not found",
-            });
+            return;
         }
 
-        const codeModel = await Code.create({ user: user._id, language, roomId, code });
+        const codeModel = await Code.findOneAndUpdate({ user: user._id, roomId}, { user: user._id, language, roomId, code });
         if (!codeModel) {
-            return res.status(400).json({
-                success: false,
-                message: "Code not saved for some error",
-            });
+            return;
         }
-
-        return res.status(200).json({
-            success: true,
-            message: "Code saved Successfully",
-        })
 
     } catch (error) {
         console.log("Error occured in codeSave");
