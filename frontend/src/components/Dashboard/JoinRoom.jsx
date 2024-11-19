@@ -6,7 +6,7 @@ const JoinRoom = () => {
     <div className="p-[0.8px] rounded-md relative w-full inline-block">
           <div className="absolute inset-0 rounded-md animate-border-hover pointer-events-none"></div>
           <MagicCard
-            className="flex flex-col items-center px-4 py-3 dark:bg-black/20 dark:hover:bg-black/100 border-[1px] border-slate-500 hover:border-none rounded-md cursor-pointer transition-all duration-300"
+            className="flex flex-col items-center px-4 py-3 dark:bg-black/20 dark:hover:bg-black/100 border-[1px] border-slate-500 hover:border-transparent rounded-md cursor-pointer transition-all duration-300"
             gradientColor={"#363636"}
           >
             <div className="flex w-full justify-between">
