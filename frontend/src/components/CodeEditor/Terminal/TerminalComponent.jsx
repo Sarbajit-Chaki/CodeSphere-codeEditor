@@ -3,20 +3,71 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeTerminal } from '@/features/EditorSlice/terminalSlice.js';
 import Terminal, { ColorMode, TerminalOutput } from 'react-terminal-ui';
+import { compileCode } from '@/api/user';
+import { toast } from 'react-toastify';
 
 const TerminalComponent = () => {
     const dispatch = useDispatch();
     const isTerminalOpen = useSelector((state) => state.terminal.isTerminalOpen);
+    const userCode = useSelector((state) => state.code.userCode);
+    const terminalUser = useSelector((state) => state.terminal.terminalUser);
+    const room = useSelector((state) => state.room.room.roomDetails);
+
+    const [codeInput, setCodeInput] = useState("");
+    const [compiling, setCompiling] = useState(false);
 
     const [terminalLineData, setTerminalLineData] = useState([
-        <TerminalOutput key={1}>{`*\n**\n***\n****\n*****\n******`}</TerminalOutput>
+        <TerminalOutput key={1}>{""}</TerminalOutput>
     ]);
 
+
+    const handleCodeRun = async (e) => {
+        e.preventDefault();
+        setCompiling(true);
+        document.body.style.cursor = "wait";
+
+        let normalized = codeInput.replace(/\s+/g, ' ');  // Replace all types of whitespace (spaces, tabs, etc.) with a single space
+        normalized = normalized.replace(/ /g, '\n');    // Replace spaces with '\n'
+        normalized = normalized.replace(/\n+/g, '\n');  // Replace multiple '\n's with a single '\n'
+        normalized = normalized.trim();     // Trim leading and trailing whitespace/newlines
+
+        let language = room?.language;
+        language = language?.split(" ")[0].toLowerCase();
+
+        let code;
+        if(terminalUser === null){
+            return;
+        }
+        else if(terminalUser === "user"){
+            code = userCode;
+        }
+        else if(terminalUser === "remoteUser"){
+            code = userCode;
+        }
+
+        const res = await compileCode({input: normalized, code: code, language: language});
+        console.log(res);
+        if(!res){
+            toast.error("Failed to run code", {autoClose: 3000});
+            return;
+        }
+
+        if(res === "Time Limit Exceeded"){
+            setTerminalLineData(res);
+        }
+        else {
+            setTerminalLineData(res);
+        }
+
+        setCompiling(false);
+        document.body.style.cursor = "default";
+    }
+
     return (
-        <div className={`absolute ${isTerminalOpen ? " bottom-0":" bottom-[-100%]"} transition-all duration-500 ease-in-out  w-full flex flex-col-reverse md:flex-row h-[250px] z-20 border-t border-t-slate-600`}>
+        <div className={`absolute ${isTerminalOpen ? " bottom-0" : " bottom-[-100%]"} transition-all duration-500 ease-in-out  w-full flex flex-col-reverse md:flex-row h-[250px] z-20 border-t border-t-slate-600`}>
             <div className="w-full md:w-[60%] h-full">
                 <Terminal name='CodeSphere-Terminal' height='165px' colorMode={ColorMode.Dark}>
-                    { terminalLineData }
+                    {terminalLineData}
                 </Terminal>
             </div>
 
@@ -24,13 +75,15 @@ const TerminalComponent = () => {
                 <div className='flex justify-between items-center mb-4'>
                     <div className='text-xl font-mono font-medium text-gray-400'>Input</div>
                     <div className='flex gap-2'>
-                        <Button>Run</Button>
+                        <Button disabled={compiling} onClick={handleCodeRun}>Run</Button>
                         <Button onClick={() => dispatch(closeTerminal())} variant="destructive">Close</Button>
                     </div>
                 </div>
-                <textarea 
+                <textarea
                     placeholder='Your program will run without input'
-                    className='w-full p-2 bg-transparent resize-none border border-slate-600 rounded-md h-[120px]' 
+                    className='w-full p-2 bg-transparent resize-none border border-slate-600 rounded-md h-[120px]'
+                    value={codeInput}
+                    onChange={(e) => setCodeInput(e.target.value)}
                 >
                 </textarea>
                 <p className=' text-gray-400 text-xs'>Type input by giving space separated values</p>

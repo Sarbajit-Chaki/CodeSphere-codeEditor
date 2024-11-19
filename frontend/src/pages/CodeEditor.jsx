@@ -12,6 +12,8 @@ import {
 } from "@/features/RoomSlice/RoomSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
+import { toast } from "react-toastify";
+import { toggleSidebar } from "@/features/EditorSlice/sidebarSlice";
 
 const CodeEditor = () => {
   const dispatch = useDispatch();
@@ -50,6 +52,7 @@ const CodeEditor = () => {
       timeout: 10000,
       transports: ["websocket"],
     });
+
     if (socket) {
       setSocketInstance(socket);
       socket.on("connect_error", handleConnectionFail);
@@ -74,7 +77,9 @@ const CodeEditor = () => {
       socket.on("userLeft", () => {
         dispatch(toogleparticipantsChange());
       });
+
     }
+
     getRoomData();
 
     return () => {
@@ -83,6 +88,7 @@ const CodeEditor = () => {
         socket.off("connect_failed");
         socket.off("userJoined");
         socket.off("receiveMessage");
+        socket.off("userLeft");
         socket.disconnect();
       }
     };

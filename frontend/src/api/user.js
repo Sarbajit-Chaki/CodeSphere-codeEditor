@@ -277,7 +277,7 @@ export const compileCode = async (data) => {
             return response.data.run.stderr;
         }
         else if (response.data.run.code === 0) {
-            return response.data;
+            return response.data.run.stdout;
         }
 
         return false;
