@@ -6,9 +6,7 @@ import { useLocation } from "react-router-dom";
 import { setUserCode } from "@/features/CodeSlice/codeSlice";
 
 const EditorComponent = ({ socket }) => {
-  const isRemoteEditorOpen = useSelector(
-    (state) => state.remoteEditor.isRemoteEditorOpen
-  );
+  const isRemoteEditorOpen = useSelector((state) => state.remoteEditor.isRemoteEditorOpen);
   const aboveTablet = window.innerWidth >= 768 ? true : false;
 
   const dispatch = useDispatch();
@@ -16,24 +14,23 @@ const EditorComponent = ({ socket }) => {
   const roomId = location?.state?.roomId;
 
   const room = useSelector((state) => state.room.room.roomDetails);
+  const userCode = useSelector((state) => state.code.userCode);
   const [language, setLanguage] = useState(null);
 
+
   useEffect(() => {
+    
     if (room?.language) {
       const derivedLanguage = room.language.split(" ")[0].toLowerCase();
       setLanguage(derivedLanguage);
     }
   }, [room?.language]);
 
-  const [code, setCode] = useState(
-    "//Welcome to CodeSphere - Code, Compile, Run and Debug online from anywhere in world.\n"
-  );
-  const userCode = useSelector((state) => state.code.userCode);
 
   useEffect(() => {
 
     return () => {
-        dispatch(setUserCode(""));
+      dispatch(setUserCode(""));
     };
   }, []);
 

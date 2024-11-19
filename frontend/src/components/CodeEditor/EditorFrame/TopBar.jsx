@@ -7,7 +7,7 @@ import { MdSaveAlt } from "react-icons/md";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleSidebar } from '@/features/EditorSlice/sidebarSlice.js';
-import { openTerminal } from '@/features/EditorSlice/terminalSlice.js';
+import { openTerminal, setTerminalUser } from '@/features/EditorSlice/terminalSlice.js';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -18,6 +18,7 @@ const TopBar = () => {
 
     const roomId = location?.state?.roomId;
     const roomData = useSelector((state) => state.room.room.roomDetails);
+    const userCode = useSelector((state) => state.code.userCode);
 
     const handleCopyRoomId = (e) => {
         e.preventDefault();
@@ -27,6 +28,48 @@ const TopBar = () => {
             autoClose: 1000,
             position: "bottom-right",
         });
+    }
+
+    const handleSaveCode = (e) => {
+        e.preventDefault();
+
+        const language = roomData?.language?.split(" ")[0].toLowerCase();
+        const roomName = roomData?.name;
+
+        if (!userCode || !language) {
+            toast.error("Code not found", { autoClose: 3000 });
+            return;
+        }
+
+        const extensions = {
+            c: "c",
+            "c++": "cpp", // C++
+            java: "java", // Java
+            python: "py",
+            javascript: "js",
+            typescript: "ts", // TypeScript
+            rust: "rs", // Rust
+            go: "go", // Go
+        };
+
+        const fileExtension = extensions[language] || "txt"; // Default to .txt if language is unknown
+
+        // Create a Blob object with the code content
+        const fileBlob = new Blob([userCode], { type: "text/plain" });
+        const url = URL.createObjectURL(fileBlob);
+
+        // Create a temporary anchor element
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `${roomName}.${fileExtension}`; // Set the file name and extension
+        document.body.appendChild(a);
+
+        // Programmatically click the anchor to trigger the download
+        a.click();
+
+        // Clean up
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
     }
 
     return (
@@ -47,8 +90,8 @@ const TopBar = () => {
                 <span onClick={() => navigate("/")} className="material-symbols-outlined bg-red-600 p-2 rounded-full cursor-pointer">call_end</span>
             </div>
             <div className=' flex items-center gap-2 sm:gap-5'>
-                <Button variant="outline"><MdSaveAlt /><span className=' hidden sm:block'>Save</span></Button>
-                <Button onClick={() => dispatch(openTerminal())}><BsTerminal /><span className=' hidden sm:block'>Terminal</span></Button>
+                <Button onClick={handleSaveCode} variant="outline"><MdSaveAlt /><span className=' hidden sm:block'>Save</span></Button>
+                <Button onClick={() => { dispatch(openTerminal()); dispatch(setTerminalUser("user")) }}><BsTerminal /><span className=' hidden sm:block'>Terminal</span></Button>
             </div>
         </div>
     )
