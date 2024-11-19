@@ -5,16 +5,14 @@ import { getMessages } from '@/api/user';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-const Messages = () => {
+const Messages = ({socket}) => {
   const location = useLocation();
   const roomId = location?.state?.roomId;
   const msgChange = useSelector((state) => state.room.room.newMesage);
   const user = useSelector((state) => state.profile.user);
-  const socket = useSelector((state) => state.socket.socketInstance);
 
   const [msgs, setMsgs] = useState([]);
   const [msg, setMsg] = useState("");
-
 
   const getMsgs = async () => {
     const res = await getMessages(roomId);
@@ -37,11 +35,12 @@ const Messages = () => {
       return;
     }
 
-    socket.emit("sendMessage", { roomId, message: msg });
-    setMsgs((prev) => [...prev, { sender: {email: user.email}, message: msg }]);
-
-    setMsg("");
-
+    if(socket) {
+      socket.emit("sendMessage", { roomId, message: msg });
+      setMsgs((prev) => [...prev, { sender: {email: user.email}, message: msg }]);
+      
+      setMsg("");
+    }
   }
 
 

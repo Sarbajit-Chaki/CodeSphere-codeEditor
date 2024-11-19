@@ -15,7 +15,6 @@ export const store = configureStore({
     terminal: terminalSlice,
     remoteEditor: remoteEditorSlice,
     room: roomSlice,
-    socket: socketSlice,
     code: codeSlice
   },
 })

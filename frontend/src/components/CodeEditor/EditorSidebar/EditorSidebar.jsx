@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/resizable"
 import { useSelector } from 'react-redux'
 
-const EditorSidebar = () => {
+const EditorSidebar = ({socket}) => {
     const isSidebarOpen = useSelector((state) => state.sidebar.isSidebarOpen)
 
     return (
@@ -23,7 +23,7 @@ const EditorSidebar = () => {
             <ResizableHandle />
 
             <ResizablePanel defaultSize={60}>
-                <Messages />
+                <Messages socket={socket} />
             </ResizablePanel>
         </ResizablePanelGroup>
     )

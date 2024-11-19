@@ -1,44 +1,105 @@
-import { getRoomDetails } from '@/api/user'
-import EditorComponent from '@/components/CodeEditor/EditorFrame/EditorComponent'
-import TopBar from '@/components/CodeEditor/EditorFrame/TopBar'
-import EditorSidebar from '@/components/CodeEditor/EditorSidebar/EditorSidebar'
-import Terminal from '@/components/CodeEditor/Terminal/TerminalComponent'
-import { setRoomDetails } from '@/features/RoomSlice/RoomSlice'
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { useLocation } from 'react-router-dom'
+import { getRoomDetails } from "@/api/user";
+import EditorComponent from "@/components/CodeEditor/EditorFrame/EditorComponent";
+import TopBar from "@/components/CodeEditor/EditorFrame/TopBar";
+import EditorSidebar from "@/components/CodeEditor/EditorSidebar/EditorSidebar";
+import Terminal from "@/components/CodeEditor/Terminal/TerminalComponent";
+import { setRoomDetails } from "@/features/RoomSlice/RoomSlice";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  toogleNewMessage,
+  toogleparticipantsChange,
+} from "@/features/RoomSlice/RoomSlice";
+import { useLocation, useNavigate } from "react-router-dom";
+import { io } from "socket.io-client";
 
 const CodeEditor = () => {
-    const dispatch = useDispatch();
-    const location = useLocation();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const navigate = useNavigate();
 
-    const roomId = location?.state?.roomId;
+  const roomId = location?.state?.roomId;
+  const [socketInstance, setSocketInstance] = useState(null);
 
-    const getRoomData = async () => {
-        const res = await getRoomDetails(roomId);
+  const handleConnectionFail = (err) => {
+    toast.error("Connection failed", { autoClose: 4000 });
+    navigate("/");
+  };
 
-        if(!res) {
-            return;
-        }
+  const getRoomData = async () => {
+    const res = await getRoomDetails(roomId);
 
-        dispatch(setRoomDetails(res.room));
+    if (!res) {
+      return;
     }
 
-    useEffect(() => {
-      getRoomData();
-    
-    }, [])
-    
-    return (
-        <>
-            <div className='relative w-full h-screen overflow-y-hidden'>
-                <EditorSidebar />
-                <TopBar />
-                <EditorComponent  />
-                <Terminal />
-            </div>
-        </>
-    )
-}
+    dispatch(setRoomDetails(res.room));
+  };
 
-export default CodeEditor
+  useEffect(() => {
+    if (!roomId) {
+      navigate("/");
+      return;
+    }
+
+    const socket = io("http://localhost:4000", {
+      // user try to connect with the socket server
+      withCredentials: true,
+      "force new connection": true,
+      reconnectionAttempts: "Infinity",
+      timeout: 10000,
+      transports: ["websocket"],
+    });
+    if (socket) {
+      setSocketInstance(socket);
+      socket.on("connect_error", handleConnectionFail);
+      socket.on("connect_failed", handleConnectionFail);
+
+      socket.emit("join-room", roomId);
+      console.log("Joining room");
+
+      socket.on("userJoined", (socket) => {
+        toast.info(`${socket.userName} joined the room`, {
+          position: "bottom-right",
+          autoClose: 2000,
+        });
+
+        dispatch(toogleparticipantsChange());
+      });
+
+      socket.on("receiveMessage", () => {
+        dispatch(toogleNewMessage());
+      });
+
+      socket.on("userLeft", () => {
+        dispatch(toogleparticipantsChange());
+      });
+    }
+    getRoomData();
+
+    return () => {
+      if(socket) {
+        socket.off("connect_error");
+        socket.off("connect_failed");
+        socket.off("userJoined");
+        socket.off("receiveMessage");
+        socket.disconnect();
+      }
+    };
+  }, []);
+
+  return (
+    <>
+      {socketInstance && (
+        <div className="relative w-full h-screen overflow-y-hidden">
+          <EditorSidebar socket={socketInstance} />
+          <TopBar />
+          <EditorComponent socket={socketInstance} />
+          <Terminal />
+        </div>
+      )}
+    </>
+  );
+};
+
+export default CodeEditor;
