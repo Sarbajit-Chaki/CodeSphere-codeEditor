@@ -63,7 +63,6 @@ export const initSocket = () => {
         })
 
         socket.on('saveCode', async (data) => {
-            console.log("saveCode:",data);
             const { code, roomId, language } = data;
             const userId = socket.user.id;
             await codeSave({code, roomId, userId, language});

@@ -20,7 +20,11 @@ export const codeSave = async (data) => {
             return;
         }
 
-        const codeModel = await Code.findOneAndUpdate({ user: user._id, roomId}, { user: user._id, language, roomId, code });
+        const codeModel = await Code.findOneAndUpdate(
+            { user: user._id, roomId}, 
+            { user: user._id, language, roomId, code },
+            { upsert: true, new: true }
+        );
         if (!codeModel) {
             return;
         }

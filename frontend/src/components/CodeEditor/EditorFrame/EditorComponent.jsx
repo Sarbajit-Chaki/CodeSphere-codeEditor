@@ -16,8 +16,8 @@ const EditorComponent = ({ socket }) => {
   const room = useSelector((state) => state.room.room.roomDetails);
   const userCode = useSelector((state) => state.code.userCode);
   const [language, setLanguage] = useState(null);
-  const lastEmittedCode = useRef(""); // Store last emitted code
-  const timeoutRef = useRef(null); // Store timeout reference
+  const lastEmittedCode = useRef("");
+  const userCodeRef = useRef(userCode);
 
   useEffect(() => {
 
@@ -27,28 +27,26 @@ const EditorComponent = ({ socket }) => {
     }
   }, [room?.language]);
 
-
   useEffect(() => {
-    if (timeoutRef.current) {
-      clearTimeout(timeoutRef.current);
-    }
-
-    // Set a new timeout to emit the code after a delay (3 seconds)
-    timeoutRef.current = setTimeout(() => {
-      if (roomId && socket && userCode !== lastEmittedCode.current) {
-        lastEmittedCode.current = userCode; // Update last emitted code
-        socket.emit("saveCode", { roomId, code: userCode, room: room?.language });
+    lastEmittedCode.current = userCodeRef.current;
+    const intervalId = setInterval(() => {
+      if(socket && roomId && room.language) {
+        if(userCodeRef.current !== lastEmittedCode.current) {
+          lastEmittedCode.current = userCodeRef.current;
+          socket.emit("saveCode", { roomId, code: userCodeRef.current, language: room.language });
+        }
       }
-    }, 3000); // Delay of 3 seconds (adjust as needed)
-
+    },4000);
     return () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
+      clearInterval(intervalId);
+      setUserCode("");
+    }
+  },[]);
 
-      dispatch(setUserCode(""));
-    };
-  }, [userCode, roomId, socket, room?.language]);
+  const handleCodeChange = (value) => {
+    dispatch(setUserCode(value));
+    userCodeRef.current = value;
+  }
 
   return (
     <div className=" w-full h-[92%] sm:h-[90%] flex flex-col md:flex-row ">
@@ -60,7 +58,7 @@ const EditorComponent = ({ socket }) => {
             defaultLanguage={language}
             defaultValue="// Welcome to CodeSphere - Code, Compile, Run and Debug online from anywhere in world."
             value={userCode}
-            onChange={(value) => dispatch(setUserCode(value))}
+            onChange={handleCodeChange}
             theme="vs-dark"
             options={{
               minimap: { enabled: false },
