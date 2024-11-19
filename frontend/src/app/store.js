@@ -4,7 +4,6 @@ import sidebarSlice  from '@/features/EditorSlice/sidebarSlice'
 import terminalSlice  from '@/features/EditorSlice/terminalSlice'
 import remoteEditorSlice  from '@/features/EditorSlice/remoteEditorSlice'
 import roomSlice  from '@/features/RoomSlice/RoomSlice'
-import socketSlice from '@/features/RoomSlice/SocketSlice'
 import codeSlice from '@/features/CodeSlice/codeSlice'
 
 
