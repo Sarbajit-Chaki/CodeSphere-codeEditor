@@ -14,7 +14,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import { toast } from "react-toastify";
 import { toggleSidebar } from "@/features/EditorSlice/sidebarSlice";
-import { setUserCode } from "@/features/CodeSlice/codeSlice";
+import { setRemoteUserCode, setUserCode } from "@/features/CodeSlice/codeSlice";
+import { closeTerminal } from "@/features/EditorSlice/terminalSlice";
+import { closeRemoteEditor } from "@/features/EditorSlice/remoteEditorSlice";
 
 const CodeEditor = () => {
   const dispatch = useDispatch();
@@ -104,6 +106,12 @@ const CodeEditor = () => {
         socket.off("receiveMessage");
         socket.off("userLeft");
         socket.disconnect();
+        dispatch(closeTerminal());
+        dispatch(closeRemoteEditor());
+        dispatch(setUserCode('// Welcome to CodeSphere - Code, Compile, Run and Debug online from anywhere in world.'));
+        dispatch(setRemoteUserCode(''));
+        dispatch(setRoomDetails({}));
+        dispatch(toggleSidebar(false));
       }
     };
   }, []);

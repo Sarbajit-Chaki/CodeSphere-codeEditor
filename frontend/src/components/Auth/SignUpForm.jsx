@@ -124,6 +124,16 @@ const SignUpForm = ({ className }) => {
                 return;
             }
 
+            if (res.status === 204) {
+                toast.update(toastId, {
+                    render: "User already exists",
+                    type: "error",
+                    isLoading: false,
+                    autoClose: 3000
+                });
+                return;
+            }
+
             toast.update(toastId, {
                 render: "OTP sent successfully",
                 type: "success",
@@ -176,7 +186,7 @@ const SignUpForm = ({ className }) => {
             isLoading: false,
             autoClose: 3000
         });
-        
+
         setOtpDialogOpen(false);
         navigate("/");
         window.location.reload();

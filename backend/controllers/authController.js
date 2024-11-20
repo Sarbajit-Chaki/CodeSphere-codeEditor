@@ -15,6 +15,14 @@ export const sendOtp = async (req, res) => {
     try {
         const { email } = req.body;
 
+        const existingUser = await User.findOne({ email });
+        if(existingUser) {
+            return res.status(204).json({
+                success: false,
+                message: 'User already exists'
+            })
+        }
+
         const otp = otpGenerator.generate(6, {
             upperCaseAlphabets: false,
             lowerCaseAlphabets: false,

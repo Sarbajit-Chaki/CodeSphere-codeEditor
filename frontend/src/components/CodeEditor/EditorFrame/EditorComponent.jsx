@@ -52,7 +52,7 @@ const EditorComponent = ({ socket }) => {
 
   return (
     <div className=" w-full h-[92%] sm:h-[90%] flex flex-col md:flex-row ">
-      {language && socket && (
+      {language && socket && userCode && (
         <>
           <Editor
             className={` ${isRemoteEditorOpen && "h-[50vh]"} md:h-full `}
