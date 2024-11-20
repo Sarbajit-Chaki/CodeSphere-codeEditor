@@ -15,7 +15,11 @@ export const sendOtp = async (email) => {
     })
 
     if (response.data.success === true) {
-        return true;
+        return response.data;
+    }
+
+    if(response.status === 204){
+        return response;
     }
 
     return false;

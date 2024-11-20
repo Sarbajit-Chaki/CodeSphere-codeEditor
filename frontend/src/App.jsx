@@ -82,7 +82,7 @@ function App() {
               <Route path="/" element={<Home />} />
             )
           }
-          <Route path="/auth" element={<Auth />} />
+          {!isAuthenticated && <Route path="/auth" element={<Auth />} />}
           <Route path="/room" element={<CodeEditor />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>

@@ -4,12 +4,15 @@ import { IoIosSend } from "react-icons/io";
 import { getMessages } from '@/api/user';
 import { useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const Messages = ({socket}) => {
   const location = useLocation();
   const roomId = location?.state?.roomId;
   const msgChange = useSelector((state) => state.room.room.newMesage);
   const user = useSelector((state) => state.profile.user);
+  const isRemoteMsgEnable = useSelector((state) => state.room.room.roomDetails.isMsgEnable);
+  const roomAdmin = useSelector((state) => state.room.room.roomDetails.admin);
 
   const [msgs, setMsgs] = useState([]);
   const [msg, setMsg] = useState("");
@@ -32,6 +35,11 @@ const Messages = ({socket}) => {
 
   const handleMsgSend = () => {
     if (!msg) {
+      return;
+    }
+
+    if(roomAdmin !== user._id && !isRemoteMsgEnable){
+      toast.warning("Prohibited to see others screen by admin", {autoClose: 3000, position: "top-right"});
       return;
     }
 

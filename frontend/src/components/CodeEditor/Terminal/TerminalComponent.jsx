@@ -10,6 +10,7 @@ const TerminalComponent = () => {
     const dispatch = useDispatch();
     const isTerminalOpen = useSelector((state) => state.terminal.isTerminalOpen);
     const userCode = useSelector((state) => state.code.userCode);
+    const remoteUserCode = useSelector((state) => state.code.remoteUserCode);
     const terminalUser = useSelector((state) => state.terminal.terminalUser);
     const room = useSelector((state) => state.room.room.roomDetails);
 
@@ -42,7 +43,7 @@ const TerminalComponent = () => {
             code = userCode;
         }
         else if(terminalUser === "remoteUser"){
-            code = userCode;
+            code = remoteUserCode;
         }
 
         const res = await compileCode({input: normalized, code: code, language: language});

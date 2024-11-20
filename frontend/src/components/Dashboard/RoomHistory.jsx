@@ -15,7 +15,7 @@ const RoomHistory = () => {
       <div className="flex flex-col gap-y-3 max-h-[160px] overflow-auto">
 
       {
-        user.rooms.map((room, i) => {
+        user?.rooms?.map((room, i) => {
           return (
             <HistoryCard
             key={i}

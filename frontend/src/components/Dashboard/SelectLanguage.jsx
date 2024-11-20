@@ -103,8 +103,8 @@ const SelectLanguage = () => {
 
       {/* Select Language box */}
       <div className="relative z-10  min-w-fit max-w-[620px] min-h-fit p-2 sm:p-6 bg-white/5 backdrop-blur-lg shadow-lg border border-white/30 rounded-md text-gray-200">
-        <p className="text-lg text-center lg:text-start">Select a language</p>
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3 mt-4 mb-8">
+        <p className="text-lg text-center ">Select Language to a Create Room </p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3 mt-4">
           {languages.map((language, index) => (
             <Dialog key={index}>
               <DialogTrigger onClick={() => setLanguageName(language.name)}>
@@ -169,6 +169,8 @@ const SelectLanguage = () => {
             </Dialog>
           ))}
         </div>
+
+        <p className=" text-xs text-gray-400 mt-2 mb-4">Note: Rooms will be valid for 3 hours</p>
 
         {/* Join Room box */}
         <Dialog>

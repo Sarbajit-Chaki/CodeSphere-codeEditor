@@ -6,11 +6,14 @@ import { toggleSidebar } from '@/features/EditorSlice/sidebarSlice.js'
 import { openRemoteEditor } from '@/features/EditorSlice/remoteEditorSlice'
 import { useLocation } from 'react-router-dom'
 import { getMembers } from '@/api/user'
-import { setremoteUserId } from '@/features/CodeSlice/codeSlice'
+import { setremoteUserId, setRemoteUserName } from '@/features/CodeSlice/codeSlice'
+import { toast } from 'react-toastify'
 
 const Participants = ({setIsSidebarOpen}) => {
   
   const participantsChange = useSelector((state) => state.room.room.participantsChange);
+  const isRemoteVisible = useSelector((state) => state.room.room.roomDetails.isVisible);
+  const roomAdmin = useSelector((state) => state.room.room.roomDetails.admin);
   const user = useSelector((state) => state.profile.user);
   const dispatch = useDispatch();
   const location = useLocation();
@@ -29,7 +32,7 @@ const Participants = ({setIsSidebarOpen}) => {
 
     let members = res?.members;
     setParticipants(members);
-    console.log("+++",members);
+    console.log("Room Memebers:",members);
   }
 
   useEffect(() => {
@@ -38,8 +41,14 @@ const Participants = ({setIsSidebarOpen}) => {
   }, [participantsChange])
 
   const handleOpenRemoteEditor = (remoteUser) => {
+    if(roomAdmin !== user._id && !isRemoteVisible){
+      toast.warning("Prohibited to see others screen by admin", {autoClose: 3000, position: "top-right"});
+      return;
+    }
+
     if(remoteUser.email != user.email){
       dispatch(setremoteUserId(remoteUser._id));
+      dispatch(setRemoteUserName(remoteUser.firstName + " " + remoteUser.lastName));
       dispatch(openRemoteEditor());
     }
   }
