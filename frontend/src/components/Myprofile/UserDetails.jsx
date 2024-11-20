@@ -6,6 +6,7 @@ import  userDeafult  from "../../assets/MyProfile/user-image.jpg";
 import { setAbout, setEmail, setFirstName, setImageUrl, setLastName } from '@/features/Profile/profileSlice';
 import { updateProfile } from '@/api/user';
 import { toast } from 'react-toastify';
+import { motion } from 'framer-motion';
 
 const UserDetails = () => {
     const { user } = useSelector((state) => state.profile);
@@ -153,8 +154,23 @@ const UserDetails = () => {
                             </div>
                         </div>
                         <div className=' flex self-end mt-5 gap-4'>
-                            <button onClick={enableEdit} className=' bg-[#1a8cd8] px-4 py-1 rounded-md font-semibold'>Edit</button>
-                            <button disabled={!isEditable} onClick={onSave} className={` bg-[#1a8cd8] px-4 py-1 rounded-md font-semibold ${isEditable ? "cursor-pointer" : "cursor-not-allowed"} `}>Save</button>
+                            <motion.button 
+                                onClick={enableEdit} 
+                                className=' bg-[#1a8cd8] px-4 py-1 rounded-md font-semibold'
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                Edit
+                            </motion.button>
+                            <motion.button
+                                disabled={!isEditable} 
+                                onClick={onSave} 
+                                className={` bg-[#1a8cd8] px-4 py-1 rounded-md font-semibold ${isEditable ? "cursor-pointer" : "cursor-not-allowed"} `}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                            >
+                                Save
+                            </motion.button>
                         </div>
                     </div>
                 </div>

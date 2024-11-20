@@ -2,6 +2,7 @@ import { useState } from 'react'
 import GradientText from '../GradientText'
 import { deleteUser } from '@/api/user';
 import { toast } from 'react-toastify';
+import { motion } from 'framer-motion';
 
 const DeleteAcount = () => {
   const [deleteConfirm, setDeleteConfirm] = useState("");
@@ -48,7 +49,14 @@ const DeleteAcount = () => {
               onChange={(e) => setDeleteConfirm(e.target.value)}
               type="text"
             />
-            <button onClick={handleDelete} className={` bg-[#d03739] px-6 py-2 rounded-md font-semibold w-fit self-end `}>Delete Account</button>
+            <motion.button 
+              onClick={handleDelete} 
+              className={` bg-[#d03739] px-6 py-2 rounded-md font-semibold w-fit self-end `}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Delete Account
+            </motion.button>
           </div>
         </div>
       </div>

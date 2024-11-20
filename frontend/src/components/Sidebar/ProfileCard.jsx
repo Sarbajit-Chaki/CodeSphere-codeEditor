@@ -19,7 +19,7 @@ export function ProfileCard({ children, email, firstName, lastName, imageUrl, cr
         <div className="flex justify-between space-x-4">
           <Avatar>
             <AvatarImage src={imageUrl} />
-            <AvatarFallback>{firstName.slice(0, 1)}{lastName.slice(0, 1)}</AvatarFallback>
+            <AvatarFallback className="bg-emerald-600">{firstName.slice(0, 1)}{lastName.slice(0, 1)}</AvatarFallback>
           </Avatar>
           <div className="space-y-1">
             <h4 className="text-sm font-bold font-mono">{firstName} {lastName}</h4>

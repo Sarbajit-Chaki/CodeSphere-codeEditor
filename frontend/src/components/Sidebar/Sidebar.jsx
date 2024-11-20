@@ -53,7 +53,9 @@ const Sidebar = () => {
         >
           <Avatar className="rounded-md">
             <AvatarImage src={user.imageUrl} />
-            <AvatarFallback className="rounded-md">{user.firstName.slice(0, 1)}{user.lastName.slice(0, 1)}</AvatarFallback>
+            <AvatarFallback className="rounded-md bg-emerald-600">
+              {user.firstName.slice(0, 1)}{user.lastName.slice(0, 1)}
+            </AvatarFallback>
           </Avatar>
         </ProfileCard>
       </div>

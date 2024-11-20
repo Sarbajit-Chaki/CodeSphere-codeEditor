@@ -2,6 +2,7 @@ import { useState } from "react";
 import HomeBtn from "../Home/HomeBtn";
 import { toast } from "react-toastify";
 import { contactUs } from "@/api/user";
+import { motion } from "framer-motion";
 
 const ContactUsForm = () => {
   const [formData, setFormData] = useState({
@@ -128,7 +129,11 @@ const ContactUsForm = () => {
           </label>
         </div>
         <button onClick={handleSubmit} className="w-full">
-          <HomeBtn text="Send Message" className={'w-full'} />
+          <motion.div
+            className="w-full bg-yellow-rich text-black font-mono rounded-md py-3 font-semibold"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.96 }}
+          >Send Message</motion.div>
         </button>
       </div>
     </div>

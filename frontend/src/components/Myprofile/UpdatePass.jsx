@@ -3,6 +3,7 @@ import GradientText from '../GradientText'
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa6";
 import { toast } from 'react-toastify';
 import { updatePassword } from '@/api/user';
+import { motion } from 'framer-motion';
 
 const UpdatePass = () => {
     const [oldPass, setOldPass] = useState("");
@@ -91,7 +92,14 @@ const UpdatePass = () => {
           </div>
         </div>
 
-        <button onClick={handleSave} className={` bg-[#1a8cd8] px-4 py-1 rounded-md font-semibold self-end `}>Save</button>
+        <motion.button 
+          onClick={handleSave} 
+          className={` bg-[#1a8cd8] px-4 py-1 rounded-md font-semibold self-end `}
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          Save
+        </motion.button>
       </div>
     </div>
   )
