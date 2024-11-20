@@ -10,6 +10,7 @@ import userRoute from './routes/userRoute.js';
 import contactRoute from './routes/contactRoute.js'
 import roomRoute from './routes/roomRoute.js';
 import messageRoute from './routes/messageRoute.js';
+import codeRoute from './routes/codeRoute.js';
 
 import { connectDB } from './config/database.js';
 import { cloudinaryConfig } from './config/cloudinary.js';
@@ -66,11 +67,12 @@ export const initSocket = () => {
             const { code, roomId, language } = data;
             const userId = socket.user.id;
             await codeSave({code, roomId, userId, language});
+
+            socket.to(roomId).emit('receiveCode',{code, userId});
         })
 
         socket.on('disconnect', async () => {
             await removeMember({email: socket.user.email, roomId: socket.roomId});
-            
             io.to(socket.roomId).emit('userLeft');
         })
     })
@@ -94,6 +96,7 @@ app.use('/user', userRoute);
 app.use('/contact', contactRoute);
 app.use('/room', roomRoute);
 app.use('/message', messageRoute);
+app.use('/code', codeRoute);
 
 server.listen(PORT, (req,res) => {
     console.log(`Server is running on port ${PORT}`);

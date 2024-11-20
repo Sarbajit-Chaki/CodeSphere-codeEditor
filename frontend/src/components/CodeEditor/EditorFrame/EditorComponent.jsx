@@ -18,11 +18,13 @@ const EditorComponent = ({ socket }) => {
   const [language, setLanguage] = useState(null);
   const lastEmittedCode = useRef("");
   const userCodeRef = useRef(userCode);
+  const languageRef = useRef(room?.language);
 
   useEffect(() => {
 
     if (room?.language) {
       const derivedLanguage = room.language.split(" ")[0].toLowerCase();
+      languageRef.current = room?.language;
       setLanguage(derivedLanguage);
     }
   }, [room?.language]);
@@ -30,10 +32,10 @@ const EditorComponent = ({ socket }) => {
   useEffect(() => {
     lastEmittedCode.current = userCodeRef.current;
     const intervalId = setInterval(() => {
-      if(socket && roomId && room.language) {
+      if(socket && roomId && languageRef.current) {
         if(userCodeRef.current !== lastEmittedCode.current) {
+          socket.emit("saveCode", { roomId, code: userCodeRef.current, language: languageRef.current });
           lastEmittedCode.current = userCodeRef.current;
-          socket.emit("saveCode", { roomId, code: userCodeRef.current, language: room.language });
         }
       }
     },4000);
@@ -79,7 +81,7 @@ const EditorComponent = ({ socket }) => {
             }}
           />
 
-          <RemoteEditor language={language} />
+          {isRemoteEditorOpen && <RemoteEditor language={language} socket={socket} />}
         </>
       )}
     </div>

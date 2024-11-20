@@ -6,16 +6,10 @@ import { toggleSidebar } from '@/features/EditorSlice/sidebarSlice.js'
 import { openRemoteEditor } from '@/features/EditorSlice/remoteEditorSlice'
 import { useLocation } from 'react-router-dom'
 import { getMembers } from '@/api/user'
+import { setremoteUserId } from '@/features/CodeSlice/codeSlice'
 
 const Participants = ({setIsSidebarOpen}) => {
-  const data = [
-    { firstName: "Dibakar", lastName: "Ghosh", imageUrl: "" },
-    { firstName: "Amit", lastName: "Sharma", imageUrl: "https://avatars.githubusercontent.com/u/116663682?s=400&u=c3d1bddd31d3de63f9bb7373ebfbebf2a8125e76&v=4" },
-    { firstName: "Priya", lastName: "Singh", imageUrl: "https://cdn.prod.website-files.com/5ec7dad2e6f6295a9e2a23dd/66fcde00cf54d71747a52bac_upwork-profile-photo-tips.jpg" },
-    { firstName: "Ravi", lastName: "Kumar", imageUrl: "https://avatars.githubusercontent.com/u/116663682?s=400&u=c3d1bddd31d3de63f9bb7373ebfbebf2a8125e76&v=4" },
-    { firstName: "Sneha", lastName: "Patel", imageUrl: "" }
-  ]
-
+  
   const participantsChange = useSelector((state) => state.room.room.participantsChange);
   const user = useSelector((state) => state.profile.user);
   const dispatch = useDispatch();
@@ -45,6 +39,7 @@ const Participants = ({setIsSidebarOpen}) => {
 
   const handleOpenRemoteEditor = (remoteUser) => {
     if(remoteUser.email != user.email){
+      dispatch(setremoteUserId(remoteUser._id));
       dispatch(openRemoteEditor());
     }
   }

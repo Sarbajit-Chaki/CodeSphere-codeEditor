@@ -36,6 +36,7 @@ function App() {
       }
 
       let data = {
+        _id: res?.user?._id ?? "",
         firstName: res?.user?.firstName ?? "",
         lastName: res?.user?.lastName ?? "",
         email: res?.user?.email ?? "",
