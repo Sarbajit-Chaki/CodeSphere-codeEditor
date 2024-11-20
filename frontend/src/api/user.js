@@ -285,3 +285,36 @@ export const compileCode = async (data) => {
         console.log("Error in compileCode: ", error);
     }
 }
+
+export const getCode = async (roomId) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/code/getCode`, {
+            roomId,
+        }, { withCredentials: true });
+
+        if (response.data.success === true) {
+            return response.data;
+        }
+
+        return false
+    } catch (error) {
+        console.log("Error in getCode: ", error);
+    }
+}
+
+export const getRemoteCode = async (data) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/code/getRemoteCode`, {
+            roomId: data.roomId,
+            userId: data.userId
+        }, { withCredentials: true });
+
+        if (response.data.success === true) {
+            return response.data;
+        }
+
+        return false
+    } catch (error) {
+        console.log("Error in getCode: ", error);
+    }
+}

@@ -1,11 +1,11 @@
-import { getRoomDetails } from "@/api/user";
+import { getCode, getRoomDetails } from "@/api/user";
 import EditorComponent from "@/components/CodeEditor/EditorFrame/EditorComponent";
 import TopBar from "@/components/CodeEditor/EditorFrame/TopBar";
 import EditorSidebar from "@/components/CodeEditor/EditorSidebar/EditorSidebar";
 import Terminal from "@/components/CodeEditor/Terminal/TerminalComponent";
 import { setRoomDetails } from "@/features/RoomSlice/RoomSlice";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   toogleNewMessage,
   toogleparticipantsChange,
@@ -14,6 +14,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { io } from "socket.io-client";
 import { toast } from "react-toastify";
 import { toggleSidebar } from "@/features/EditorSlice/sidebarSlice";
+import { setUserCode } from "@/features/CodeSlice/codeSlice";
 
 const CodeEditor = () => {
   const dispatch = useDispatch();
@@ -22,6 +23,7 @@ const CodeEditor = () => {
 
   const roomId = location?.state?.roomId;
   const [socketInstance, setSocketInstance] = useState(null);
+
 
   const handleConnectionFail = (err) => {
     toast.error("Connection failed", { autoClose: 4000 });
@@ -37,6 +39,17 @@ const CodeEditor = () => {
 
     dispatch(setRoomDetails(res.room));
   };
+
+  const getUserCode = async () => {
+    const res = await getCode(roomId);
+
+    if (!res) {
+      return;
+    }
+    console.log("get code:",res);
+
+    dispatch(setUserCode(res?.code?.code));
+  }
 
   useEffect(() => {
     if (!roomId) {
@@ -81,6 +94,7 @@ const CodeEditor = () => {
     }
 
     getRoomData();
+    getUserCode();
 
     return () => {
       if(socket) {
