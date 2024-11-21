@@ -16,22 +16,29 @@ import NotFoundPage from "./pages/NotFoundPage";
 import { useDispatch } from "react-redux";
 import { setUserObj } from "./features/Profile/profileSlice";
 import CodeEditor from "./pages/CodeEditor";
+import ErrorPage from "./pages/ErrorPage";
+import SkeletonComponent from "./components/Skeleton/Skeleton";
 
 function App() {
   const location = useLocation();
   const dispatch = useDispatch();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchUser = async () => {
+      setIsLoading(true);
       const token = Cookies.get("token");
       if (!token) {
         console.log("No token found.");
+        setIsLoading(false);
         return;
       }
 
+      
       const res = await getUser();
       if (!res) {
+        setIsLoading(false);
         return;
       }
 
@@ -49,10 +56,15 @@ function App() {
       
       dispatch(setUserObj(data));
       setIsAuthenticated(true);
+      setIsLoading(false);
     };
 
     fetchUser();
   }, [location]);
+
+  if(isLoading) {
+    return <SkeletonComponent />;
+  }
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
@@ -69,7 +81,8 @@ function App() {
         theme="dark"
         transition:Bounce
       />
-      <div className="bg-black overflow-x-hidden scroll-smooth">
+      <div className="bg-black overflow-x-hidden scroll-smooth relative">
+        
         <Routes>
           {
             isAuthenticated ? (
@@ -84,6 +97,7 @@ function App() {
           }
           {!isAuthenticated && <Route path="/auth" element={<Auth />} />}
           <Route path="/room" element={<CodeEditor />} />
+          <Route path="/error" element={<ErrorPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </div>
