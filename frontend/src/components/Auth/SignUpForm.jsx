@@ -40,10 +40,6 @@ const SignUpForm = ({ className }) => {
     const [otp, setOtp] = useState("")
     const [otpDialogOpen, setOtpDialogOpen] = useState(false)
 
-    const handleCodeChange = (data) => {
-        setCode(data)
-    }
-
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value })
     }

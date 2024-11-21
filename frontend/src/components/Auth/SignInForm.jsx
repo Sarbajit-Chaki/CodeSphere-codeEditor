@@ -10,6 +10,10 @@ import { Bounce, toast } from 'react-toastify';
 import { setUserObj } from '@/features/Profile/profileSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
+import EmailField from '../ForgotPassword/EmailField';
+import OtpField from '../ForgotPassword/OtpField';
+import ResetPassword from '../ForgotPassword/ResetPassword';
 
 const SignInForm = ({className}) => {
     const dispatch = useDispatch();
@@ -26,6 +30,9 @@ const SignInForm = ({className}) => {
         email: '',
         password: ''
     })
+
+    const [stage, setStage] = useState(1)
+    const [dialogOpen, setDialogOpen] = useState(false)
 
     const handleChange = (e) => {
         setForm({...form, [e.target.name]: e.target.value})
@@ -111,8 +118,17 @@ const SignInForm = ({className}) => {
 
                 <button type='submit' className={` bg-[#fb4c19] rounded-3xl px-8 py-3 text-white `}>LOG IN</button>
             </form>
-            <div>
-                <div className='text-[#fb4c19] cursor-pointer  -my-6 text-end'>Forgot Password ?</div>
+            <div className='-mt-5'>
+            <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+                <DialogTrigger className='w-full'>
+                    <div className='text-[#fb4c19] cursor-pointer  -my-6 text-end'>Forgot Password ?</div>
+                </DialogTrigger>
+                <DialogContent className="sm:max-w-[425px] min-h-[30vh]">
+                    {stage === 1 && <EmailField setStage={setStage} />}
+                    {stage === 2 && <OtpField setStage={setStage} />}
+                    {stage === 3 && <ResetPassword setStage={setStage} setDialogOpen={setDialogOpen} />}
+                </DialogContent>
+            </Dialog>
             </div>
             <div className='flex w-full -my-5 items-center'>
                 <div className='w-full h-[1px] bg-white'></div>
