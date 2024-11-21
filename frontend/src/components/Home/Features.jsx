@@ -1,7 +1,9 @@
 import React from "react";
-import tablet from "@/assets/Home/tablet-home.png";
 import GridPattern from "../ui/animated-grid-pattern";
 import { cn } from "@/lib/utils";
+import feature1 from "@/assets/Home/feature1.png";
+import feature2 from "@/assets/Home/feature2.png";
+import feature3 from "@/assets/Home/feature3.png";
 
 const Features = () => {
   return (
@@ -33,21 +35,27 @@ const Features = () => {
           </div>
         </div>
         <div className="w-full flex flex-col items-center gap-0 md:flex-row md:justify-around ">
-          <img
-            className="w-[50%] max-w-10/12 md:w-[180px] lg:w-[220px] xl:w-[280px] rotate-90 -my-4 md:mt-6"
-            src={tablet}
-            alt=""
-          />
-          <img
-            className=" w-[50%] max-w-10/12 md:w-[180px] lg:w-[220px] xl:w-[280px] -my-4 md:mt-6"
-            src={tablet}
-            alt=""
-          />
-          <img
-            className="w-[50%] max-w-10/12 md:w-[180px] lg:w-[220px] xl:w-[280px]  rotate-90 -my-4 md:mt-6"
-            src={tablet}
-            alt=""
-          />
+          <div className="z-50">
+            <img
+              className="w-[50%] max-w-10/12 md:w-[180px] lg:w-[220px] xl:w-[340px] -my-4 md:mt-6"
+              src={feature1}
+              alt=""
+            />
+          </div>
+          <div className="z-50">
+            <img
+              className=" w-[50%] max-w-10/12 md:w-[180px] lg:w-[220px] xl:w-[320px] -my-4 md:mt-6"
+              src={feature2}
+              alt=""
+            />
+          </div>
+          <div className="z-50">
+            <img
+              className="w-[50%] max-w-10/12 md:w-[180px] lg:w-[220px] xl:w-[340px] -my-4 md:mt-6"
+              src={feature3}
+              alt=""
+            />
+          </div>
         </div>
       </div>
     </div>

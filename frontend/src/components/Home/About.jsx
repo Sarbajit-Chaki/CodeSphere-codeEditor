@@ -24,9 +24,9 @@ const About = () => {
           </div>
         </div>
         <div className=" w-full h-full ">
-          <div className="relative max-w-[800px] mx-auto">
+          <div className="relative max-w-[800px] mx-auto rounded-md">
             <img
-              className=" w-[800px]  shadow-[10px_-5px_50px_-5px] shadow-[#118AB2]"
+              className=" w-[800px] rounded-md shadow-[10px_-5px_50px_-5px] shadow-[#118AB2]"
               src={code}
               alt=""
             />
