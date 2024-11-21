@@ -6,7 +6,7 @@ export const codeSave = async (data) => {
     try {
         const { code, userId, language, roomId } = data;
 
-        if (!code || !language || !roomId || !userId) {
+        if (code === null || code === undefined || !language || !roomId || !userId) {
             return ;
         }
 

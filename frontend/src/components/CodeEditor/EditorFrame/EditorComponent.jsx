@@ -1,4 +1,4 @@
-import { Editor } from "@monaco-editor/react";
+import { Editor, useMonaco } from "@monaco-editor/react";
 import React, { useEffect, useRef, useState } from "react";
 import RemoteEditor from "./RemoteEditor";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,7 @@ const EditorComponent = ({ socket }) => {
 
   const dispatch = useDispatch();
   const location = useLocation();
+  const monaco = useMonaco();
   const roomId = location?.state?.roomId;
 
   const room = useSelector((state) => state.room.room.roomDetails);
@@ -45,6 +46,42 @@ const EditorComponent = ({ socket }) => {
     }
   },[]);
 
+  useEffect(() => {
+    console.log("monaco in useEffect: ", monaco);
+    if(monaco) {
+        console.log("monaco in if: ", monaco.editor);
+        monaco.editor.defineTheme('custom-theme', {
+            base: 'vs-dark',
+            inherit: true,
+            rules: [
+                { token: '', foreground: 'D4D4D4', background: '10151B' },
+                { token: 'comment', foreground: '808080' }, 
+                { token: 'keyword', foreground: 'FE4EDA' }, 
+                { token: 'string', foreground: '32CD32' }, 
+                { token: 'function', foreground: 'F1C40F' },
+                { token: 'variable', foreground: '9CDCFE' },
+                { token: 'constant', foreground: '4FC1FF' }, 
+                { token: 'number', foreground: '56B6C2' }, 
+                { token: 'delimiter', foreground: 'D4D4D4' },
+                { token: 'error', foreground: 'F44747' }, 
+            ],
+            colors: {
+                "editor.background": "#10151B", 
+                'editorLineNumber.foreground': '#4B5263',
+                'editor.selectionBackground': '#264F78', 
+                'editorIndentGuide.background': '#2E2E3E', 
+                "scrollbarSlider.background": "#4A5568", 
+                "scrollbarSlider.hoverBackground": "#718096", 
+                "scrollbarSlider.activeBackground": "#A0AEC0",
+                "editor.lineHighlightBackground": "#1B2635",
+            }
+        });
+
+        monaco.editor.setTheme('custom-theme');
+    }
+
+},[monaco])
+
   const handleCodeChange = (value) => {
     dispatch(setUserCode(value));
     userCodeRef.current = value;
@@ -52,7 +89,7 @@ const EditorComponent = ({ socket }) => {
 
   return (
     <div className=" w-full h-[92%] sm:h-[90%] flex flex-col md:flex-row ">
-      {language && socket && userCode && (
+      {language && socket && userCode !== null && (
         <>
           <Editor
             className={` ${isRemoteEditorOpen && "h-[50vh]"} md:h-full `}
@@ -61,7 +98,7 @@ const EditorComponent = ({ socket }) => {
             defaultValue="// Welcome to CodeSphere - Code, Compile, Run and Debug online from anywhere in world."
             value={userCode}
             onChange={handleCodeChange}
-            theme="vs-dark"
+            theme="custom-theme"
             options={{
               minimap: { enabled: false },
               fontSize: 16,

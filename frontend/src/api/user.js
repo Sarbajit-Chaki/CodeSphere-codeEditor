@@ -273,6 +273,7 @@ export const compileCode = async (data) => {
             "stdin": input,
             timeout: 3,
         })
+        console.log(response)
 
         if (response.data.run.signal === "SIGKILL") {
             return "Time Limit Exceeded";
@@ -281,6 +282,9 @@ export const compileCode = async (data) => {
             return response.data.run.stderr;
         }
         else if (response.data.run.code === 0) {
+            return response.data.run.stdout;
+        }
+        else if (response.data.run.code !== 0) {
             return response.data.run.stdout;
         }
 

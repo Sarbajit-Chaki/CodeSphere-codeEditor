@@ -25,39 +25,7 @@ const RemoteEditor = ({language, socket}) => {
     const remoteUserName = useSelector((state) => state.code.remoteUserName);
     const monaco = useMonaco();
 
-    useEffect(() => {
-        if(monaco) {
-            monaco.editor.defineTheme('custom-theme', {
-                base: 'vs-dark',
-                inherit: true,
-                rules: [
-                    { token: '', foreground: 'D4D4D4', background: '10151B' },
-                    { token: 'comment', foreground: '808080' }, 
-                    { token: 'keyword', foreground: 'FE4EDA' }, 
-                    { token: 'string', foreground: '32CD32' }, 
-                    { token: 'function', foreground: 'F1C40F' },
-                    { token: 'variable', foreground: '9CDCFE' },
-                    { token: 'constant', foreground: '4FC1FF' }, 
-                    { token: 'number', foreground: '56B6C2' }, 
-                    { token: 'delimiter', foreground: 'D4D4D4' },
-                    { token: 'error', foreground: 'F44747' }, 
-                ],
-                colors: {
-                    "editor.background": "#10151B", 
-                    'editorLineNumber.foreground': '#4B5263',
-                    'editor.selectionBackground': '#264F78', 
-                    'editorIndentGuide.background': '#2E2E3E', 
-                    "scrollbarSlider.background": "#4A5568", 
-                    "scrollbarSlider.hoverBackground": "#718096", 
-                    "scrollbarSlider.activeBackground": "#A0AEC0",
-                    "editor.lineHighlightBackground": "#1B2635",
-                }
-            });
 
-            monaco.editor.setTheme('custom-theme');
-        }
-
-    },[monaco])
 
     const handleCodeSave = async (code) => {
         const language = roomData?.language?.split(" ")[0].toLowerCase();
@@ -142,7 +110,7 @@ const RemoteEditor = ({language, socket}) => {
                 defaultLanguage={language}
                 defaultValue="// Welcome to CodeSphere - Code, Compile, Run and Debug online from anywhere in world."
                 value={remoteUserCode}
-                theme='vs-dark'
+                theme='custom-theme'
                 options={{
                     minimap: { enabled: false },
                     fontSize: 16,

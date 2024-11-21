@@ -50,6 +50,7 @@ const TerminalComponent = () => {
         console.log(res);
         if(!res){
             toast.error("Failed to run code", {autoClose: 3000});
+            document.body.style.cursor = "default";
             return;
         }
 
