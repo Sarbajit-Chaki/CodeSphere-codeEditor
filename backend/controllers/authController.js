@@ -4,6 +4,8 @@ import { User } from '../models/User.model.js';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { oauth2Client } from '../config/googleConfig.js';
+import mailSender from '../utils/mailSender.js';
+import forgotPasswordTemplate from '../utils/forgotMail.js';
 
 
 const cookieOptions = {
@@ -16,7 +18,7 @@ export const sendOtp = async (req, res) => {
         const { email } = req.body;
 
         const existingUser = await User.findOne({ email });
-        if(existingUser) {
+        if (existingUser) {
             return res.status(204).json({
                 success: false,
                 message: 'User already exists'
@@ -30,10 +32,10 @@ export const sendOtp = async (req, res) => {
         }).toString();
 
         const otpModel = await Otp.create({ email, otp });
-        
+
         return res.status(200).json({
             success: true,
-            message: 'OTP sent successfully' 
+            message: 'OTP sent successfully'
         });
     } catch (error) {
         console.log("Error in sendOtp: ", error);
@@ -43,7 +45,7 @@ export const sendOtp = async (req, res) => {
 export const emailSignup = async (req, res) => {
     try {
         const { firstName, lastName, email, password, otp } = req.body;
-        if(!firstName || !lastName || !email || !password || !otp) {
+        if (!firstName || !lastName || !email || !password || !otp) {
             return res.status(400).json({
                 success: false,
                 message: 'All fields are required'
@@ -51,7 +53,7 @@ export const emailSignup = async (req, res) => {
         }
 
         const existingUser = await User.findOne({ email });
-        if(existingUser) {
+        if (existingUser) {
             return res.status(400).json({
                 success: false,
                 message: 'User already exists'
@@ -59,13 +61,13 @@ export const emailSignup = async (req, res) => {
         }
 
         const recentOtp = await Otp.find({ email }).sort({ createdAt: -1 }).limit(1);
-        if(recentOtp.length == 0) {
+        if (recentOtp.length == 0) {
             return res.status(400).json({
                 success: false,
                 message: "OTP not found"
             });
         }
-        else if(recentOtp[0].otp !== otp) {
+        else if (recentOtp[0].otp !== otp) {
             return res.status(400).json({
                 success: false,
                 message: 'Invalid OTP'
@@ -84,7 +86,7 @@ export const emailSignup = async (req, res) => {
         }
 
         const token = jwt.sign(payload, process.env.JWT_SECRET);
-        
+
         return res.cookie("token", token, cookieOptions).status(201).json({
             success: true,
             message: 'User created successfully',
@@ -101,14 +103,14 @@ export const emailSignup = async (req, res) => {
 export const emailLogin = async (req, res) => {
     try {
         const { email, password } = req.body;
-        if(!email || !password) {
+        if (!email || !password) {
             return res.status(400).json({
                 success: false,
                 message: 'All fields are required'
             });
         }
         const user = await User.findOne({ email });
-        if(!user) {
+        if (!user) {
             return res.status(400).json({
                 success: false,
                 message: 'User not found'
@@ -116,7 +118,7 @@ export const emailLogin = async (req, res) => {
         }
 
         const isMatch = await bcrypt.compare(password, user.password);
-        if(!isMatch) {
+        if (!isMatch) {
             return res.status(401).json({
                 success: false,
                 message: 'Invalid password'
@@ -158,7 +160,7 @@ export const googleSignup = async (req, res) => {
         const email = data.email;
 
         const user = await User.findOne({ email });
-        if(user) {
+        if (user) {
             const payload = {
                 name: user.firstName + " " + user.lastName,
                 email: user.email,
@@ -196,7 +198,7 @@ export const googleSignup = async (req, res) => {
             message: 'User created successfully',
             user: newUser
         });
-        
+
     } catch (error) {
         console.log("Error in googleSignup: ", error);
         return res.status(500).json({
@@ -219,5 +221,106 @@ export const logout = async (req, res) => {
             success: false,
             message: 'Internal server error'
         });
+    }
+}
+
+export const sendMailForgotPassword = async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) {
+            return res.status(400).json({
+                success: false,
+                message: 'Email is required'
+            });
+        }
+
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+
+        const token = jwt.sign({ email: email }, process.env.JWT_SECRET, { expiresIn: '15m' })
+
+        await mailSender(email, 'Forgot Password? Add a new One', forgotPasswordTemplate(token, email));
+
+        return res.status(200).json({
+            success: true,
+            message: 'Forgot Password mail sent successfully'
+        })
+
+    } catch (error) {
+        console.log("Error in sendMailForgotPassword");
+    }
+}
+
+export const verifyToken = async (req, res) => {
+    try {
+        const { token } = req.body;
+        if (!token) {
+            return res.status(400).json({
+                success: false,
+                message: 'Token is required'
+            });
+        }
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        if (!decoded) {
+            return res.status(401).json({
+                success: false,
+                message: 'Invalid token'
+            })
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'Token verified successfully',
+            decoded
+        });
+
+    } catch (error) {
+
+        if (error.name === "TokenExpiredError") {
+            return res.status(204).json({
+                success: false,
+                message: "Token has expired. Please login again."
+            });
+        }
+
+        console.log("Error in verifyToken: ");
+    }
+}
+
+export const resetPassword = async (req, res) => {
+    try {
+        const { password, email } = req.body;
+        if (!password || !email) {
+            return res.status(400).json({
+                success: false,
+                message: 'All fields are required'
+            });
+        }
+
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            return res.status(400).json({
+                success: false,
+                message: 'User not found'
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        user.password = hashedPassword;
+        await user.save();
+
+        return res.status(200).json({
+            success: true,
+            message: 'Password reset successfully'
+        });
+
+    } catch (error) {
+        console.log("Error in resetPassword");
     }
 }

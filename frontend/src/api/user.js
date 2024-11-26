@@ -1,5 +1,4 @@
 import axios from "axios";
-import { Cookie, Phone } from "lucide-react";
 
 const BASE_URL = import.meta.env.VITE_B_URL
 
@@ -324,5 +323,60 @@ export const getRemoteCode = async (data) => {
         return false
     } catch (error) {
         console.log("Error in getCode: ", error);
+    }
+}
+
+export const forgotMail = async (email) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/auth/forgotPass`, {
+            email: email
+        }, {
+            withCredentials: true
+        })
+
+        if (response.data.success === true) {
+            return response.data
+        }
+
+        return false
+    } catch (error) {
+        console.log("Error in forgotMail: ", error);
+    }
+}
+
+export const verifyToken = async (token) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/auth/verifyToken`, {
+            token: token
+        }, {
+            withCredentials: true
+        })
+
+        if (response.data.success === true) {
+            return response.data
+        }
+
+        return false
+    } catch (error) {
+        console.log("Error in verifyToken: ", error);
+    }
+}
+
+export const resetPassword = async (data) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/auth/resetPassword`, {
+            password: data.password,
+            email: data.email
+        }, {
+            withCredentials: true
+        })
+
+        if (response.data.success === true) {
+            return response.data
+        }
+
+        return false
+    } catch (error) {
+        console.log("Error in resetPassword: ", error);
     }
 }

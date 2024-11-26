@@ -97,7 +97,7 @@ function App() {
             )
           }
           {!isAuthenticated && <Route path="/auth" element={<Auth />} />}
-          <Route path="/reset-password/:token" element={<ResetPassword />} />
+          <Route path="/reset-password" element={<ResetPassword />} />
           <Route path="/room" element={<CodeEditor />} />
           <Route path="/error" element={<ErrorPage />} />
           <Route path="*" element={<NotFoundPage />} />
