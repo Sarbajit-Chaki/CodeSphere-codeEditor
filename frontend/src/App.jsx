@@ -18,6 +18,7 @@ import { setUserObj } from "./features/Profile/profileSlice";
 import CodeEditor from "./pages/CodeEditor";
 import ErrorPage from "./pages/ErrorPage";
 import SkeletonComponent from "./components/Skeleton/Skeleton";
+import ResetPassword from "./components/ForgotPassword/ResetPassword";
 
 function App() {
   const location = useLocation();
@@ -96,6 +97,7 @@ function App() {
             )
           }
           {!isAuthenticated && <Route path="/auth" element={<Auth />} />}
+          <Route path="/reset-password/:token" element={<ResetPassword />} />
           <Route path="/room" element={<CodeEditor />} />
           <Route path="/error" element={<ErrorPage />} />
           <Route path="*" element={<NotFoundPage />} />
