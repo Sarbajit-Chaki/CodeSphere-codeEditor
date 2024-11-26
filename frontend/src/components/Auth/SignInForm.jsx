@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import { setUserObj } from '@/features/Profile/profileSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from '../ui/dialog';
 import EmailField from '../ForgotPassword/EmailField';
 
 const SignInForm = ({className}) => {
@@ -122,7 +122,8 @@ const SignInForm = ({className}) => {
                     <div className='text-[#fb4c19] cursor-pointer  -my-6 text-end'>Forgot Password ?</div>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] min-h-[30vh]">
-                    <EmailField setStage={setStage} />
+                    <DialogTitle>Forgot Password</DialogTitle>
+                    <EmailField setDialogOpen={setDialogOpen} />
                 </DialogContent>
             </Dialog>
             </div>
