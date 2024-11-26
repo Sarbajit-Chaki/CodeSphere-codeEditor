@@ -6,14 +6,12 @@ import { FaEyeSlash } from "react-icons/fa";
 import GradientText from '../GradientText';
 import GoogleAuthButton from './GoogleAuthButton';
 import { login } from '@/api/user';
-import { Bounce, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import { setUserObj } from '@/features/Profile/profileSlice';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { Dialog, DialogContent, DialogTrigger } from '../ui/dialog';
 import EmailField from '../ForgotPassword/EmailField';
-import OtpField from '../ForgotPassword/OtpField';
-import ResetPassword from '../ForgotPassword/ResetPassword';
 
 const SignInForm = ({className}) => {
     const dispatch = useDispatch();
@@ -124,9 +122,7 @@ const SignInForm = ({className}) => {
                     <div className='text-[#fb4c19] cursor-pointer  -my-6 text-end'>Forgot Password ?</div>
                 </DialogTrigger>
                 <DialogContent className="sm:max-w-[425px] min-h-[30vh]">
-                    {stage === 1 && <EmailField setStage={setStage} />}
-                    {stage === 2 && <OtpField setStage={setStage} />}
-                    {stage === 3 && <ResetPassword setStage={setStage} setDialogOpen={setDialogOpen} />}
+                    <EmailField setStage={setStage} />
                 </DialogContent>
             </Dialog>
             </div>
