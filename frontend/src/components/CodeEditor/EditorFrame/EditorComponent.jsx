@@ -47,9 +47,7 @@ const EditorComponent = ({ socket }) => {
   },[]);
 
   useEffect(() => {
-    console.log("monaco in useEffect: ", monaco);
     if(monaco) {
-        console.log("monaco in if: ", monaco.editor);
         monaco.editor.defineTheme('custom-theme', {
             base: 'vs-dark',
             inherit: true,

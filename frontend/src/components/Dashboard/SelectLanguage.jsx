@@ -60,7 +60,7 @@ const SelectLanguage = () => {
       render: "Room created successfully",
       type: "success",
       isLoading: false,
-      autoClose: 3000,
+      autoClose: 2000,
       position: "top-right"
     });
 
@@ -90,7 +90,7 @@ const SelectLanguage = () => {
       render: "Room joined successfully",
       type: "success",
       isLoading: false,
-      autoClose: 3000,
+      autoClose: 2000,
       position: "top-right"
     });
 

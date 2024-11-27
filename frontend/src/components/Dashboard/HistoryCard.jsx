@@ -45,7 +45,8 @@ const HistoryCard = ({ language, roomName, roomID, createdAt }) => {
       render: "Room joined successfully",
       type: "success",
       isLoading: false,
-      autoClose: 3000
+      autoClose: 2000,
+      position: "top-right"
     });
 
     navigate("/room", { state: { roomId: roomID } });
