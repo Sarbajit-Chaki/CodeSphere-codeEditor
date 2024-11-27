@@ -68,7 +68,6 @@ function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <div className="bg-black overflow-x-hidden scroll-smooth relative">
-        
         <Routes>
           {
             isAuthenticated ? (
