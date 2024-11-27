@@ -11,6 +11,7 @@ import forgotPasswordTemplate from '../utils/forgotMail.js';
 const cookieOptions = {
     httpOnly: false,
     expires: new Date(Date.now() + 1 * 365 * 24 * 60 * 60 * 1000),
+    sameSite: "none",
 }
 
 export const sendOtp = async (req, res) => {
