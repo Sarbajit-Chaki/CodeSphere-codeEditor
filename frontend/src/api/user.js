@@ -358,7 +358,25 @@ export const verifyToken = async (token) => {
 
         return false
     } catch (error) {
-        console.log("Error in verifyToken: ", error);
+        const message = error.response.data.error.name;
+        if (message === "TokenExpiredError") {
+            return {
+                success: false,
+                message: message
+            };
+        }
+
+        if (message === 'JsonWebTokenError') {
+            return {
+                success: false,
+                message: message,
+            };
+        }
+
+        return {
+                success: false,
+                message: 'Error in verifyToken',
+        };
     }
 }
 

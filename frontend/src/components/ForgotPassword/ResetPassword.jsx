@@ -9,9 +9,11 @@ import {
 } from "../ui/card";
 import { Button } from "../ui/button";
 import { Eye, EyeOff } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { resetPassword, verifyToken } from "@/api/user";
 import { toast } from "react-toastify";
+import TokenExp from "@/pages/TokenExp";
+import NotFoundPage from "@/pages/NotFoundPage";
 
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -19,11 +21,12 @@ const ResetPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [email, setEmail] = useState("");
+  
   const [tokenNotFound, setTokenNotFound] = useState(false);
   const [isTokenExpired, setIsTokenExpired] = useState(false);
 
   const location = useLocation();
-
+  const navigate = useNavigate();
 
   const verify = async (token) => {
     if (!token) {
@@ -32,12 +35,21 @@ const ResetPassword = () => {
     }
 
     const res = await verifyToken(token);
-    if (!res) {
-      setIsTokenExpired(true);
-      return;
+    
+    if (res.success === true){
+      setEmail(res?.decoded?.email);
     }
-
-    setEmail(res?.decoded?.email);
+    else if(res.success === false){
+      if(res.message === "TokenExpiredError"){
+        setIsTokenExpired(true);
+      }
+      else if (res.message === "JsonWebTokenError") {
+        setTokenNotFound(true);
+      }
+      else {
+        navigate("/error");
+      }
+    }
   }
 
   useEffect(() => {
@@ -78,15 +90,13 @@ const ResetPassword = () => {
 
   if (tokenNotFound) {
     return (
-      <div className="flex items-center justify-center h-screen bg-[#000814]">
-        <div className="text-white text-2xl font-semibold">Token Not Found</div>
-      </div>
+      <NotFoundPage />
     )
   }
 
   return (
     <div className="flex items-center justify-center h-screen bg-[#000814]">
-      {isTokenExpired ? <div className="text-white text-2xl font-semibold">Token Expired</div> :
+      {isTokenExpired ? <TokenExp /> :
         <Card className="w-[400px]">
           <CardHeader>
             <CardTitle>Reset Password</CardTitle>

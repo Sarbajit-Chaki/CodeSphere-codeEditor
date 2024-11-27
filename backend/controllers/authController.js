@@ -281,15 +281,11 @@ export const verifyToken = async (req, res) => {
         });
 
     } catch (error) {
-
-        if (error.name === "TokenExpiredError") {
-            return res.status(204).json({
-                success: false,
-                message: "Token has expired. Please login again."
-            });
-        }
-
-        console.log("Error in verifyToken: ");
+        return res.status(500).json({
+            success: false,
+            message: 'Internal server error',
+            error: error
+        });
     }
 }
 
