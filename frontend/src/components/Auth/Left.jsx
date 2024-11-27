@@ -6,7 +6,7 @@ import Card from './Card'
 import BorderCircle from '../Animations/BorderCircle'
 import Text from './Text'
 
-import img1 from '@/assets/Auth/img1.webp'
+import img1 from '@/assets/Auth/img1.jpg'
 import img2 from '@/assets/Auth/img2.jpg'
 
 const Left = () => {
