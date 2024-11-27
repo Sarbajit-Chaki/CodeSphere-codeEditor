@@ -64,7 +64,25 @@ export const login = async (data) => {
 
         return false;
     } catch (error) {
-        console.log("Error in login");
+        const message = error.response.data.message;
+        if (message === "Unauthorize") {
+            return {
+                success: false,
+                message: 'Dont have an account yet. Please sign up first',
+            };
+        }
+
+        if (message === 'InvalidPassword') {
+            return {
+                success: false,
+                message: "Password is incorrect",
+            };
+        }
+
+        return {
+                success: false,
+                message: 'Error in login',
+        };
     }
 }
 
