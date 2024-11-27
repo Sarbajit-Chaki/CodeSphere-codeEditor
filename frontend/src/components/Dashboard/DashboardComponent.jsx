@@ -1,5 +1,4 @@
 import Particles from "../ui/particles";
-import DashLeftComponent from "./DashLeftComponent";
 import RoomHistory from "./RoomHistory";
 import SelectLanguage from "./SelectLanguage";
 
@@ -15,7 +14,6 @@ const DashboardComponent = () => {
       />
 
       <div className="flex flex-col lg:flex-row gap-5">
-        {/* <DashLeftComponent /> */}
         <div className="flex flex-col gap-y-6 max-w-11/12">
           <SelectLanguage />
           <RoomHistory />

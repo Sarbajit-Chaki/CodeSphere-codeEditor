@@ -60,7 +60,8 @@ const SelectLanguage = () => {
       render: "Room created successfully",
       type: "success",
       isLoading: false,
-      autoClose: 3000
+      autoClose: 3000,
+      position: "top-right"
     });
 
     navigate("/room", { state: { roomId } });
@@ -89,7 +90,8 @@ const SelectLanguage = () => {
       render: "Room joined successfully",
       type: "success",
       isLoading: false,
-      autoClose: 3000
+      autoClose: 3000,
+      position: "top-right"
     });
 
     navigate("/room", { state: { roomId } });
