@@ -38,13 +38,17 @@ const SignInForm = ({className}) => {
 
     const handleSubmit = async(e) => {
         e.preventDefault()
+        if(!form.email || !form.password){
+            toast.error("All fields are required", { autoClose: 3000 });
+            return;
+        }
         const toastId = toast.loading("Loading...");
 
         const res = await login(form);
 
-        if(!res){
+        if(res.success === false){
             toast.update(toastId, {
-                render: "An error occured",
+                render: res.message,
                 type: "error",
                 isLoading: false,
                 autoClose: 3000

@@ -113,7 +113,7 @@ export const emailLogin = async (req, res) => {
         if (!user) {
             return res.status(400).json({
                 success: false,
-                message: 'User not found'
+                message: 'Unauthorize'
             });
         }
 
@@ -121,7 +121,7 @@ export const emailLogin = async (req, res) => {
         if (!isMatch) {
             return res.status(401).json({
                 success: false,
-                message: 'Invalid password'
+                message: 'InvalidPassword'
             });
         }
 
