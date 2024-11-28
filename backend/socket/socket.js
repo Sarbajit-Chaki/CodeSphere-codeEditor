@@ -1,6 +1,6 @@
 import { socketAuthMiddleware } from '../middlewares/auth.middleware.js';
 
-import { addMember, checkRoom, removeMember } from '../controllers/roomController.js';
+import { addMember, removeMember } from '../controllers/roomController.js';
 import { saveMessage } from '../controllers/messageController.js';
 import { codeSave } from '../controllers/codeController.js';
 
