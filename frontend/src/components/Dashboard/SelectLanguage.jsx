@@ -76,9 +76,9 @@ const SelectLanguage = () => {
 
     const res = await joinRoom(roomId);
 
-    if (!res) {
+    if (!res?.success) {
       toast.update(toastId, {
-        render: "Failed to join room",
+        render: res?.message,
         type: "error",
         isLoading: false,
         autoClose: 3000

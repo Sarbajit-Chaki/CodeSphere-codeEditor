@@ -80,6 +80,14 @@ export const joinRoom = async (req, res) => {
             });
         }
 
+        const isPresent = room.members.includes(userId);
+        if(isPresent){
+            return res.status(400).json({
+                success: false,
+                message: "You are already in this room"
+            });
+        }
+
         if(!user.rooms.includes(roomId)){
             user.rooms.push(roomId);
             await user.save();

@@ -10,8 +10,9 @@ export const initSocket = (io) => {
     io.on('connection', (socket) => {
         console.log('user connected', socket?.user);
 
-        socket.on('join-room', async (roomId) => {
-            // Join the specified room
+        socket.on('join-room', async (roomId) => { 
+            //Join the specified room
+
             socket.join(roomId);
             socket.roomId = roomId;
             await addMember({email: socket.user.email, roomId: roomId});

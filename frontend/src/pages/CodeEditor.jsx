@@ -74,7 +74,7 @@ const CodeEditor = () => {
       setSocketInstance(socket);
       socket.on("connect_error", handleConnectionFail);
       socket.on("connect_failed", handleConnectionFail);
-
+      
       socket.emit("join-room", roomId);
       console.log("Joining room");
 

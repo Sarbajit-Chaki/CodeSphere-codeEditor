@@ -31,9 +31,9 @@ const HistoryCard = ({ language, roomName, roomID, createdAt }) => {
 
     const res = await joinRoom(roomID);
 
-    if (!res) {
+    if (!res?.success) {
       toast.update(toastId, {
-        render: "Failed to join room",
+        render: res.message,
         type: "error",
         isLoading: false,
         autoClose: 3000
