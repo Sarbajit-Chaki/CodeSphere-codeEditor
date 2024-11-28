@@ -220,8 +220,9 @@ export const joinRoom = async (roomId) => {
             message: 'Unable to join room'
         }
     } catch (error) {
-        const message = error.response.data.error.message;
         console.log("Error in joinRoom: ", error);
+        const message = error.response.data.message;
+        // console.log("Error in joinRoom: ", error);
         return {
             success: false,
             message: message
