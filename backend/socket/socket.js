@@ -1,6 +1,6 @@
 import { socketAuthMiddleware } from '../middlewares/auth.middleware.js';
 
-import { addMember, removeMember } from '../controllers/roomController.js';
+import { addMember, checkRoom, removeMember } from '../controllers/roomController.js';
 import { saveMessage } from '../controllers/messageController.js';
 import { codeSave } from '../controllers/codeController.js';
 
@@ -11,7 +11,16 @@ export const initSocket = (io) => {
         console.log('user connected', socket?.user);
 
         socket.on('join-room', async (roomId) => {
-            // Join the specified room
+            // check if user is already in the room, if not, 
+            //Join the specified room
+            const isPresesent = await checkRoom({roomId, userId: socket.user.id});
+            if(isPresesent){
+                socket.emit('userAlreadyPresent', {
+                    userName: socket.user.name,
+                });
+                return;
+            }
+
             socket.join(roomId);
             socket.roomId = roomId;
             await addMember({email: socket.user.email, roomId: roomId});

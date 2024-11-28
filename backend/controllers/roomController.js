@@ -199,3 +199,22 @@ export const getRoomDetails = async (req, res) => {
         console.log("Error in getRoomDetails");
     }
 }
+
+export const checkRoom = async (data) => {
+    try {
+        const roomId = data.roomId;
+        const userId = data.userId;
+
+        const room = await Room.findById(roomId);
+        const roomMembers = room.members;
+
+        if(roomMembers.includes(userId)) {
+            return true;
+        }
+
+        return false;
+
+    } catch(error) {
+        console.log("Error in checkRoom");
+    }
+}

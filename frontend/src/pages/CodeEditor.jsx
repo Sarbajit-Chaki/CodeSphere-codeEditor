@@ -74,9 +74,18 @@ const CodeEditor = () => {
       setSocketInstance(socket);
       socket.on("connect_error", handleConnectionFail);
       socket.on("connect_failed", handleConnectionFail);
-
+      
       socket.emit("join-room", roomId);
       console.log("Joining room");
+
+      socket.on("userAlreadyPresent", (socket) => {
+        toast.error(`${socket.userName} is already in the room`, {
+          position: "top-center",
+          autoClose: 2000,
+        });
+
+        navigate("/");
+      })
 
       socket.on("userJoined", (socket) => {
         toast.info(`${socket.userName} joined the room`, {
