@@ -34,24 +34,24 @@ const Features = () => {
             efficient teamwork and productivity.
           </div>
         </div>
-        <div className="w-full flex flex-col items-center gap-0 md:flex-row md:justify-around ">
+        <div className="w-full flex flex-col items-center md:flex-row md:justify-around gap-0  ">
           <div className="z-50">
             <img
-              className="w-[50%] max-w-10/12 md:w-[180px] lg:w-[220px] xl:w-[340px] -my-4 md:mt-6"
+              className="w-[50%] mx-auto max-w-10/12 md:w-[180px] lg:w-[220px] xl:w-[340px] -my-4 md:mt-6"
               src={feature1}
               alt=""
             />
           </div>
           <div className="z-50">
             <img
-              className=" w-[50%] max-w-10/12 md:w-[180px] lg:w-[220px] xl:w-[320px] -my-4 md:mt-6"
+              className=" w-[50%] mx-auto max-w-10/12 md:w-[180px] lg:w-[220px] xl:w-[320px] -my-4 md:mt-6"
               src={feature2}
               alt=""
             />
           </div>
           <div className="z-50">
             <img
-              className="w-[50%] max-w-10/12 md:w-[180px] lg:w-[220px] xl:w-[340px] -my-4 md:mt-6"
+              className="w-[50%] mx-auto max-w-10/12 md:w-[180px] lg:w-[220px] xl:w-[340px] -my-4 md:mt-6"
               src={feature3}
               alt=""
             />
