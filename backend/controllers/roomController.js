@@ -80,6 +80,14 @@ export const joinRoom = async (req, res) => {
             });
         }
 
+        const isPresent = room.members.includes(userId);
+        if(isPresent){
+            return res.status(400).json({
+                success: false,
+                message: "You are already in this room"
+            });
+        }
+
         if(!user.rooms.includes(roomId)){
             user.rooms.push(roomId);
             await user.save();
@@ -197,24 +205,5 @@ export const getRoomDetails = async (req, res) => {
         })
     } catch (error) {
         console.log("Error in getRoomDetails");
-    }
-}
-
-export const checkRoom = async (data) => {
-    try {
-        const roomId = data.roomId;
-        const userId = data.userId;
-
-        const room = await Room.findById(roomId);
-        const roomMembers = room.members;
-
-        if(roomMembers.includes(userId)) {
-            return true;
-        }
-
-        return false;
-
-    } catch(error) {
-        console.log("Error in checkRoom");
     }
 }

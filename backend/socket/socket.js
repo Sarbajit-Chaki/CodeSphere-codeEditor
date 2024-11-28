@@ -10,16 +10,8 @@ export const initSocket = (io) => {
     io.on('connection', (socket) => {
         console.log('user connected', socket?.user);
 
-        socket.on('join-room', async (roomId) => {
-            // check if user is already in the room, if not, 
+        socket.on('join-room', async (roomId) => { 
             //Join the specified room
-            const isPresesent = await checkRoom({roomId, userId: socket.user.id});
-            if(isPresesent){
-                socket.emit('userAlreadyPresent', {
-                    userName: socket.user.name,
-                });
-                return;
-            }
 
             socket.join(roomId);
             socket.roomId = roomId;
