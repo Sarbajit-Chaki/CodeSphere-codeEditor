@@ -118,7 +118,7 @@ return `
       </span>
     </div>
     <div class="email-info">
-      <a href="/">CodeSphere</a> | Siliguri, West Bengal - 734001, INDIA
+      <a href="https://code-sphere-editor.vercel.app/">CodeSphere</a> | Siliguri, West Bengal - 734001, INDIA
     </div>
     <div class="email-info">
       &copy; 2024 [CodeSphere]. All rights

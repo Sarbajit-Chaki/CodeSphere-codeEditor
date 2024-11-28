@@ -9,7 +9,7 @@ import forgotPasswordTemplate from '../utils/forgotMail.js';
 
 
 const cookieOptions = {
-    httpOnly: false,
+    httpOnly: true,
     expires: new Date(Date.now() + 1 * 365 * 24 * 60 * 60 * 1000),
     sameSite: "none",
     secure: true,
@@ -212,7 +212,12 @@ export const googleSignup = async (req, res) => {
 
 export const logout = async (req, res) => {
     try {
-        res.clearCookie("token", { path: "/" });
+        res.clearCookie("token", {
+            httpOnly: true,
+            sameSite: "none",
+            secure: true,
+        });
+        
         return res.status(200).json({
             success: true,
             message: 'User logged out successfully'

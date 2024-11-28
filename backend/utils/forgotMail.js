@@ -96,7 +96,7 @@ const forgotPasswordTemplate = (token, email) => {
           </p>
           <a
             class="button"
-            href="http://localhost:5173/reset-password?token=${token}"
+            href="https://code-sphere-editor.vercel.app/reset-password?token=${token}"
             target="_blank"
           >
             Reset Password
@@ -118,7 +118,7 @@ const forgotPasswordTemplate = (token, email) => {
             <a href="mailto:${email}">${email}</a>
           </p>
           <p class="email-info">
-            <a href="/">CodeSphere</a> | Siliguri, West Bengal - 734001, INDIA
+            <a href="https://code-sphere-editor.vercel.app/">CodeSphere</a> | Siliguri, West Bengal - 734001, INDIA
           </p>
           <p class="email-info">&copy; 2024 CodeSphere. All rights reserved.</p>
         </div>
