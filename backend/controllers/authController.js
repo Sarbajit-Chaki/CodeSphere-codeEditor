@@ -13,8 +13,6 @@ const cookieOptions = {
     expires: new Date(Date.now() + 1 * 365 * 24 * 60 * 60 * 1000),
     sameSite: "none",
     secure: true,
-    path: "/",
-    domain: "https://code-sphere-editor.vercel.app/"
 }
 
 export const sendOtp = async (req, res) => {
