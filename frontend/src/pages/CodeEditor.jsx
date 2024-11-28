@@ -19,6 +19,8 @@ import { closeTerminal } from "@/features/EditorSlice/terminalSlice";
 import { closeRemoteEditor } from "@/features/EditorSlice/remoteEditorSlice";
 
 const CodeEditor = () => {
+  const BACK_URL = import.meta.env.VITE_B_URL;
+  console.log("back url: ", BACK_URL);
   const dispatch = useDispatch();
   const location = useLocation();
   const navigate = useNavigate();
@@ -59,7 +61,7 @@ const CodeEditor = () => {
       return;
     }
 
-    const socket = io("http://localhost:4000", {
+    const socket = io(`${BACK_URL}`, {
       // user try to connect with the socket server
       withCredentials: true,
       "force new connection": true,

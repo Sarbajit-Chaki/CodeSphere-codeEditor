@@ -27,14 +27,7 @@ function App() {
   useEffect(() => {
     const fetchUser = async () => {
       setIsLoading(true);
-      const token = Cookies.get("token");
-      if (!token) {
-        console.log("No token found.");
-        setIsLoading(false);
-        return;
-      }
 
-      
       const res = await getUser();
       if (!res) {
         setIsLoading(false);
