@@ -8,12 +8,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { joinRoom } from "@/api/user";
+import { deleteRoom, joinRoom } from "@/api/user";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { setRooms } from "@/features/Profile/profileSlice";
+import { useDispatch } from "react-redux";
 
 const HistoryCard = ({ language, roomName, roomID, createdAt }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const timeAgo = (timestamp) => {
     const diff = Math.floor((new Date() - new Date(timestamp)) / 1000);
@@ -50,6 +53,22 @@ const HistoryCard = ({ language, roomName, roomID, createdAt }) => {
     });
 
     navigate("/room", { state: { roomId: roomID } });
+  }
+
+  const handleDelete = async (e) => {
+    e.preventDefault();
+
+    if (!roomID) return;
+
+    const res = await deleteRoom(roomID);
+
+    if (!res) {
+      toast.error("Failed to delete room");
+      return;
+    }
+
+    dispatch(setRooms(res?.rooms));
+    toast.success("Room deleted successfully");
   }
   
   return (
@@ -94,6 +113,7 @@ const HistoryCard = ({ language, roomName, roomID, createdAt }) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem onClick={handleJoin}>Join</DropdownMenuItem>
+              <DropdownMenuItem onClick={handleDelete}>Delete</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </MagicCard>

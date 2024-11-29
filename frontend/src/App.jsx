@@ -26,7 +26,7 @@ function App() {
   useEffect(() => {
     const fetchUser = async () => {
       setIsLoading(true);
-
+      
       const res = await getUser();
       if (!res) {
         setIsLoading(false);
@@ -45,13 +45,13 @@ function App() {
         rooms: res?.user?.rooms ?? []
       }
       
-      dispatch(setUserObj(data));
       setIsAuthenticated(true);
+      dispatch(setUserObj(data));
       setIsLoading(false);
     };
 
     fetchUser();
-  }, []);
+  }, [location]);
 
   if(isLoading) {
     return <SkeletonComponent />;

@@ -426,3 +426,21 @@ export const resetPassword = async (data) => {
         console.log("Error in resetPassword: ", error);
     }
 }
+
+export const deleteRoom = async (roomId) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/room/deleteRoom`, {
+            roomId
+        }, {
+            withCredentials: true
+        })
+
+        if (response.data.success === true) {
+            return response.data
+        }
+
+        return false
+    } catch (error) {
+        console.log("Error in deleteRoom: ", error);
+    }
+}
