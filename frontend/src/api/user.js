@@ -94,7 +94,8 @@ export const getUser = async () => {
         }
         return false
     } catch (error) {
-        console.log("Error in getUser: ");
+        console.log("Error in getUser: ", error?.message);
+        return false;
     }
 }
 

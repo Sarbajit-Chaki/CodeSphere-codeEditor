@@ -9,7 +9,6 @@ import MyProfile from "./pages/MyProfile";
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from "react";
 import { getUser } from "./api/user";
-import Cookies from "js-cookie";
 import NotFoundPage from "./pages/NotFoundPage";
 import { useDispatch } from "react-redux";
 import { setUserObj } from "./features/Profile/profileSlice";
@@ -52,7 +51,7 @@ function App() {
     };
 
     fetchUser();
-  }, [location]);
+  }, []);
 
   if(isLoading) {
     return <SkeletonComponent />;
