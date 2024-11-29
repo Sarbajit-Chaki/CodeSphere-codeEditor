@@ -9,7 +9,6 @@ import MyProfile from "./pages/MyProfile";
 import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useState } from "react";
 import { getUser } from "./api/user";
-import Cookies from "js-cookie";
 import NotFoundPage from "./pages/NotFoundPage";
 import { useDispatch } from "react-redux";
 import { setUserObj } from "./features/Profile/profileSlice";
@@ -27,7 +26,7 @@ function App() {
   useEffect(() => {
     const fetchUser = async () => {
       setIsLoading(true);
-
+      
       const res = await getUser();
       if (!res) {
         setIsLoading(false);
@@ -46,8 +45,8 @@ function App() {
         rooms: res?.user?.rooms ?? []
       }
       
-      dispatch(setUserObj(data));
       setIsAuthenticated(true);
+      dispatch(setUserObj(data));
       setIsLoading(false);
     };
 

@@ -207,3 +207,52 @@ export const getRoomDetails = async (req, res) => {
         console.log("Error in getRoomDetails");
     }
 }
+
+export const deleteRoom = async (req, res) => {
+    try {
+        const { roomId } = req.body;
+        const userId = req.user.id;
+
+        if(!roomId || !userId) {
+            return res.status(400).json({
+                success: false,
+                message: "Credentials are required"
+            });
+        }
+
+        const room = await Room.findById(roomId);
+        if(!room) {
+            return res.status(400).json({
+                success: false,
+                message: "Room not found"
+            });
+        }
+
+        const user = await User.findById(userId);
+        if(!user) {
+            return res.status(400).json({
+                success: false,
+                message: "User not found"
+            });
+        }
+
+        await Room.findByIdAndDelete(roomId);
+        const updatedUser = await User.findByIdAndUpdate(userId, {$pull:{rooms:roomId}}, {new: true}).populate("rooms");
+        if(!updatedUser){
+            return res.status(400).json({
+                success: false,
+                message: "Some error occured, can't delete Room"
+            });
+        }
+
+        const userRooms = updatedUser.rooms;
+
+        return res.status(200).json({
+            success: true,
+            message: "Room deleted successfully",
+            rooms: userRooms
+        })
+    } catch (error) {
+        console.log("Error in deleteRoom");
+    }
+}    

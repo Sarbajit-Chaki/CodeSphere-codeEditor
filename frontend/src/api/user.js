@@ -94,7 +94,8 @@ export const getUser = async () => {
         }
         return false
     } catch (error) {
-        console.log("Error in getUser: ");
+        console.log("Error in getUser: ", error?.message);
+        return false;
     }
 }
 
@@ -423,5 +424,23 @@ export const resetPassword = async (data) => {
         return false
     } catch (error) {
         console.log("Error in resetPassword: ", error);
+    }
+}
+
+export const deleteRoom = async (roomId) => {
+    try {
+        const response = await axios.post(`${BASE_URL}/room/deleteRoom`, {
+            roomId
+        }, {
+            withCredentials: true
+        })
+
+        if (response.data.success === true) {
+            return response.data
+        }
+
+        return false
+    } catch (error) {
+        console.log("Error in deleteRoom: ", error);
     }
 }
