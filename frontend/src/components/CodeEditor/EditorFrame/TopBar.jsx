@@ -85,7 +85,7 @@ const TopBar = () => {
             </div>
             <div className=' flex items-center gap-2 sm:gap-5'>
                 <Button onClick={handleCopyRoomId} className="bg-emerald-400 hidden sm:block">Copy Room ID</Button>
-                <div className='p-2 bg-emerald-400 rounded-full cursor-pointer block sm:hidden '><TbCopy size={24} /></div>
+                <div onClick={handleCopyRoomId} className='p-2 bg-emerald-400 rounded-full cursor-pointer block sm:hidden '><TbCopy size={24} /></div>
 
                 <span onClick={() => navigate("/")} className="material-symbols-outlined bg-red-600 p-2 rounded-full cursor-pointer">call_end</span>
             </div>
