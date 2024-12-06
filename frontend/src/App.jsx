@@ -17,7 +17,8 @@ import ErrorPage from "./pages/ErrorPage";
 import SkeletonComponent from "./components/Skeleton/Skeleton";
 import ResetPassword from "./components/ForgotPassword/ResetPassword";
 
-function App() {
+
+function useFetchUser() {
   const location = useLocation();
   const dispatch = useDispatch();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -26,7 +27,7 @@ function App() {
   useEffect(() => {
     const fetchUser = async () => {
       setIsLoading(true);
-      
+
       const res = await getUser();
       if (!res) {
         setIsLoading(false);
@@ -44,7 +45,7 @@ function App() {
         createdAt: res?.user?.createdAt ?? "",
         rooms: res?.user?.rooms ?? []
       }
-      
+
       setIsAuthenticated(true);
       dispatch(setUserObj(data));
       setIsLoading(false);
@@ -53,7 +54,14 @@ function App() {
     fetchUser();
   }, [location]);
 
-  if(isLoading) {
+  return { isAuthenticated, isLoading };
+}
+
+
+function App() {
+  const { isAuthenticated, isLoading } = useFetchUser();
+
+  if (isLoading) {
     return <SkeletonComponent />;
   }
 
