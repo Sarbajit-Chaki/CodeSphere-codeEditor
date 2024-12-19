@@ -25,7 +25,8 @@
 
 ### Backend:  
 - Express.js  
-- MongoDB  
+- MongoDB
+- Socket.io
 
 ### Additional Libraries:  
 - Axios  
