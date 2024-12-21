@@ -26,7 +26,7 @@ const EditorComponent = ({ socket }) => {
     if (room?.language) {
       const derivedLanguage = room.language.split(" ")[0].toLowerCase();
       languageRef.current = room?.language;
-      setLanguage(derivedLanguage);
+      setLanguage(derivedLanguage === "c++" ? "cpp" : derivedLanguage);
     }
   }, [room?.language]);
 
