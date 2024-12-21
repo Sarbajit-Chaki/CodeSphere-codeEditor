@@ -112,7 +112,7 @@ const CodeEditor = () => {
         socket.disconnect();
         dispatch(closeTerminal());
         dispatch(closeRemoteEditor());
-        dispatch(setUserCode(defaultCodeArr[room?.language.split(" ")[0].toLowerCase()]));
+        dispatch(setUserCode(defaultCodeArr[room?.language?.split(" ")[0].toLowerCase()]));
         dispatch(setRemoteUserCode(''));
         dispatch(setRoomDetails({}));
         dispatch(toggleSidebar(false));
