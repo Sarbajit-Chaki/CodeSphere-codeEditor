@@ -302,11 +302,12 @@ export const compileCode = async (data) => {
         })
         console.log(response)
 
-        if (response.data.run.signal === "SIGKILL") {
-            return "Time Limit Exceeded";
-        }
-        else if (response.data.run.stderr) {
+        
+        if (response.data.run.stderr) {
             return response.data.run.stderr;
+        }
+        else if (response.data.run.signal === "SIGKILL") {
+            return "Time Limit Exceeded";
         }
         else if (response.data.run.code === 0) {
             return response.data.run.stdout;
