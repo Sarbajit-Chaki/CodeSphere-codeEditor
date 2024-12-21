@@ -94,7 +94,7 @@ const EditorComponent = ({ socket }) => {
             className={` ${isRemoteEditorOpen && "h-[50vh]"} md:h-full `}
             width={isRemoteEditorOpen && aboveTablet ? "50%" : "100%"}
             defaultLanguage={language}
-            defaultValue={defaultCodeArr[language]}
+            defaultValue={defaultCodeArr[language === "cpp" ? "c++" : language]}
             value={userCode}
             onChange={handleCodeChange}
             theme="custom-theme"
