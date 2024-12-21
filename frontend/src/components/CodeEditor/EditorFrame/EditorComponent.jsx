@@ -4,6 +4,7 @@ import RemoteEditor from "./RemoteEditor";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { setUserCode } from "@/features/CodeSlice/codeSlice";
+import { defaultCodeArr } from "@/data/defaultCode.js";
 
 const EditorComponent = ({ socket }) => {
   const isRemoteEditorOpen = useSelector((state) => state.remoteEditor.isRemoteEditorOpen);
@@ -93,7 +94,7 @@ const EditorComponent = ({ socket }) => {
             className={` ${isRemoteEditorOpen && "h-[50vh]"} md:h-full `}
             width={isRemoteEditorOpen && aboveTablet ? "50%" : "100%"}
             defaultLanguage={language}
-            defaultValue="// Welcome to CodeSphere - Code, Compile, Run and Debug online from anywhere in world."
+            defaultValue={defaultCodeArr[language]}
             value={userCode}
             onChange={handleCodeChange}
             theme="custom-theme"
