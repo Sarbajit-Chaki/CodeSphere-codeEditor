@@ -12,11 +12,12 @@ import { deleteRoom, joinRoom } from "@/api/user";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { setRooms } from "@/features/Profile/profileSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-const HistoryCard = ({ language, roomName, roomID, createdAt }) => {
+const HistoryCard = ({ language, roomName, roomID, createdAt, adminId }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.profile.user)
 
   const timeAgo = (timestamp) => {
     const diff = Math.floor((new Date() - new Date(timestamp)) / 1000);
@@ -113,7 +114,7 @@ const HistoryCard = ({ language, roomName, roomID, createdAt }) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem onClick={handleJoin}>Join</DropdownMenuItem>
-              <DropdownMenuItem onClick={handleDelete}>Delete</DropdownMenuItem>
+              {user._id === adminId && <DropdownMenuItem onClick={handleDelete}>Delete</DropdownMenuItem>}
             </DropdownMenuContent>
           </DropdownMenu>
         </MagicCard>
