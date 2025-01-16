@@ -17,6 +17,7 @@ import { toggleSidebar } from "@/features/EditorSlice/sidebarSlice";
 import { setRemoteUserCode, setUserCode } from "@/features/CodeSlice/codeSlice";
 import { closeTerminal } from "@/features/EditorSlice/terminalSlice";
 import { closeRemoteEditor } from "@/features/EditorSlice/remoteEditorSlice";
+import { defaultCodeArr } from "@/data/defaultCode";
 
 const CodeEditor = () => {
   const BACK_URL = import.meta.env.VITE_B_URL;
@@ -26,6 +27,7 @@ const CodeEditor = () => {
   const navigate = useNavigate();
 
   const roomId = location?.state?.roomId;
+  const room = useSelector((state) => state.room.room.roomDetails)
   const [socketInstance, setSocketInstance] = useState(null);
 
 
@@ -110,7 +112,7 @@ const CodeEditor = () => {
         socket.disconnect();
         dispatch(closeTerminal());
         dispatch(closeRemoteEditor());
-        dispatch(setUserCode('// Welcome to CodeSphere - Code, Compile, Run and Debug online from anywhere in world.'));
+        dispatch(setUserCode(defaultCodeArr[room?.language?.split(" ")[0].toLowerCase()]));
         dispatch(setRemoteUserCode(''));
         dispatch(setRoomDetails({}));
         dispatch(toggleSidebar(false));

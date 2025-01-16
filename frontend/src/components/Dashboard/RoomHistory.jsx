@@ -23,6 +23,7 @@ const RoomHistory = () => {
                 roomName={room.name}
                 roomID={room._id}
                 createdAt={room.createdAt}
+                adminId={room.admin}
               />
             );
           })

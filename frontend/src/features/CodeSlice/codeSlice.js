@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    userCode: `// Welcome to CodeSphere - Code, Compile, Run and Debug online from anywhere in world.\n`,
+    userCode: "",
     remoteUserCode: "",
     remoteUserId: null,
     remoteUserName: "",
