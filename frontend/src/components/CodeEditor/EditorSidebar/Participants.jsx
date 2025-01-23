@@ -15,6 +15,7 @@ const Participants = ({setIsSidebarOpen}) => {
   const isRemoteVisible = useSelector((state) => state.room.room.roomDetails.isVisible);
   const roomAdmin = useSelector((state) => state.room.room.roomDetails.admin);
   const user = useSelector((state) => state.profile.user);
+  const userId = user._id;
   const dispatch = useDispatch();
   const location = useLocation();
 
@@ -70,7 +71,7 @@ const Participants = ({setIsSidebarOpen}) => {
                     <AvatarFallback>{user?.firstName?.slice(0, 1)}{user?.lastName?.slice(0, 1)}</AvatarFallback>
                   </Avatar>
                 </div>
-                <div className='text-xl font-semibold'>{user?.firstName} {user?.lastName}</div>
+                <div className='text-xl font-semibold'>{user?.firstName} {user?.lastName} {user._id == userId ? " (You)" : ""}</div>
               </div>
             )
           })

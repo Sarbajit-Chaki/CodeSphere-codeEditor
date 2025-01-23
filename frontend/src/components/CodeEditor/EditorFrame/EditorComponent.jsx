@@ -40,7 +40,7 @@ const EditorComponent = ({ socket }) => {
           lastEmittedCode.current = userCodeRef.current;
         }
       }
-    },4000);
+    },1000);
     return () => {
       clearInterval(intervalId);
       setUserCode("");
